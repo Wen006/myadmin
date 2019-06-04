@@ -1,4 +1,4 @@
-import { fakeRegister } from '@/services/api';
+import { fakeRegister } from '@/services/example/api';
 import { setAuthority } from '@/utils/authority';
 import { reloadAuthorized } from '@/utils/Authorized';
 

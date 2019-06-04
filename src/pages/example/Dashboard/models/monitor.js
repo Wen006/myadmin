@@ -1,4 +1,4 @@
-import { queryTags } from '@/services/api';
+import { queryTags } from '@/services/example/api';
 
 export default {
   namespace: 'monitor',

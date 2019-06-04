@@ -14,7 +14,7 @@ import logo from '../assets/logo.svg';
 import Footer from './Footer';
 import Header from './Header';
 import Context from './MenuContext';
-import Exception403 from '../pages/Exception/403';
+import Exception403 from '../pages/example/Exception/403';
 import PageLoading from '@/components/PageLoading';
 import SiderMenu from '@/components/SiderMenu';
 import { title } from '../defaultSettings';

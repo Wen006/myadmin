@@ -1,11 +1,11 @@
 {
-  "name": "ant-design-pro",
+  "name": "myadmin",
   "version": "2.2.0",
   "description": "An out-of-box UI solution for enterprise applications",
   "private": true,
   "scripts": {
     "presite": "cd functions && npm install",
-    "start": "cross-env APP_TYPE=site umi dev",
+    "start": "cross-env APP_TYPE=site PORT=3000 BROWSER=none umi dev",
     "start:no-mock": "cross-env MOCK=none umi dev",
     "build": "umi build",
     "site": "npm run presite && cross-env APP_TYPE=site npm run build && firebase deploy && npm run docker:push",
