@@ -1,0 +1,1 @@
+import { callMethod } from '@/services/ServiceHandler'

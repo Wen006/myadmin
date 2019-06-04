@@ -322,6 +322,7 @@ function getFakeCaptcha(req, res) {
 }
 
 export default {
+  'GET /ss':[2],
   'GET /api/project/notice': getNotice,
   'GET /api/activities': getActivities,
   'POST /api/forms': (req, res) => {

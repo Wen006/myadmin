@@ -1,17 +1,8 @@
-/* eslint-disable no-param-reassign */
-/**
- * @description 统一请求工具类
- * - get
- * @param
- * - url
- * - 
- */
-import axios from 'axios';
-import lodash from 'lodash'
-import qs from 'qs'
+import fetch from 'dva/fetch';
 import { notification } from 'antd';
 import router from 'umi/router';
 import hash from 'hash.js';
+import { isAntdPro } from './utils';
 
 const codeMessage = {
   200: '服务器成功返回请求的数据。',
@@ -31,35 +22,6 @@ const codeMessage = {
   504: '网关超时。',
 };
 
-// axios配置
-const defaultAxiosCfg = {
-  withCredentials: true,
-  timeout: 1800000,
-};
-
-// 添加请求拦截器
-axios.interceptors.request.use(conf => {
-  lodash.assign(conf.headers,{
-    'Accept-Language':'zh_CN',
-    'Access-Token':'1111111',
-  })
-  // 在发送请求之前做些什么
-  return conf;
-}, (error) => 
-  // 对请求错误做些什么
-   Promise.reject(error)
-);
-
-// 添加响应拦截器
-axios.interceptors.response.use((response) => 
-  // 对响应数据做点什么
-   response
-, (error) => 
-  // 对响应错误做点什么
-   Promise.reject(error)
-);
-
-// 校验返回结果
 const checkStatus = response => {
   if (response.status >= 200 && response.status < 300) {
     return response;
@@ -75,7 +37,6 @@ const checkStatus = response => {
   throw error;
 };
 
-// 保存缓存
 const cachedSave = (response, hashcode) => {
   /**
    * Clone a response data and store it in sessionStorage
@@ -96,86 +57,55 @@ const cachedSave = (response, hashcode) => {
 };
 
 /**
- * @description 返回原生的axios
- * @param {请求url} url 
- * @param {请求的参数} options 
- * 
- */
-export function fetch (url,options) {
-  const { method = 'GET', body, headers } = options;
-
-  // body 请求体参数
-  const cloneData = lodash.cloneDeep(body);
-
-  // axios 配置
-  const comCfg =lodash.assign({},defaultAxiosCfg);
-  
-  if (headers) {
-    comCfg.headers = headers;
-  }
-
-  switch (method) {
-    case 'GET':
-      return axios.get(url, {
-        params: cloneData,
-        ...comCfg,
-      });
-    case 'DELETE':
-      return axios.delete(url, {
-        data: cloneData,
-        ...comCfg,
-      });
-    case 'POST':
-      return axios.post(url, cloneData, {
-        ...comCfg,
-      });
-    case 'FORMPOST':
-      return axios.post(url, cloneData, {
-        headers: {
-          'Content-TYPE': 'application/x-www-form-urlencoded',
-        },
-        transformRequest: [
-          _data => qs.stringify(_data),
-        ],
-        ...comCfg,
-      });
-    case 'PUT':
-      return axios.put(url, cloneData);
-    case 'PATCH':
-      return axios.patch(url, cloneData);
-    default:
-      return axios(options);
-  }
-};
-
-/**
  * Requests a URL, returning a promise.
- * @description 返回带有处理的结果，以及错误校验的
+ *
  * @param  {string} url       The URL we want to request
  * @param  {object} [option] The options we want to pass to "fetch"
  * @return {object}           An object containing either "data" or "err"
  */
-export default function request(url, option, expirys=false) {
-console.log(url)
-  const { method = 'GET', body, query } = option;
- 
-  // query 参数是放到url上的
-  if (query) {
-    url = url.includes('?') ? url + qs.stringify(query) : `${url}?${qs.stringify(query)}`;
-  } 
-
+export default function request(url, option) {
+  const options = {
+    expirys: isAntdPro(),
+    ...option,
+  };
   /**
    * Produce fingerprints based on url and parameters
    * Maybe url has the same parameters
    */
-  const fingerprint = url + (body ? JSON.stringify(body) : '');
-
+  const fingerprint = url + (options.body ? JSON.stringify(options.body) : '');
   const hashcode = hash
     .sha256()
     .update(fingerprint)
     .digest('hex');
-  
-  if (expirys !== false) {
+
+  const defaultOptions = {
+    credentials: 'include',
+  };
+  const newOptions = { ...defaultOptions, ...options };
+  if (
+    newOptions.method === 'POST' ||
+    newOptions.method === 'PUT' ||
+    newOptions.method === 'DELETE'
+  ) {
+    if (!(newOptions.body instanceof FormData)) {
+      newOptions.headers = {
+        Accept: 'application/json',
+        'Content-Type': 'application/json; charset=utf-8',
+        ...newOptions.headers,
+      };
+      newOptions.body = JSON.stringify(newOptions.body);
+    } else {
+      // newOptions.body is FormData
+      newOptions.headers = {
+        Accept: 'application/json',
+        ...newOptions.headers,
+      };
+    }
+  }
+
+  const expirys = options.expirys && 60;
+  // options.expirys !== false, return the cache,
+  if (options.expirys !== false) {
     const cached = sessionStorage.getItem(hashcode);
     const whenCached = sessionStorage.getItem(`${hashcode}:timestamp`);
     if (cached !== null && whenCached !== null) {
@@ -188,19 +118,10 @@ console.log(url)
       sessionStorage.removeItem(`${hashcode}:timestamp`);
     }
   }
-
-  return fetch(url, option)
-    // .then(checkStatus)
-    // .then(response => cachedSave(response, hashcode))
+  return fetch(url, newOptions)
+    .then(checkStatus)
+    .then(response => cachedSave(response, hashcode))
     .then(response => {
-      // `data` 由服务器提供的响应
-      // `status` 来自服务器响应的 HTTP 状态码
-      // `statusText` 来自服务器响应的 HTTP 状态信息
-      // `headers` 服务器响应的头
-      // `config` 是为请求提供的配置信息
-      const { status, statusText, data } = response;
-        console.log(status,statusText,data)
-      }).then(response => {
       // DELETE and 204 do not return data by default
       // using .json will report an error.
       if (newOptions.method === 'DELETE' || response.status === 204) {
@@ -231,9 +152,4 @@ console.log(url)
         router.push('/exception/404');
       }
     });
-}
-
-// 这个用于某些业务自定义的请求 ，比如上传等等
-export {
-  axios,
 }
