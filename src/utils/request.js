@@ -12,6 +12,9 @@ import qs from 'qs'
 import { notification } from 'antd';
 import router from 'umi/router';
 import hash from 'hash.js';
+import Log from '@/utils/utils.log'
+
+const logger = new Log("Request")
 
 const codeMessage = {
   200: '服务器成功返回请求的数据。',
@@ -156,7 +159,6 @@ export function fetch (url,options) {
  * @return {object}           An object containing either "data" or "err"
  */
 export default function request(url, option, expirys=false) {
-console.log(url)
   const { method = 'GET', body, query } = option;
  
   // query 参数是放到url上的
@@ -198,17 +200,12 @@ console.log(url)
       // `statusText` 来自服务器响应的 HTTP 状态信息
       // `headers` 服务器响应的头
       // `config` 是为请求提供的配置信息
-      const { status, statusText, data } = response;
-        console.log(status,statusText,data)
-      }).then(response => {
-      // DELETE and 204 do not return data by default
-      // using .json will report an error.
-      if (newOptions.method === 'DELETE' || response.status === 204) {
-        return response.text();
-      }
-      return response.json();
+      const { status, statusText, data } = response; 
+
+      return data;
     })
     .catch(e => {
+      console.log(e,'error')
       const status = e.name;
       if (status === 401) {
         // @HACK

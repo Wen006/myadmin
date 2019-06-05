@@ -45,7 +45,7 @@ const ModuleReturn = {
   code: '200' | '500' | 'OTHER', // codeMessage
   localeCode: '若有则统一提示消息ReturnMessage',
   datas: 'Object', // 结果集
-  retrunMessage: '提示消息',
+  returnMessage: '提示消息',
 };
 
 // var Random = Mock.Random;
@@ -162,7 +162,7 @@ const writeOk = function(response, data = {}) {
   moduleReturn.code = 200;
   moduleReturn.success = true;
   moduleReturn.datas = data;
-  moduleReturn.retrunMessage = '操作成功';
+  moduleReturn.returnMessage = '操作成功';
   response.status(200).json(moduleReturn);
 };
 
@@ -177,7 +177,7 @@ const writeFail = function(response, data = {}) {
   moduleReturn.code = 'COMMON_500';
   moduleReturn.success = false;
   moduleReturn.datas = data;
-  moduleReturn.retrunMessage = '操作失败';
+  moduleReturn.returnMessage = '操作失败';
   response.json(moduleReturn);
 };
 

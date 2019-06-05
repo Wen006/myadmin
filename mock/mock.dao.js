@@ -56,7 +56,7 @@ const getTableData = function(tName) {
   const db = dbs[`${tName}`];
   if (!db) {
     console.error(`数据库表【${tName}】规则未配置！`);
-    return undefined;
+    return [];
   }
   return db;
 };

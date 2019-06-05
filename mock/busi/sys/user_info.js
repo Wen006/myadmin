@@ -1,9 +1,19 @@
 // /* eslint-disable import/named */
 import { getMockPre,Base64,writeOk, writeJson, ModuleReturn } from '../../mock.util'
 import { getTableData } from '../../mock.dao';
+import lodash from 'lodash'
+
+const getToken = userAccount => (tokens[userAccount] = lodash.uniqueId(userAccount))
 
 const sessionUser = {};
- function userLogin(req, resp) {
+
+const tokens = {}
+
+const urlReg = /[a-zA-Z0-9][-a-zA-Z0-9]{0,62}(\.[a-zA-Z0-9][-a-zA-Z0-9]{0,62}|(:[0-9]{1,4}))+\.?/;
+
+const getReferer = reff => urlReg.exec(reff)[0];
+
+function userLogin(req, resp) {
   const { body, query, headers, url } = req;
   const { userAccount: uA, password: pwd, checkCode } = { ...body, ...query };
   let currentUser = null;
@@ -17,10 +27,12 @@ const sessionUser = {};
         currentUser = it;
         return true;
       }
+      return false;
     })
   ) {
     if (currentUser.password == password) {
       currentUser.currentAuthority = 'admin';
+      currentUser.accessToken = getToken(currentUser.userAccount);
       sessionUser[`${referer}`] = currentUser;
       writeOk(resp, currentUser);
     } else {
@@ -35,7 +47,8 @@ const sessionUser = {};
   const { body, query, headers, url } = req;
   const { userAccount, password, checkCode } = { ...body, ...query };
   const { referer } = headers;
-  const currentUser = sessionUser[`${referer}`];
+  const currentUser = sessionUser[`${getReferer(referer)}`];
+  console.log("cuur",currentUser,sessionUser)
   if (currentUser) {
     writeOk(resp, currentUser);
   } else {
@@ -50,7 +63,7 @@ const sessionUser = {};
   const { body, query, headers, url } = req;
   const { userAccount, password, checkCode } = { ...body, ...query };
   const { referer } = headers;
-  sessionUser[`${referer}`] = undefined;
+  sessionUser[`${getReferer(referer)}`] = undefined;
   writeOk(resp, {});
 }
 
@@ -58,7 +71,7 @@ const sessionUser = {};
   const { body, query, headers, url } = req;
   const { userAccount, password, checkCode } = { ...body, ...query };
   const { referer } = headers;
-  let currentUser = sessionUser[`${referer}`];
+  let currentUser = sessionUser[`${getReferer(referer)}`];
   writeOk(resp, currentUser);
 }
 

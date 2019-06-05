@@ -1,4 +1,13 @@
-const log = {}
+// const log = {}
+const levels = {
+  INFO:"info",
+  DEBUG:'debug',
+}
+
+function log(target,level){
+  this.target = target || 'global';
+  this.level = level || levels.DEBUG;
+}
 
 /**
  * @description 返回这个样式的颜色值

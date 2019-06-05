@@ -1,4 +1,12 @@
 import { query as queryUsers, queryCurrent } from '@/services/example/user';
+import db,{ setItem, getItem,setCookie } from '@/utils/util.db'
+import { callMethod } from '@/services/ServiceHandler';
+
+const loginKey = {
+  LOGIN_STATUS:"sys.login.status",
+  USER_NAME:"sys.login.userName",
+  TOKEN:"accessToken",
+}
 
 export default {
   namespace: 'user',
@@ -9,7 +17,7 @@ export default {
   },
 
   effects: {
-    *fetch(_, { call, put }) {
+    *saveLoginUser({payload}, { call, put }) {
       const response = yield call(queryUsers);
       yield put({
         type: 'save',
@@ -17,22 +25,32 @@ export default {
       });
     },
     *fetchCurrent(_, { call, put }) {
-      const response = yield call(queryCurrent);
+      // const loginStatus = db.get(loginKey.loginKey).value();
+      // if(loginStatus == "ok"){
+      // }else{}
+
+      const {success,datas} = yield call(callMethod, {key:"SYS_USER_INFO_GETCURUSER",params:{}});
       yield put({
         type: 'saveCurrentUser',
-        payload: response,
+        payload: datas,
+        accessToken: datas.accessToken,
       });
     },
   },
 
   reducers: {
-    save(state, action) {
+    saveLoginUser(state,{payload,accessToken}){
+      const { userAccount } = payload
+      db.set(loginKey.LOGIN_STATUS,"ok").set(loginKey.USER_NAME,userAccount).write();
+      setCookie('accessToken',accessToken);
+
       return {
         ...state,
-        list: action.payload,
-      };
+        currentUser:payload,
+      }
     },
     saveCurrentUser(state, action) {
+      
       return {
         ...state,
         currentUser: action.payload || {},

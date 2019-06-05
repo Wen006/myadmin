@@ -5,6 +5,8 @@ import webpackPlugin from './plugin.config';
 import defaultSettings from '../src/defaultSettings';
 import slash from 'slash2';
 
+const version = require("../package.json")
+
 const plugins = [
   [
     'umi-plugin-react',
@@ -57,6 +59,7 @@ export default {
   plugins,
   define: {
     APP_TYPE: process.env.APP_TYPE || '',
+    APP_VERSION: process.env.APP_VERSION || version,
   },
   treeShaking: true,
   targets: {

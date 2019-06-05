@@ -1,9 +1,16 @@
 import { routerRedux } from 'dva/router';
 import { stringify } from 'qs';
 import { fakeAccountLogin, getFakeCaptcha } from '@/services/example/api';
+import { callMethod } from '@/services/ServiceHandler';
 import { setAuthority } from '@/utils/authority';
 import { getPageQuery } from '@/utils/utils';
 import { reloadAuthorized } from '@/utils/Authorized';
+// import db, { setCookie,getCookie } from '@/utils/util.db'
+
+const api = {
+  sysUserInfoLogin:"SYS_USER_INFO_LOGIN",
+}
+ 
 
 export default {
   namespace: 'login',
@@ -14,14 +21,23 @@ export default {
 
   effects: {
     *login({ payload }, { call, put }) {
-      const response = yield call(fakeAccountLogin, payload);
+      const {success,datas} = yield call(callMethod, {key:api.sysUserInfoLogin,params:payload});
       yield put({
         type: 'changeLoginStatus',
-        payload: response,
+        payload: {
+          status:success?"ok":false,
+          currentAuthority:datas.currentAuthority||'guest'
+        },
       });
       // Login successfully
-      if (response.status === 'ok') {
+      if (success) {
         reloadAuthorized();
+        const { accessToken,...userInfo} = datas;
+        yield put({
+          type:'user/saveLoginUser',
+          payload:userInfo,
+          accessToken,
+        })
         const urlParams = new URL(window.location.href);
         const params = getPageQuery();
         let { redirect } = params;
@@ -63,6 +79,8 @@ export default {
         })
       );
     },
+
+
   },
 
   reducers: {

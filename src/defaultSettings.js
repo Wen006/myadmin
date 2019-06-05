@@ -7,4 +7,8 @@ module.exports = {
   autoHideHeader: false, // auto hide header
   fixSiderbar: false, // sticky siderbar
   title: 'My Admin',
+  language:{
+    zh_CN:'zh-CN',
+    
+  },
 };

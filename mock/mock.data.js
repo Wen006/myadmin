@@ -7,7 +7,7 @@ const user = {
   id: 1,
   userCode: 'Kevin',
   userAccount: 'Kevin',
-  password: '3d4f2bf07dc1be38b20cd6e46949a1071f9d0e3d',
+  password: '111111',
   nickName: 'Kevin',
   userName: 'Kevin',
   userType: '0',
@@ -109,6 +109,6 @@ const user = {
   ],
 };
 
-export default {
+module.exports = {
   user,
 };

@@ -29,7 +29,6 @@ export function getMethodInfo(key) {
 }
 
 export async function callMethod({ key, params }) {
-  console.log(key)
   const currentHandler = getMethodInfo(key);
   const { method, mocktable, mockhandler, headers = {}, url } = currentHandler;
 
