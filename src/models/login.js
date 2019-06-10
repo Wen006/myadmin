@@ -17,6 +17,8 @@ export default {
 
   state: {
     status: undefined,
+    isCaptcha: false, // 是否要验证码
+    isEncode: true, // 是否加密
   },
 
   effects: {

@@ -7,8 +7,11 @@ module.exports = {
   autoHideHeader: false, // auto hide header
   fixSiderbar: false, // sticky siderbar
   title: 'My Admin',
+  logoText: 'MPC-财经云',
+  logoIcon: '/icons/logo/logo_f.png',
+  defaultLanguage:'zh-CN',
   language:{
     zh_CN:'zh-CN',
-    
+    en_US:'en-US',
   },
 };

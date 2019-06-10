@@ -1,0 +1,46 @@
+@import  "../../../public/fonts/iconfont/iconfont.css";
+/* 关于这个引用路径，有一个坑，ant.design 我用的dva，默认资源路径为 /public 所以这个引用的实际目录是  /public/fonts/iconfont/iconfont.css */
+
+/* 设置使用字体的优先级 anticon-user 高 */
+:global{
+  .ant-menu-item .iconmenu,
+  .ant-menu-submenu-title .iconmenu {
+    min-width: 14px;
+    margin-right: 10px;
+    transition: font-size 0.15s cubic-bezier(0.215, 0.61, 0.355, 1), margin 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+  }
+  .ant-menu-item .iconmenu + span,
+  .ant-menu-submenu-title .iconmenu + span {
+    transition: opacity 0.3s cubic-bezier(0.645, 0.045, 0.355, 1), width 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+    opacity: 1;
+  }
+  .ant-menu-inline-collapsed > .ant-menu-item .iconmenu,
+  .ant-menu-inline-collapsed > .ant-menu-item-group > .ant-menu-item-group-list > .ant-menu-item .iconmenu,
+  .ant-menu-inline-collapsed > .ant-menu-submenu > .ant-menu-submenu-title .iconmenu {
+    font-size: 16px;
+    line-height: 40px;
+    margin: 0;
+  }
+
+  .ant-menu-inline-collapsed > .ant-menu-item .iconmenu + span,
+  .ant-menu-inline-collapsed > .ant-menu-item-group > .ant-menu-item-group-list > .ant-menu-item .iconmenu + span,
+  .ant-menu-inline-collapsed > .ant-menu-submenu > .ant-menu-submenu-title .iconmenu + span {
+    max-width: 0;
+    display: inline-block;
+    opacity: 0;
+  }
+  .ant-menu-inline-collapsed-tooltip .iconmenu {
+    display: none;
+  }
+  .iconmenu{
+    &:before {
+      /* 优先调用 anticon-user 字体，就是上面图例创建的 anticon-custom，名字对上就行，我自己的程序叫 anticon-user 了 */
+      font-family:"iconmenu" !important;   
+      /* 默认样式是这样
+          font-family: "anticon" !important;   
+      */
+    }
+  }
+}
+
+

@@ -5,15 +5,15 @@
  */
 export default [
     // dashboard
-    { path: '/', redirect: '/dashboard/analysis' },
+    { path: '/', redirect: '/dashboard/home' },
     {
       path: '/dashboard',
       name: 'dashboard',
       icon: 'dashboard',
       routes: [
         {
-          path: '/dashboard/analysis',
-          name: 'analysis',
+          path: '/dashboard/home',
+          name: 'home',
           component: './example/Dashboard/Analysis',
         },
         {

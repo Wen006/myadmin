@@ -64,14 +64,20 @@ class BasicLayout extends React.PureComponent {
     } = this.props;
     dispatch({
       type: 'user/fetchCurrent',
+    }).then(success=>{
+      if(success){
+        dispatch({
+          type: 'menu/getMenuData',
+          payload: { routes, authority },
+        });
+      }else{
+        window.location.push("/user/login")
+      }
     });
     dispatch({
       type: 'setting/getSetting',
     });
-    dispatch({
-      type: 'menu/getMenuData',
-      payload: { routes, authority },
-    });
+
   }
 
   componentDidUpdate(preProps) {

@@ -4,6 +4,7 @@ import { Menu, Icon } from 'antd';
 import Link from 'umi/link';
 import { urlToList } from '../_utils/pathTools';
 import { getMenuMatches } from './SiderMenuUtils';
+import Iconfont from '@/components/Iconfont/index'
 import { isUrl } from '@/utils/utils';
 import styles from './index.less';
 
@@ -18,7 +19,8 @@ const getIcon = icon => {
     return <img src={icon} alt="icon" className={styles.icon} />;
   }
   if (typeof icon === 'string') {
-    return <Icon type={icon} />;
+    // return <Icon type={icon} />;
+    return <Iconfont type={icon} />
   }
   return icon;
 };

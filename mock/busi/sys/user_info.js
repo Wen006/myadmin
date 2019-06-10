@@ -1,17 +1,22 @@
+/* eslint-disable prefer-const */
+/* eslint-disable no-unused-vars */
+/* eslint-disable no-console */
+/* eslint-disable no-return-assign */
+/* eslint-disable import/named */
 // /* eslint-disable import/named */
+import lodash from 'lodash'
 import { getMockPre,Base64,writeOk, writeJson, ModuleReturn } from '../../mock.util'
 import { getTableData } from '../../mock.dao';
-import lodash from 'lodash'
-
-const getToken = userAccount => (tokens[userAccount] = lodash.uniqueId(userAccount))
-
-const sessionUser = {};
 
 const tokens = {}
 
+const sessionUser = {};
+
+const getToken = userAccount => (tokens[userAccount] = lodash.uniqueId(userAccount))
+
 const urlReg = /[a-zA-Z0-9][-a-zA-Z0-9]{0,62}(\.[a-zA-Z0-9][-a-zA-Z0-9]{0,62}|(:[0-9]{1,4}))+\.?/;
 
-const getReferer = reff => urlReg.exec(reff)[0];
+const getReferer = ref => (urlReg.exec(ref)[0]||"SESSION_USER");
 
 function userLogin(req, resp) {
   const { body, query, headers, url } = req;
@@ -33,7 +38,7 @@ function userLogin(req, resp) {
     if (currentUser.password == password) {
       currentUser.currentAuthority = 'admin';
       currentUser.accessToken = getToken(currentUser.userAccount);
-      sessionUser[`${referer}`] = currentUser;
+      sessionUser[`${getReferer(referer)}`] = currentUser;
       writeOk(resp, currentUser);
     } else {
       writeJson(resp, Object.assign(ModuleReturn, { returnMessage: '密码错误！', success: false }));
@@ -48,7 +53,7 @@ function userLogin(req, resp) {
   const { userAccount, password, checkCode } = { ...body, ...query };
   const { referer } = headers;
   const currentUser = sessionUser[`${getReferer(referer)}`];
-  console.log("cuur",currentUser,sessionUser)
+  
   if (currentUser) {
     writeOk(resp, currentUser);
   } else {

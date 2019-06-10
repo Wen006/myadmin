@@ -2,6 +2,7 @@ import memoizeOne from 'memoize-one';
 import isEqual from 'lodash/isEqual';
 import { formatMessage } from 'umi/locale';
 import Authorized from '@/utils/Authorized';
+import Global from '@/stores/Global'
 
 const { check } = Authorized;
 
@@ -97,6 +98,16 @@ export default {
 
   effects: {
     *getMenuData({ payload }, { put }) {
+      const { routes, authority } = payload;
+      const {datas:menuData} =yield Global.callMethod({key:'SYS_MENU_INFO_GET_MENU',params:{}})
+      // const menuData2 = filterMenuData(memoizeOneFormatter(routes, authority));
+      const breadcrumbNameMap = memoizeOneGetBreadcrumbNameMap(menuData);
+      yield put({
+        type: 'save',
+        payload: { menuData, breadcrumbNameMap },
+      });
+    },
+    *getMenuDataw({ payload }, { put }) {
       const { routes, authority } = payload;
       const menuData = filterMenuData(memoizeOneFormatter(routes, authority));
       const breadcrumbNameMap = memoizeOneGetBreadcrumbNameMap(menuData);

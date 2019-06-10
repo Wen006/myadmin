@@ -17,7 +17,7 @@ export default class TopNavHeader extends PureComponent {
   }
 
   render() {
-    const { theme, contentWidth, menuData, logo } = this.props;
+    const { logoText,theme, contentWidth, menuData, logoIcon } = this.props;
     const { maxWidth } = this.state;
     const flatMenuKeys = getFlatMenuKeys(menuData);
     return (
@@ -31,8 +31,8 @@ export default class TopNavHeader extends PureComponent {
           <div className={styles.left}>
             <div className={styles.logo} key="logo" id="logo">
               <Link to="/">
-                <img src={logo} alt="logo" />
-                <h1>Ant Design Pro</h1>
+                <img src={logoIcon} alt="logo" />
+                <h1>{logoText}</h1>
               </Link>
             </div>
             <div

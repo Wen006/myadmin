@@ -35,6 +35,7 @@ export default {
         payload: datas,
         accessToken: datas.accessToken,
       });
+      return success;
     },
   },
 
