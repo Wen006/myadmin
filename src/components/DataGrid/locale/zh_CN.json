@@ -1,0 +1,5 @@
+{
+    "table.dtp.showTotal":"共{total}条",
+    "table.dtp.selected":"已选择 {total} 条",
+    "table.dtp.clear":"清空"
+}

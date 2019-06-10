@@ -57,6 +57,7 @@ if (process.env.APP_TYPE === 'site') {
 export default {
   // add for transfer to umi
   plugins,
+  sass:{},
   define: {
     APP_TYPE: process.env.APP_TYPE || '',
     APP_VERSION: process.env.APP_VERSION || version,

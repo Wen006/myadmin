@@ -116,6 +116,9 @@ class CoverCardList extends PureComponent {
                     <TagSelect.Option value="cat10">类目十</TagSelect.Option>
                     <TagSelect.Option value="cat11">类目十一</TagSelect.Option>
                     <TagSelect.Option value="cat12">类目十二</TagSelect.Option>
+                    <TagSelect.Option value="cat12">类目十二</TagSelect.Option>
+                    <TagSelect.Option value="cat12">类目十二</TagSelect.Option>
+                    <TagSelect.Option value="cat12">类目十二</TagSelect.Option>
                   </TagSelect>
                 )}
               </FormItem>

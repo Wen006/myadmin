@@ -2,7 +2,7 @@ import memoizeOne from 'memoize-one';
 import isEqual from 'lodash/isEqual';
 import { formatMessage } from 'umi/locale';
 import Authorized from '@/utils/Authorized';
-import Global from '@/stores/Global'
+import Global from '@/stores/common/Global'
 
 const { check } = Authorized;
 

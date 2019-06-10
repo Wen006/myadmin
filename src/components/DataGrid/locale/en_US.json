@@ -1,0 +1,5 @@
+{
+    "table.dtp.showTotal":"Total {total} Item",
+    "table.dtp.selected":"Select {total} item",
+    "table.dtp.clear":"clear"
+}

@@ -9,6 +9,8 @@ import result from './zh-CN/result';
 import settingDrawer from './zh-CN/settingDrawer';
 import settings from './zh-CN/settings';
 import pwa from './zh-CN/pwa';
+import sys from './zh-CN/sys'
+import app from './zh-CN/app'
 
 export default {
   'navBar.lang': '语言',
@@ -19,6 +21,8 @@ export default {
   'app.forms.basic.title': '基础表单',
   'app.forms.basic.description':
     '表单页用于向用户收集或验证信息，基础表单常见于数据项较少的表单场景。',
+    ...sys,
+    ...app,
   ...analysis,
   ...exception,
   ...form,

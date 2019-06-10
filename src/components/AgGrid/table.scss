@@ -1,0 +1,43 @@
+:global {
+    $ag-icons-path: "~ag-grid-community/src/styles/ag-theme-balham/icons/";
+    $font-family: "Chinese Quote", -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Helvetica Neue", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    $border-color: #e8e8e8;
+    $header-background-color: rgb(250, 250, 250);
+    $secondary-font-size: 14px;
+    $font-size: 14px;
+    $primary-color: #5B8CFF;
+    $odd-row-background-color: #ffffff;
+    $hover-color: rgb(211, 235, 231);
+    $foreground-color: rgba(0, 0, 0, 0.65);
+    $cell-horizontal-border: 1px solid #e8e8e8;
+    $accent-color: #FFFFF1;
+    $selected-color: none;
+    $row-border-width: 1px;
+    $secondary-font-weight: normal;
+    $header-foreground-color: rgba(0, 0, 0, 0.85);
+    $ag-range-selected-color-1: rgb(250, 235, 215);
+    $ag-range-selected-color-2: darken($ag-range-selected-color-1, 10%);
+    $ag-range-selected-color-3: darken($ag-range-selected-color-1, 20%);
+    $ag-range-selected-color-4: darken($ag-range-selected-color-1, 30%);
+
+    @import "~ag-grid-community/src/styles/ag-grid.scss";
+    @import "~ag-grid-community/src/styles/ag-theme-balham/sass/ag-theme-balham.scss";
+    
+    .ag-theme-balham {
+        .ag-row {
+            border-color: #e8e8e8
+        }
+    }
+
+    .ag-theme-balham .ag-root {
+        border-right: 0;
+        border-bottom: 0
+    }
+    .ag-theme-balham .ag-icon-checkbox-unchecked{
+        opacity:0.4;
+    }
+    .ag-theme-balham .ag-icon-checkbox-checked{
+        opacity:0.5;
+
+    }
+}

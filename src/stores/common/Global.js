@@ -2,7 +2,7 @@
 import { callMethod } from '@/services/ServiceHandler';
 import db from '@/utils/util.db'
 // import { GSpinStore } from 'plugins/Loader/GSpin';
-import CacheStore from './common/sys/CacheStore';
+import CacheStore from './sys/CacheStore';
 
 class Global {
   languageInfo = undefined;

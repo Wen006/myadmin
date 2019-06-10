@@ -13,6 +13,7 @@ import { join } from 'path';
 import Mock from 'mockjs';
 
 let api = {}
+
 try{
   const apiPath = join(__dirname,'../src/services/config/index.js');
   const apiConf = require(apiPath);
@@ -329,6 +330,8 @@ const Base64 = {
   }, // End Function _utf8_decode
 };
 
+
+
 module.exports = {
   getMockPre,
   initMockData,
@@ -338,4 +341,5 @@ module.exports = {
   writeJson,
   ModuleReturn,
   Base64,
+  api,
 };

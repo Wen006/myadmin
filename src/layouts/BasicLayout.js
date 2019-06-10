@@ -71,7 +71,10 @@ class BasicLayout extends React.PureComponent {
           payload: { routes, authority },
         });
       }else{
-        window.location.push("/user/login")
+        // window.location.push("/user/login")
+        dispatch({
+          type:"login/logout",
+        })
       }
     });
     dispatch({

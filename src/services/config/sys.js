@@ -101,8 +101,6 @@ export default {
   SYS_MENU_INFO_GET_MENU: {
     url: '/menuInfo/queryMenuDataN',
     method: 'GET',
-    mocktable: 'MENU_INFO',
-    mockhandler: 'list2',
   },
   SYS_MENU_GETONE: {
     url: '/system/menu/getOne',

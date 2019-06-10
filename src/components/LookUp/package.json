@@ -1,0 +1,6 @@
+{
+  "name": "LookUp",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./LookUp.js"
+}
