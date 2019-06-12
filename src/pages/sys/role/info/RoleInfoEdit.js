@@ -316,7 +316,7 @@ class MenuInfoEdit extends React.Component {
                   <FormItem label={intl && intl.get('MenuName')}>
                     {getFieldDecorator('menuName', {
                       initialValue: item.menuName,
-                      rules: [{ required: true, message: intl && intl.get('Require') }],
+                      rules: [{ required: true, message: intl && intl.get('app.form.input.require') }],
                     })(<Input />)}
                   </FormItem>
                 </Col>
@@ -324,7 +324,7 @@ class MenuInfoEdit extends React.Component {
                   <FormItem label={intl && intl.get('MenuCode')}>
                     {getFieldDecorator('menuCode', {
                       initialValue: item.menuCode,
-                      rules: [{ required: true, message: intl && intl.get('Require') }],
+                      rules: [{ required: true, message: intl && intl.get('app.form.input.require') }],
                     })(<Input />)}
                   </FormItem>
                 </Col>
@@ -332,7 +332,7 @@ class MenuInfoEdit extends React.Component {
                   <FormItem label={intl && intl.get('Icon')}>
                     {getFieldDecorator('icon', {
                       initialValue: item.icon,
-                      rules: [{ required: true, message: intl && intl.get('Require') }],
+                      rules: [{ required: true, message: intl && intl.get('app.form.input.require') }],
                     })(<Input />)}
                   </FormItem>
                 </Col>
@@ -342,7 +342,7 @@ class MenuInfoEdit extends React.Component {
                   <FormItem label={intl && intl.get('MpName')}>
                     {getFieldDecorator('mpName', {
                       initialValue: item.mpName,
-                      rules: [{ required: true, message: intl && intl.get('Require') }],
+                      rules: [{ required: true, message: intl && intl.get('app.form.input.require') }],
                     })(<Input disabled />)}
                   </FormItem>
                   {getFieldDecorator('mpid', {})(<Input className='hidden' />)}
@@ -355,7 +355,7 @@ class MenuInfoEdit extends React.Component {
                   <FormItem label={intl && intl.get('Url')}>
                     {getFieldDecorator('url', {
                       initialValue: item.url,
-                      rules: [{ required: true, message: intl && intl.get('Require') }],
+                      rules: [{ required: true, message: intl && intl.get('app.form.input.require') }],
                     })(<Input />)}
                   </FormItem>
                 </Col>
@@ -363,7 +363,7 @@ class MenuInfoEdit extends React.Component {
                   <FormItem label={intl && intl.get('TaxisNo')}>
                     {getFieldDecorator('taxisNo', {
                       initialValue: item.taxisNo,
-                      rules: [{ required: true, message: intl && intl.get('Require') }],
+                      rules: [{ required: true, message: intl && intl.get('app.form.input.require') }],
                     })(<Input />)}
                   </FormItem>
                 </Col>
@@ -372,7 +372,7 @@ class MenuInfoEdit extends React.Component {
                 <FormItem label={intl && intl.get('Remark')}>
                   {getFieldDecorator('remark', {
                     initialValue: item.remark,
-                    rules: [{ required: true, message: intl && intl.get('Require') }],
+                    rules: [{ required: true, message: intl && intl.get('app.form.input.require') }],
                   })(<Input />)}
                 </FormItem>
               </Row>

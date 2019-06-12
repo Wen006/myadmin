@@ -5,5 +5,6 @@ import RadioH from './Item/RadioH';
 import DatePickerH from './Item/DatePickerH';
 import RangePickerH from './Item/RangePickerH';
 import InputNumberH from './Item/InputNumberH';
+import InputLookUp from './Item/InputLookUp'
 
-export { InputH, SelectH, CheckboxH, RadioH, DatePickerH, RangePickerH, InputNumberH };
+export { InputH, SelectH, CheckboxH, RadioH, DatePickerH, RangePickerH, InputNumberH, InputLookUp };

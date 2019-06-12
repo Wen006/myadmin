@@ -427,7 +427,7 @@ const btnNames = [
     btnType: 'default',
   }, {
     btnName: 'cancel',
-    btnLocaleName: 'Cancel',
+    btnLocaleName: 'app.btn.cancel',
     iconType: 'close',
     btnType: 'default',
   }, {
@@ -454,7 +454,7 @@ const btnNames = [
     iconType: 'save',
   }, {
     btnName: 'sure',
-    btnLocaleName: 'MakeSure',
+    btnLocaleName: 'app.btn.sure',
     iconType: 'check',
   }, {
     btnName: 'update',

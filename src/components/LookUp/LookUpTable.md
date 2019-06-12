@@ -1,0 +1,1 @@
+ <LookUpTable rowSelection='multiple' lookUpKey="USER_INFO"/>

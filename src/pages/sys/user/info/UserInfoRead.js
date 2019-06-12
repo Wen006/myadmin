@@ -230,7 +230,7 @@
 //                 {/* <Col span={8} >
 //                   <FormItem label={intl && intl.get('ReservedField1')} >
 //                     {getFieldDecorator('reservedField1', {
-//                       rules: [{ required: true, message: intl && intl.get('Require') }],
+//                       rules: [{ required: true, message: intl && intl.get('app.form.input.require') }],
 //                       initialValue: currentObj.reservedField1,
 //                     })(
 //                       <Select style={{ width: '100%' }}>

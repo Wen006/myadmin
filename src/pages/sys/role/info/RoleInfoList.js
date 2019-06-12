@@ -633,7 +633,7 @@ class RoleList extends React.Component {
                       <FormItem label={intl && intl.get('RoleName')} key="item_roleName">
                         {getFieldDecorator('roleName', {
                           initialValue: record.roleName,
-                          rules: [{ required: true, message: intl && intl.get('Require') }],
+                          rules: [{ required: true, message: intl && intl.get('app.form.input.require') }],
                         })(<Input />)}
                       </FormItem>
                     </Col>
@@ -643,7 +643,7 @@ class RoleList extends React.Component {
                       <FormItem label={intl && intl.get('RoleCode')} key="item_roleCode">
                         {getFieldDecorator('roleCode', {
                           initialValue: record.roleCode,
-                          rules: [{ required: true, message: intl && intl.get('Require') }],
+                          rules: [{ required: true, message: intl && intl.get('app.form.input.require') }],
                         })(<Input />)}
                       </FormItem>
                     </Col>

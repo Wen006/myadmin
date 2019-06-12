@@ -4,6 +4,7 @@ export default {
     'app.btn.reset':'重置',
     'app.btn.search':'查询',
     'app.btn.cancel':'取消',
+    'app.btn.sure':'确认',
     'app.btn.confirm':'确认',
     'app.btn.confirm.remove.title':'确认删除？',
     'app.btn.remove':'删除',

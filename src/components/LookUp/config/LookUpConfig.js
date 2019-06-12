@@ -5,37 +5,29 @@ const lookUpConfigs = {
   USER_INFO: {
     desc: '用户选择---菜单管理，角色管理', // 解释干啥的，哪模块用到了，用逗号隔开
     auth: 'wennn', // 作者信息
-    title: 'lookup.userinfo.headerName', // 弹出框的标题 国际化key
+    title: 'lookup.user.info.title', // 弹出框的标题 国际化key
     api: 'SYS_USER_LIST', // service的api
     columns: [
       {
-        headerName: 'userinfo.username', // 国际化 key
+        headerName: 'user.info.userName', // 国际化 key
         field: 'userName',
-        width: '40%',
       },
       {
-        headerName: 'USER_CODE',
+        headerName: 'user.info.userCode',
         field: 'userCode',
-        width: '50%',
       },
     ],
     condition: {
       inputItems: [
         {
-          label: 'userinfo.username', // 国际化 key
+          label: 'user.info.userName', // 国际化 key
           key: 'userName',
           type: 'string',
         },
         {
-          label: '年龄',
+          label: 'user.info.userCode',
           key: 'userCode',
           type: 'number',
-        },
-        {
-          label: '生日',
-          key: 'bir',
-          type: 'date',
-          align: 'center',
         },
       ],
     },
@@ -46,12 +38,12 @@ const lookUpConfigs = {
     desc: '菜单选择',
     columns: [
       {
-        headerName: 'MENU_NAME',
+        headerName: 'menu.info.menuName',
         field: 'menuName',
         width: '40%',
       },
       {
-        headerName: 'MENU_CODE',
+        headerName: 'menu.info.menuCode',
         field: 'menuCode',
         width: '50%',
       },
@@ -59,11 +51,11 @@ const lookUpConfigs = {
     condition: {
       inputItems: [
         {
-          label: '菜单名称',
-          key: 'userName',
+          label: 'menu.info.menuName',
+          key: 'menuName',
         },
         {
-          label: '菜单代码',
+          label: 'menu.info.menuCode',
           key: 'menuCode',
         },
       ],
@@ -74,9 +66,7 @@ const lookUpConfigs = {
 export default lookUpConfigs;
 
 export function getConfig(key){
-  console.log("getConfig ------")
   if(!lookUpConfigs[key])throw Error(`lookup.config.LookLookUpKey >>>> ${this.lookUpKey} 配置不存在! `);
-  console.log(lookUpConfigs[key])
   return lookUpConfigs[key];
 }
 

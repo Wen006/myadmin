@@ -16,10 +16,6 @@ import UserInfo from './common/UserInfo';
 class UserInfoList extends React.Component {
   columnDefs = [
     {
-      width: 80,
-      checkboxSelection: true,
-    },
-    {
       headerName: Intler.getIntl('user.info.userAccount'),
       field: 'userAccount',
       align: 'left',
@@ -145,19 +141,20 @@ class UserInfoList extends React.Component {
         queryKey: 'SYS_USER_LIST_BY_DTO',
       },
       onGridReady: (params, agStore) => {
-        this.agStore = agStore;
         this.gridApi = params.api;
         this.gridColumnApi = params.columnApi;
         this.gridProApi = params.gridProApi;
+        this.agStore = agStore;
         this.agStore.submit({}); // 调用store查询数据 页面一加载就查询
       },
-      onSelectionChanged: params => {
-        const selectedRows = this.gridApi.getSelectedRows();
-        this.setState({ selectCount: selectedRows.length }, () => {
-          this.gridProApi.reloadToolBar(); // 这里需要手动刷新toolbar上对按钮
-        });
-      },
       gridOptions: {
+        rowSelection:'single',    // 是否多选
+        onRowSelected:params=>{
+          const {selectedRowKeys} = this.agStore.getSelect();
+          this.setState({selectCount:selectedRowKeys.length},()=>{
+            this.agStore.gridProApi.reloadToolBar();
+          })
+        },
         frameworkComponents: {
           adRender: AdRender,
           infoCellRenderer: (
@@ -226,7 +223,7 @@ class UserInfoList extends React.Component {
       <PageHeaderWrapper>
         <UserFilter key="filter" handleSubmit={this.handleSubmit} />
         <div className={styles.agListBox}>
-          <AgGridPro key="dataGrid" columnDefs={this.columnDefs} {...agPropPros} />
+          {/* <AgGridPro key="dataGrid" columnDefs={this.columnDefs} {...agPropPros} /> */}
         </div>
         {/* <PasswdModal
           onReady={api => {

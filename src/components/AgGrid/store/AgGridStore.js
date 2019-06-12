@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 /* eslint-disable global-require */
 
 import * as mobx from 'mobx';
@@ -32,6 +33,12 @@ const localeText = {
   },
 };
 
+
+const SelectType = {
+  SINGLE:'single',
+  MULTIPLE:'multiple',    
+}
+
 export function getLocalText(key) {
   return localeText[lang][key];
 }
@@ -42,13 +49,11 @@ class AgGridStore {
     showSizeChanger: true,
     showQuickJumper: true,
     size: 'small',
-    showTotal: total => {
-      return (
+    showTotal: total => (
         this.getLocalText('table.dtp.showTotal.pre') +
         total +
         this.getLocalText('table.dtp.showTotal.next')
-      );
-    },
+      ),
     current: 1,
     pageNo: 1,
     pageSize: 10,
@@ -84,22 +89,29 @@ class AgGridStore {
   // 如果有checkbox  则保存选择的行记录
   selectedRows = [];
 
+  rowKey = 'id';
+
+  rowSelection = SelectType.SINGLE
+
   // 通过构造函数 来初始化 信息
-  constructor({ queryKey, dataKey, queryMethod, pagination, rowData }) {
+  constructor({ queryKey, dataKey, queryMethod, pagination,rowKey = 'id', rowData,rowSelection = SelectType.SINGLE }) {
     this.dataKey = dataKey || 'data';
     this.queryMethod = queryMethod;
     this.queryKey = queryKey;
     lodash.assign(this.defaultPagination, pagination);
     this.pagination = lodash.assign({}, this.defaultPagination);
     this.rowData = rowData;
+    this.rowSelection = rowSelection
+    this.rowKey = rowKey
   }
 
   // 查询（从一开始默认页面开始查询）
-  submit = (params = {}) => {
+  submit = lodash.debounce((params = {}) => {
     // 这里其实就是把分页至为 初始分页信息 然后查询
     this.pagination.pageNo = 1;
+    this.clearSelect();
     this.fetch(lodash.assign({ pageNo: 1 }, params));
-  };
+  },400);
 
   // 从当前也查询
   fetch = async inParams => {
@@ -134,28 +146,47 @@ class AgGridStore {
     return { total: result.total, data };
   };
 
-  // 设置选择的记录
-  setSelect = selectedRows => {
-    this.selectedRowKeys = selectedRows.map(it => it.id);
-    this.selectedRows = selectedRows;
-  };
+  getSelectOneRecord = () => this.selectedRows[0];
+
+  /* -------用户选择记录的函数 Start------------------------------------------------*/
+
+  allSelect = { }
+
+  onSelectionChanged = (params) =>{
+    const {node,data} = params;
+    const { selected } = node
+    const dataKey = data[this.rowKey];
+    // const selectedRows = params.api.getSelectedRows();
+    if(selected){
+      this.allSelect[dataKey] = data;
+    }else if(this.allSelect[dataKey]) {
+      delete this.allSelect[dataKey];
+    }
+    this.selectedRowKeys = lodash.keys(this.allSelect);
+    this.selectedRows = lodash.values(this.allSelect);
+    return this.getSelect();
+  }
+
+  getSelect = () => ({
+      selectedRowKeys: this.selectedRowKeys,
+      selectedRows: this.selectedRows,
+  });
 
   // 清除选择的记录
   clearSelect = () => {
     this.selectedRowKeys = [];
     this.selectedRows = [];
+    this.allSelect = {}
   };
 
-  getSelectOneRecord = () => {
-    return this.selectedRows[0];
+  // 设置选择的记录
+  setSelect = selectedRows => {
+    this.selectedRowKeys = selectedRows.map(it => it[this.rowKey]);
+    this.selectedRows = selectedRows;
   };
+ 
 
-  getSelect = () => {
-    return {
-      selectedRowKeys: this.selectedRowKeys,
-      selectedRows: this.selectedRows,
-    };
-  };
+  /* -------用户选择记录的函数 End------------------------------------------------*/
 
   getLocalText = getLocalText;
 }

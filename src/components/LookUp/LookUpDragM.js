@@ -1,16 +1,21 @@
+/* eslint-disable react/sort-comp */
+/* eslint-disable prefer-destructuring */
 
 import React from "react";
 import DragM from "dragm";
 
-class BuildTitle extends React.Component {
+export default class BuildTitle extends React.Component {
+  
     updateTransform = transformStr => {
       this.modalDom.style.transform = transformStr;
     };
+
     componentDidMount() {
       this.modalDom = document.getElementsByClassName(
-        "ant-modal-wrap" //modal的class是ant-modal
+        "ant-modal-wrap" // modal的class是ant-modal
       )[0];
     }
+
     render() {
       const { title } = this.props;
       return (
@@ -19,5 +24,4 @@ class BuildTitle extends React.Component {
         </DragM>
       );
     }
-  }
-  export default BuildTitle
+}

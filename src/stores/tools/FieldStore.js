@@ -76,7 +76,7 @@ export default class DtFieldsStore {
 
             label: labelKey,
             rules:
-              isRequiedFlag == 1 ? [{ required: true, message: Intler.getIntl('Require') }] : [],
+              isRequiedFlag == 1 ? [{ required: true, message: Intler.getIntl('app.form.input.require') }] : [],
             readOnly: isReadFlag == 1,
             hidden: isDisplayFlag == 0,
           };

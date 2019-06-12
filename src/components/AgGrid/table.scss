@@ -38,6 +38,10 @@
     }
     .ag-theme-balham .ag-icon-checkbox-checked{
         opacity:0.5;
-
+    }
+    .ag-theme-balham {
+        .ag-row-selected{
+            background:gray;
+        }
     }
 }

@@ -8,6 +8,8 @@ import { observable } from 'mobx';
 import { observer } from 'mobx-react';
 import FormFilter from '@/components/FormFilter'
 import LookUpTable from '@/components/LookUp/LookUpTable'
+import LookUp from '@/components/LookUp/LookUp'
+import InputLookUp from '@/components/FormMark/Item/InputLookUp'
 
 
 
@@ -141,13 +143,53 @@ class UserFilter extends React.Component {
 
     return (
       <Form layout="inline">
-        <LookUpTable />
+        {/* <LookUp lookUpKey="USER_INFO" 
+                rowSelection="multiple" 
+                onOk={(select)=>{
+                    console.log("onOk",select)
+                }}>
+          hello
+        </LookUp>
+        <LookUpTable rowSelection='multiple' lookUpKey="USER_INFO"/> */}
+        <InputLookUp 
+          id="userName" 
+          form={form} 
+          label={Intler.getIntl("user.info.mag")}  
+          title="用户管理多多岛" lookUpKey="USER_INFO" 
+          rules={[]} 
+          // openBefore={
+          //   // false
+          //   // ()=>false
+          //   ()=>new Promise((resolve,reject)=>{
+          //     resolve();// 弹框打开
+          //     // reject(); // 弹框不打开
+          //   })
+          // }
+          // closeBefore={
+          //   // true
+          //   // ()=>true
+          //   // ()=>new Promise((resolve,reject)=>{
+          //   //   // resolve();// 弹框关闭
+          //   //   // reject(); // 弹框不关闭
+          //   // })
+          // }
+          onSearchBefore={
+            // {id:100}
+            ()=>{return {id:1}}
+            // ()=>new Promise((resolve,reject)=>{
+            //   resolve({id:300})
+            // })
+          }
+          onOk={_=>console.log(_,"ok")} 
+          onClear={_=>console.log("clear")} 
+          onCancel={_=>console.log("cancle")} 
+        />
         {/* {
           moreCondition? <ComplexCurr {...queryProps} key="a" />:<SimpleCurr key="b" {...queryProps}  />
         } */}
-        <div style={{ textAlign: 'center', paddingBottom: '10px' }} className={styles.searchMore}>
+        {/* <div style={{ textAlign: 'center', paddingBottom: '10px' }} className={styles.searchMore}>
           <a onClick={this.handleShowMoreCondition}>{moreCondition?"展开":"收起"}<Icon type={moreCondition ? 'up' : 'down'} /></a>
-        </div>
+        </div> */}
       </Form>
     );
   }

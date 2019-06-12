@@ -4,8 +4,9 @@ import { Tooltip, Input } from 'antd';
 import FItem from '../FItem';
 import RadioH from './RadioH';
 import styles from '../index.less';
+import Intler from '@/components/Intler';
 
-const defaultRules = [{ required: true, message: "app.form.input.require" }];
+const defaultRules = [{ required: true, message: Intler.getIntl("app.form.input.require") }];
 
 const showTip = label => {
   if (!label) return null;
@@ -24,6 +25,7 @@ const TypeEnums = {
   MonthPicker: 'MonthPicker',
   RangePicker: 'RangePicker',
   WeekPicker: 'WeekPicker',
+  InputLookUp: 'InputLookUp',
 };
 
 export default (Ele, type) => {
@@ -45,32 +47,31 @@ export default (Ele, type) => {
       const {
         rules = defaultRules, // 校验规则
         initialValue, // Form输入框初始值，可以通过form.setFieldsValue 来代替
-        disabled, // 只读查看页面
+        defaultValue,
         hidden, // 隐藏但是不消失
-        view,
+        view, // 只读查看页面
         fieldOptions = {}, // getFieldDecorator.options
         options = {}, // 输入标签属性
         ...formItemProps // FItem 属性 labelOptions
       } = this.props;
 
       // RadioH 比较特殊
-      if (this.type == TypeEnums.RadioGroup || this.type == TypeEnums.RadioGroup)
-        return <RadioH {...this.props} />;
-
+      if (this.type == TypeEnums.RadioGroup)return <RadioH {...this.props} />;
+      
       const { getFieldDecorator } = this.form;
 
-      const { disabled: Idisablde = false, ...otherOptions } = options;
-      const reStyle = Idisablde ? 'readBox' : undefined;
-
+      // 隐藏字段
       if (hidden) {
-        return getFieldDecorator(this.id, { initialValue, ...fieldOptions })(
-          <Input hidden {...otherOptions} />
+        return getFieldDecorator(this.id, { initialValue:initialValue||defaultValue, ...fieldOptions })(
+          <Input hidden {...options} />
         );
       }
 
+      let reStyle;
       if (view) {
         // 当查看到时候
-        otherOptions.initialValue = initialValue;
+        options.initialValue = initialValue || defaultValue;
+        reStyle = 'readBox'
       }
 
       return (
@@ -79,7 +80,7 @@ export default (Ele, type) => {
             rules: view ? [] : rules,
             initialValue,
             ...fieldOptions,
-          })(<Ele {...otherOptions} view={view} readOnly={disabled} className={styles[reStyle]} />)}
+          })(<Ele {...options} view={view} className={styles[reStyle]} />)}
         </FItem>
       );
     }

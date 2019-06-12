@@ -7,7 +7,7 @@ import { Tooltip, Radio, Input } from 'antd';
 import ViewRender from './ViewRender';
 import FItem from '../FItem';
 
-const defaultRules = [{ required: true, message: formatMessage({id:'Require'})}];
+const defaultRules = [{ required: true, message: formatMessage({id:'app.form.input.require'})}];
 
 const showTip = label => {
   if (!label) return null;
