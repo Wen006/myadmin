@@ -44,7 +44,7 @@ const defaultAxiosCfg = {
 axios.interceptors.request.use(conf => {
   lodash.assign(conf.headers,{
     'Accept-Language':'zh_CN',
-    'Access-Token':'1111111',
+    // 'Access-Token':'1111111',
   })
   // 在发送请求之前做些什么
   return conf;

@@ -5,7 +5,9 @@ import { Icon } from 'antd';
 import GlobalFooter from '@/components/GlobalFooter';
 import SelectLang from '@/components/SelectLang';
 import styles from './UserLayout.less';
-import logo from '../assets/logo.svg';
+import { BgCL } from '@/components/Animation'
+import { title,footerTitle,logoIcon } from '../defaultSettings';
+
 
 const links = [
   {
@@ -27,7 +29,7 @@ const links = [
 
 const copyright = (
   <Fragment>
-    Copyright <Icon type="copyright" /> 2018 蚂蚁金服体验技术部出品
+    Copyright <Icon type="copyright" /> {footerTitle}
   </Fragment>
 );
 
@@ -48,22 +50,24 @@ class UserLayout extends React.PureComponent {
     return (
       // @TODO <DocumentTitle title={this.getPageTitle()}>
       <div className={styles.container}>
-        <div className={styles.lang}>
-          <SelectLang />
-        </div>
-        <div className={styles.content}>
-          <div className={styles.top}>
-            <div className={styles.header}>
-              <Link to="/">
-                <img alt="logo" className={styles.logo} src={logo} />
-                <span className={styles.title}>Ant Design</span>
-              </Link>
-            </div>
-            <div className={styles.desc}>Ant Design 是西湖区最具影响力的 Web 设计规范</div>
+        <BgCL>
+          <div className={styles.lang}>
+            <SelectLang />
           </div>
-          {children}
-        </div>
-        <GlobalFooter links={links} copyright={copyright} />
+          <div className={styles.content}>
+            <div className={styles.top}>
+              <div className={styles.header}>
+                <Link to="/">
+                  <img alt="logo" className={styles.logo} src={logoIcon} />
+                  <span className={styles.title}>{title}</span>
+                </Link>
+              </div>
+              <div className={styles.desc}>MPC 产品研发组</div>
+            </div>
+            {children}
+          </div>
+          <GlobalFooter links={links} copyright={copyright} />
+        </BgCL>
       </div>
     );
   }

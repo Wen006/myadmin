@@ -9,6 +9,7 @@ module.exports = {
   title: 'My Admin',
   logoText: 'MPC-财经云',
   logoIcon: '/icons/logo/logo_f.png',
+  footerTitle: '2019 MPC 产品研发组',
   defaultLanguage:'zh-CN',
   language:{
     zh_CN:'zh-CN',

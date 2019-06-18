@@ -1,6 +1,6 @@
 
 module.exports = { 
-  apiProxy:'',
+  apiProxy:'http://localhost:8888',
   // 路由配置
   sysBoot: {
     fsc: true,
