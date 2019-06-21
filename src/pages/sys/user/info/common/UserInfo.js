@@ -16,7 +16,7 @@ import Global from '@/stores/common/Global';
 class UserInfo extends React.Component {
   formField = [
     'id',
-    'userAccount',
+    'userName',
     'userName',
     'email',
     'countryName',

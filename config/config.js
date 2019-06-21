@@ -80,8 +80,8 @@ export default {
     // '@antv/data-set': 'DataSet',
   },
   // proxy: {
-  //   '/server/api/': {
-  //     target: 'https://preview.pro.ant.design/',
+  //   '/api/': {
+  //     target: 'http://localhost:8888/api/',
   //     changeOrigin: true,
   //     pathRewrite: { '^/server': '' },
   //   },
@@ -89,30 +89,40 @@ export default {
   ignoreMomentLocale: true,
   lessLoaderOptions: {
     javascriptEnabled: true,
+    options:[
+      {
+        test: /\.css$/,
+        use: [
+            'style-loader',
+            'css-loader',
+            'less-loader'   // compiles Less to CSS
+        ]
+      }
+    ]
   },
   disableRedirectHoist: true,
-  cssLoaderOptions: {
-    modules: true,
-    getLocalIdent: (context, localIdentName, localName) => {
-      if (
-        context.resourcePath.includes('node_modules') ||
-        context.resourcePath.includes('ant.design.pro.less') ||
-        context.resourcePath.includes('global.less')
-      ) {
-        return localName;
-      }
-      const match = context.resourcePath.match(/src(.*)/);
-      if (match && match[1]) {
-        const antdProPath = match[1].replace('.less', '');
-        const arr = slash(antdProPath)
-          .split('/')
-          .map(a => a.replace(/([A-Z])/g, '-$1'))
-          .map(a => a.toLowerCase());
-        return `antd-pro${arr.join('-')}-${localName}`.replace(/--/g, '-');
-      }
-      return localName;
-    },
-  },
+  // cssLoaderOptions: {
+  //   modules: true,
+  //   getLocalIdent: (context, localIdentName, localName) => {
+  //     if (
+  //       context.resourcePath.includes('node_modules') ||
+  //       context.resourcePath.includes('ant.design.pro.less') ||
+  //       context.resourcePath.includes('global.less')
+  //     ) {
+  //       return localName;
+  //     }
+  //     const match = context.resourcePath.match(/src(.*)/);
+  //     if (match && match[1]) {
+  //       const antdProPath = match[1].replace('.less', '');
+  //       const arr = slash(antdProPath)
+  //         .split('/')
+  //         .map(a => a.replace(/([A-Z])/g, '-$1'))
+  //         .map(a => a.toLowerCase());
+  //       return `antd-pro${arr.join('-')}-${localName}`.replace(/--/g, '-');
+  //     }
+  //     return localName;
+  //   },
+  // },
   manifest: {
     basePath: '/',
   },

@@ -194,7 +194,7 @@ export default class UserList extends React.Component {
     const columnDefs = [
       { headerName:'',width:40,checkboxSelection:true},
       { headerName: Intler.getIntl('UserAccount'),
-        field: 'userAccount',align: 'left',cellRenderer: 'infoCellRenderer'},
+        field: 'userName',align: 'left',cellRenderer: 'infoCellRenderer'},
       { headerName: Intler.getIntl('UserName'), field: 'userName', align: 'left' },
       { headerName: Intler.getIntl('User_UnitName'), field: 'unitName', align: 'left' },
       { headerName: Intler.getIntl('User_EntityName'), field: 'entityName', align: 'left' },

@@ -31,8 +31,8 @@ class EditPwd extends React.Component {
     // form.setFieldsValue(userinfo)
 
     // getUserWithK3InfoById({ userId: user.id }).then(({ datas }) => {
-    //   const { id, userAccount, userName, reservedField3, kThreeFlag } = datas
-    //   const userinfo = { id, userAccount, userName, kThreeFlag }
+    //   const { id, userName, userName, reservedField3, kThreeFlag } = datas
+    //   const userinfo = { id, userName, userName, kThreeFlag }
     //   if (kThreeFlag === '0') {
     //     this.setState({ isK3: true })
     //     userinfo.reservedField3 = reservedField3
@@ -137,9 +137,9 @@ class EditPwd extends React.Component {
               <Col span={12} offset={6}>
               <NInput
                 label={intl&&intl.get("USER_ACCOUNT")}
-                modalKey="userAccount"
+                modalKey="userName"
                 options={{
-                  initialValue: item.userAccount,
+                  initialValue: item.userName,
                 }}
                 form={form}
                 disabled

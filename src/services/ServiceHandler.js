@@ -56,7 +56,6 @@ export async function callMethod({ key, params }) {
         lodash.pick(newOptions, ['method', 'url', 'headers'])
       )}`
     );
-
   return request(url,newOptions);
 }
 

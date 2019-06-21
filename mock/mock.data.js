@@ -5,10 +5,9 @@
 // 用于登陆的账号
 const user = {
   id: 1,
-  userCode: 'Kevin',
-  userAccount: 'Kevin',
-  password: '111111',
-  userName: 'Kevin',
+  userCode: 'admin',
+  userName: 'admin',
+  password: '1',
   userType: '0',
   updPwdTime: 1520352000000,
   invalidPwdTime: 1837785600000,

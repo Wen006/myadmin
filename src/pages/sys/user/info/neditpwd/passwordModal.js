@@ -16,8 +16,8 @@ class PasswordModal extends React.Component {
   componentDidMount() {
     // const { item = {} } = this.state;
     // getUserWithK3InfoById({ userId: item.id }).then(({ datas }) => {
-    //   const { id, userAccount, userName, password, reservedField3, kThreeFlag } = datas
-    //   let userinfo = { id, userAccount, userName,kThreeFlag }
+    //   const { id, userName, userName, password, reservedField3, kThreeFlag } = datas
+    //   let userinfo = { id, userName, userName,kThreeFlag }
     //   if (kThreeFlag == '0') {
     //     this.setState({ isK3: true })
     //     userinfo.reservedField3 = reservedField3

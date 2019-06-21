@@ -12,7 +12,7 @@ const tokens = {}
 
 const sessionUser = {};
 
-const getToken = userAccount => (tokens[userAccount] = lodash.uniqueId(userAccount))
+const getToken = userName => (tokens[userName] = lodash.uniqueId(userName))
 
 const urlReg = /[a-zA-Z0-9][-a-zA-Z0-9]{0,62}(\.[a-zA-Z0-9][-a-zA-Z0-9]{0,62}|(:[0-9]{1,4}))+\.?/;
 
@@ -20,15 +20,23 @@ const getReferer = ref => (urlReg.exec(ref)[0]||"SESSION_USER");
 
 function userLogin(req, resp) {
   const { body, query, headers, url } = req;
-  const { userAccount: uA, password: pwd, checkCode } = { ...body, ...query };
+  const { username: uA, password: pwd, checkCode } = { ...body, ...query };
   let currentUser = null;
   const { referer } = headers;
-  const userAccount = Base64.decode(uA);
-  const password = Base64.decode(pwd);
-  console.log('用户登陆', userAccount, '==', password);
+  let userName; 
+  let password;
+  try { 
+   userName = Base64.decode(uA); 
+   password = Base64.decode(pwd);
+  } catch (error) {
+    console.log("Base64 解密出错了",error);
+    userName = uA;
+    password = pwd;
+  }
+  console.log('用户登陆', userName, '==', password);
   if (
     getTableData('USER_INFO').some(it => {
-      if (it.userAccount == userAccount) {
+      if (it.userName == userName) {
         currentUser = it;
         return true;
       }
@@ -37,7 +45,7 @@ function userLogin(req, resp) {
   ) {
     if (currentUser.password == password) {
       currentUser.currentAuthority = 'admin';
-      currentUser.accessToken = getToken(currentUser.userAccount);
+      currentUser.accessToken = getToken(currentUser.userName);
       sessionUser[`${getReferer(referer)}`] = currentUser;
       writeOk(resp, currentUser);
     } else {
@@ -50,7 +58,7 @@ function userLogin(req, resp) {
 
  function getCurrentUser(req, resp) {
   const { body, query, headers, url } = req;
-  const { userAccount, password, checkCode } = { ...body, ...query };
+  const { userName, password, checkCode } = { ...body, ...query };
   const { referer } = headers;
   const currentUser = sessionUser[`${getReferer(referer)}`];
   
@@ -66,7 +74,7 @@ function userLogin(req, resp) {
 
  function loginOut(req, resp) {
   const { body, query, headers, url } = req;
-  const { userAccount, password, checkCode } = { ...body, ...query };
+  const { userName, password, checkCode } = { ...body, ...query };
   const { referer } = headers;
   sessionUser[`${getReferer(referer)}`] = undefined;
   writeOk(resp, {});
@@ -74,7 +82,7 @@ function userLogin(req, resp) {
 
  function changeRole(req, resp) {
   const { body, query, headers, url } = req;
-  const { userAccount, password, checkCode } = { ...body, ...query };
+  const { userName, password, checkCode } = { ...body, ...query };
   const { referer } = headers;
   let currentUser = sessionUser[`${getReferer(referer)}`];
   writeOk(resp, currentUser);

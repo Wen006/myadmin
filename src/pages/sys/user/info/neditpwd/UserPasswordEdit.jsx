@@ -72,9 +72,9 @@ class UserPasswordEdit extends React.Component {
           />
           <NInput
             label={intl&&intl.get("USER_ACCOUNT")}
-            modalKey="userAccount"
+            modalKey="userName"
             options={{
-              initialValue: item.userAccount,
+              initialValue: item.userName,
             }}
             form={form}
             disabled

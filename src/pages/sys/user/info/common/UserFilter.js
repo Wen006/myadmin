@@ -48,7 +48,7 @@ const ComplexCurr = ({ form, handleReset, handleSubmit, handleShowMoreCondition 
       <InputH id="entityId" form={form} rules={[]} hidden />
       <InputH id="unitId" form={form} rules={[]} hidden />
       <AutoRow colProps={{ span: 6 }}>
-        <InputH label="UserAccount" id="userAccount" form={form} rules={[]} />
+        <InputH label="UserAccount" id="userName" form={form} rules={[]} />
         {/* <InputLookUp
           form={form}
           label="User_UnitName"
@@ -155,7 +155,8 @@ class UserFilter extends React.Component {
           id="userName" 
           form={form} 
           label={Intler.getIntl("user.info.mag")}  
-          title="用户管理多多岛" lookUpKey="USER_INFO" 
+          title="用户管理多多岛" 
+          lookUpKey="USER_INFO" 
           rules={[]} 
           // openBefore={
           //   // false

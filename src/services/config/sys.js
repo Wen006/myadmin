@@ -5,12 +5,6 @@ export default {
     desc: '初始化参数',
     auth: 'wennn',
   },
-  SYS_GET_TIME_ZOME: {
-    url: '/system/md/mdTimezone/selectByTimezone',
-    method: 'get',
-    desc: '初始化参数',
-    auth: 'wennn',
-  },
   SYS_USER_INFO_LOGIN: {
     url: '/security/login',
     method: 'formpost',
@@ -18,7 +12,7 @@ export default {
     auth: 'wennn',
   },
   SYS_USER_LIST_BY_DTO: {
-    url: '/userInfo/listByDto',
+    url: '/sm/user/list',
     method: 'get',
     mockhandler: 'list',
     mocktable: 'USER_INFO',
@@ -46,8 +40,8 @@ export default {
     auth: 'wennn',
   },
   SYS_USER_INFO_GETCURUSER: {
-    url: '/security/checkLogin',
-    method: 'POST',
+    url: '/security/success',
+    method: 'get',
     desc: '获取当前用户信息',
     auth: 'wennn',
   },
@@ -99,7 +93,7 @@ export default {
     mockhandler: 'list',
   },
   SYS_MENU_INFO_GET_MENU: {
-    url: '/menuInfo/queryMenuDataN',
+    url: '/sm/menu/queryMenuData',
     method: 'GET',
   },
   SYS_MENU_GETONE: {

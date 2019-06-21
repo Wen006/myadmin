@@ -136,9 +136,9 @@
 //               <Row>
 //                 <Col span={8}>
 //                   <FormItem label={intl && intl.get('UserAccount')}>
-//                     {getFieldDecorator('userAccount', {
-//                       initialValue: currentObj.userAccount,
-//                     })(<div disabled>{currentObj.userAccount}</div>)}
+//                     {getFieldDecorator('userName', {
+//                       initialValue: currentObj.userName,
+//                     })(<div disabled>{currentObj.userName}</div>)}
 //                   </FormItem>
 //                 </Col>
 //                 <Col span={8}>

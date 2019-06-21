@@ -7,6 +7,10 @@ import MPCConfirm from '@/components/MPCConfirm/MPCConfirm';
 import UserInfoStore from '@/stores/sys/user/UserInfoStore';
 import Navigator from '@/stores/common/Navigator';
 import PageHeaderWrapper from '@/components/PageHeaderWrapper';
+import Toolbar from '@/components/Toolbar'
+import { Button } from 'antd'
+import SearchBar from '@/components/SearchBar'
+import columns from './columns'
 
 import styles from '@/pages/common.less';
 import UserFilter from './common/UserFilter';
@@ -14,10 +18,11 @@ import UserInfo from './common/UserInfo';
 // import PasswdModal from './common/PasswdModal';
 
 class UserInfoList extends React.Component {
+
   columnDefs = [
     {
-      headerName: Intler.getIntl('user.info.userAccount'),
-      field: 'userAccount',
+      headerName: Intler.getIntl('user.info.userName'),
+      field: 'userName',
       align: 'left',
       cellRenderer: 'infoCellRenderer',
     },
@@ -117,25 +122,25 @@ class UserInfoList extends React.Component {
     const { selectCount } = this.state;
 
     const agPropPros = {
-      toolBars: [
-        // 这是个数组 注意数组里每个元素要有 唯一的key
-        <Btns.search algin="left" key="search" onClick={() => this.handleSubmit()} />,
-        <Btns.add algin="left" key="add" onClick={() => this.handleBarOpe('add')} />,
-        <Btns.update
-          algin="left"
-          disabled={selectCount != 1}
-          key="edit"
-          onClick={() => this.handleBarOpe('edit')}
-        />,
-        <MPCConfirm
-          key="del"
-          disabled={selectCount < 1}
-          type="del"
-          onConfirm={() => this.handleBarOpe('delete')}
-        >
-          <Btns.del algin="left" disabled={selectCount < 1} key="delete" />
-        </MPCConfirm>,
-      ],
+      // toolBars: [
+      //   // 这是个数组 注意数组里每个元素要有 唯一的key
+      //   <Btns.search algin="left" key="search" onClick={() => this.handleSubmit()} />,
+      //   <Btns.add algin="left" key="add" onClick={() => this.handleBarOpe('add')} />,
+      //   <Btns.update
+      //     algin="left"
+      //     disabled={selectCount != 1}
+      //     key="edit"
+      //     onClick={() => this.handleBarOpe('edit')}
+      //   />,
+      //   <MPCConfirm
+      //     key="del"
+      //     disabled={selectCount < 1}
+      //     type="del"
+      //     onConfirm={() => this.handleBarOpe('delete')}
+      //   >
+      //     <Btns.del algin="left" disabled={selectCount < 1} key="delete" />
+      //   </MPCConfirm>,
+      // ],
       fetch: {
         // 这里是和后台交互的 不配置该项 需要自己维护数据源 DataSource  以及分页信息
         queryKey: 'SYS_USER_LIST_BY_DTO',
@@ -218,19 +223,33 @@ class UserInfoList extends React.Component {
         },
       },
     };
+
+    const searchBarProps = {
+      columns: columns(this,[]),
+      onSearch: values => {
+        this.handleSubmit(values);
+      }
+    };
     
     return (
       <PageHeaderWrapper>
-        <UserFilter key="filter" handleSubmit={this.handleSubmit} />
+        <Toolbar
+          appendLeft={
+            <Button.Group>
+              <Btns.add /> 
+              <Btns.del 
+                disabled={selectCount == 0}
+              /> 
+            </Button.Group>
+            }
+          pullDown={<SearchBar key="grid" type="grid" {...searchBarProps} />}
+        >
+          <SearchBar key="inline" type="inline" group="abc" {...searchBarProps} />
+          {/* <UserFilter key="filter" handleSubmit={this.handleSubmit} /> */}
+        </Toolbar>
         <div className={styles.agListBox}>
-          {/* <AgGridPro key="dataGrid" columnDefs={this.columnDefs} {...agPropPros} /> */}
+          <AgGridPro key="dataGrid" columnDefs={this.columnDefs} {...agPropPros} />
         </div>
-        {/* <PasswdModal
-          onReady={api => {
-            this.modalApi = api;
-          }}
-          userInfoStore={this.userInfoStore}
-        /> */}
       </PageHeaderWrapper>
     );
   }

@@ -116,6 +116,7 @@ class AgGridStore {
   // 从当前也查询
   fetch = async inParams => {
     this.queryParams = lodash.assign({ ...this.queryParams, ...inParams });
+    console.log(this.queryParams)
     const {
       pageNo = this.pagination.pageNo,
       pageSize = this.pagination.pageSize,

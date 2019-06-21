@@ -23,12 +23,13 @@ export default {
 
   effects: {
     *login({ payload }, { call, put }) {
-      const {success,datas} = yield call(callMethod, {key:api.sysUserInfoLogin,params:payload});
+      const {success,datas,returnMessage} = yield call(callMethod, {key:api.sysUserInfoLogin,params:payload});
       yield put({
         type: 'changeLoginStatus',
         payload: {
-          status:success?"ok":false,
-          currentAuthority:datas.currentAuthority||'guest'
+          status:success?"ok":"error",
+          currentAuthority:datas.currentAuthority||'guest',
+          returnMessage,
         },
       });
       // Login successfully
@@ -36,9 +37,8 @@ export default {
         reloadAuthorized();
         const { accessToken,...userInfo} = datas;
         yield put({
-          type:'user/saveLoginUser',
+          type:'user/saveCurrentUser',
           payload:userInfo,
-          accessToken,
         })
         const urlParams = new URL(window.location.href);
         const params = getPageQuery();
@@ -70,7 +70,7 @@ export default {
           status: false,
           currentAuthority: 'guest',
         },
-      });
+      })
       reloadAuthorized();
       yield put(
         routerRedux.push({
@@ -81,8 +81,6 @@ export default {
         })
       );
     },
-
-
   },
 
   reducers: {
@@ -92,6 +90,7 @@ export default {
         ...state,
         status: payload.status,
         type: payload.type,
+        returnMessage:payload.returnMessage,
       };
     },
   },

@@ -13,6 +13,8 @@ import { notification } from 'antd';
 import router from 'umi/router';
 import hash from 'hash.js';
 import Log from '@/utils/utils.log'
+import { formatMessage, setLocale, getLocale } from 'umi/locale';
+
 
 const logger = new Log("Request")
 
@@ -43,7 +45,7 @@ const defaultAxiosCfg = {
 // 添加请求拦截器
 axios.interceptors.request.use(conf => {
   lodash.assign(conf.headers,{
-    'Accept-Language':'zh_CN',
+    'Accept-Language':getLocale() || 'zh_CN',
     // 'Access-Token':'1111111',
   })
   // 在发送请求之前做些什么
@@ -106,7 +108,6 @@ const cachedSave = (response, hashcode) => {
  */
 export function fetch (url,options) {
   const { method = 'GET', body, headers } = options;
-
   // body 请求体参数
   const cloneData = lodash.cloneDeep(body);
 
@@ -162,7 +163,7 @@ export default function request(url, option, expirys=false) {
   const { method = 'GET', body, query } = option;
  
   // query 参数是放到url上的
-  if (query) {
+  if (query && lodash.keys(query).length>0) {
     url = url.includes('?') ? url + qs.stringify(query) : `${url}?${qs.stringify(query)}`;
   } 
 

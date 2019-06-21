@@ -1,5 +1,5 @@
 export default {
-    'user.info.userAccount':"账号",
+    'user.info.userName':"账号",
     'user.info.email':'邮箱',
     'user.info.userName':"用户名",
     'user.info.userCode':"用户代码",

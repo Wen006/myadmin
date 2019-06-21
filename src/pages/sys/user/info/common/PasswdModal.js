@@ -31,8 +31,8 @@ import { Fragment } from "react";
 
 //   showModal = (visible, record) => {
 //     this.userInfoStore.record = visible ? record : {};
-//     const { userName, userAccount, id } = this.userInfoStore.record;
-//     const value = { userName, userAccount, id };
+//     const { userName, userName, id } = this.userInfoStore.record;
+//     const value = { userName, userName, id };
 //     this.setState({ visible }, () => {
 //       this.form.setFieldsValue(value);
 //     });

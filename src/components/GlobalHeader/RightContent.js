@@ -195,7 +195,7 @@ export default class GlobalHeaderRight extends PureComponent {
             {...loadMoreProps}
           />
         </NoticeIcon>
-        {currentUser.userAccount ? (
+        {currentUser.userName ? (
           <HeaderDropdown overlay={menu}>
             <span className={`${styles.action} ${styles.account}`}>
               <Avatar
@@ -204,7 +204,7 @@ export default class GlobalHeaderRight extends PureComponent {
                 src={`/icons/user/${currentUser.avatar||"user.png"}`}
                 alt="avatar"
               />
-              <span className={styles.name}>{currentUser.userAccount}</span>
+              <span className={styles.name}>{currentUser.userName}</span>
             </span>
           </HeaderDropdown>
         ) : (
