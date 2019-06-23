@@ -1,10 +1,12 @@
+/* eslint-disable prefer-destructuring */
+/* eslint-disable react/no-array-index-key */
 /* eslint-disable react/require-default-props */
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Form, Row, Col, Button, message, Input } from 'antd';
 import cx from 'classnames';
 import './style/index.less';
-import { InputH } from '../FormMark';
+import { InputH,SelectH, CheckboxH, RadioH, DatePickerH, RangePickerH, InputNumberH, InputLookUp } from '../FormMark';
 
 const createForm = Form.create;
 
@@ -73,8 +75,8 @@ class SearchBar extends React.Component {
 
   // 当type为grid时，指定每行元素个数
   cols = {
-    xs: 8,
-    md: 6,
+    xs: 12,
+    md: 8,
     xl: 4
   };
 
@@ -93,12 +95,27 @@ class SearchBar extends React.Component {
 
   // 当type为grid时，指定每两个元素的间隔
   rows = {
-    gutter: 8
+    gutter: 4
   };
 
-  resetForm(e) {
+  componentDidMount(){
+    const { onReady,form } = this.props
+    if(onReady){
+      onReady({
+        form,
+        resetForm:this.resetForm,
+        setFormValues:this.setFormValues,
+      })
+    }
+  }
+
+  resetForm=(e) => {
     this.props.form.resetFields();
     this.searchForm(true);
+  }
+  
+  setFormValues = (values) =>{
+    this.props.form.setFieldsValue(values);
   }
 
   searchForm(isReset) {
@@ -128,7 +145,7 @@ class SearchBar extends React.Component {
       children,
       form,
       appendTo,
-      record,
+      record,onReady,
       ...otherProps
     } = this.props;
 
@@ -187,12 +204,12 @@ class SearchBar extends React.Component {
 
               const formProps = {
                 form,
-                id: field.name,
+                id: field.id,
                 // label: field.title,
                 rules:[],
                 record,
                 options:{
-                  placeholder:`请输入${field.title}`,
+                  placeholder:`请输入${field.label}`,
                 },
                 ...field.searchItem
               };
@@ -225,12 +242,32 @@ class SearchBar extends React.Component {
                   };
                   formProps.maxLength = field.searchItem.maxLength || 100;
                   formProps.autoComplete = 'off'; 
-                  FieldComp = <InputH {...formProps} />
+                  FieldComp = fieldType == "textarea"?<InputH.TextAreaH {...formProps} />:<InputH {...formProps} />;
+                  break;
+                case 'SelectH':
+                  FieldComp = <span key={`col-${i}`}><InputH {...formProps}  /></span>;  
+                  break;
+                case 'CheckboxH':
+                  FieldComp = <span key={`col-${i}`}><InputH {...formProps}  /></span>;  
+                  break;
+                case 'RadioH':
+                  FieldComp = <span key={`col-${i}`}><InputH {...formProps}  /></span>;  
+                  break;
+                case 'DatePickerH':
+                  FieldComp = <span key={`col-${i}`}><InputH {...formProps}  /></span>;  
+                  break;
+                case 'RangePickerH':
+                  FieldComp = <span key={`col-${i}`}><InputH {...formProps}  /></span>;  
+                  break;
+                case 'InputNumberH':
+                  FieldComp = <span key={`col-${i}`}><InputH {...formProps}  /></span>;  
+                  break;
+                case 'InputLookUp':
+                  FieldComp = <span key={`col-${i}`}><InputLookUp {...formProps}  /></span>;  
                   break;
                 case 'hidden': // 隐藏域
                   return (
-                    <span key={`col-${i}`}>xx
-                    </span>
+                    <span key={`col-${i}`}><InputH {...formProps} hidden /></span>
                   );
                 default:
                   // 通用
@@ -241,7 +278,7 @@ class SearchBar extends React.Component {
                 <ComponentCol key={`col-${i}`} className="col-item" {...col}>
                   <ComponentItem
                     {...formItemLayout}
-                    label={field.title}
+                    label={field.label}
                     className="col-item-content"
                   >
                     {FieldComp}

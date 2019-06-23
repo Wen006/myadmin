@@ -1,5 +1,7 @@
 export default {
     'app.btn.add':'新增',
+    'app.btn.save':'保存',
+    'app.btn.back':'返回',
     'app.btn.update':'修改',
     'app.btn.reset':'重置',
     'app.btn.search':'查询',

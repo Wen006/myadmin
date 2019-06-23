@@ -16,7 +16,7 @@ const WrapProps = Ele => {
 
     render() {
       const { initialValue, readOnly, ...otherProps } = this.props;
-      if (readOnly) return <ViewRender>{this.valueFormatter(initialValue)}</ViewRender>;
+      if (readOnly) return <ViewRender>{this.valueFormatter(initialValue||otherProps.value)}</ViewRender>;
       return <Ele {...otherProps} />;
     }
   };

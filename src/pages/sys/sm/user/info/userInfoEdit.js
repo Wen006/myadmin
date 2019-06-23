@@ -5,6 +5,7 @@ import UserInfoStore from '@/stores/sys/user/UserInfoStore';
 import Navigator from '@/stores/common/Navigator';
 import PageHeaderWrapper from '@/components/PageHeaderWrapper';
 import UserInfo from './common/UserInfo';
+import UserPwdEdit from './neditpwd/UserPwdEdit'
 
 export default class UserInfoEdit extends React.Component {
   constructor(props) {
@@ -27,8 +28,8 @@ export default class UserInfoEdit extends React.Component {
 
     return (
       <PageHeaderWrapper
-        title="高级表单"
-        content="高级表单常见于一次性输入和提交大批量数据的场景。"
+        // title="高级表单"
+        // content="高级表单常见于一次性输入和提交大批量数据的场景。"
         // wrapperClassName={styles.advancedForm}
       >
         <Card loading={!loaded}>
@@ -42,6 +43,7 @@ export default class UserInfoEdit extends React.Component {
               }}
             />
           ) : null}
+          {/* <UserPwdEdit/> */}
         </Card>
       </PageHeaderWrapper>
     );

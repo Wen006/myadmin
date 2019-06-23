@@ -9,8 +9,8 @@ export default [
     routes: ((urlPre,pageDir)=>[
       { path: `${urlPre}`, redirect: `${urlPre}/login` },
       { path: `${urlPre}/login`, component: `${pageDir}/Login` },
-      { path: `${urlPre}/register`, component: `./example/User/Register` },
-      { path: `${urlPre}/register-result`, component: `./example/User/RegisterResult` },
+      // { path: `${urlPre}/register`, component: `./example/User/Register` },
+      // { path: `${urlPre}/register-result`, component: `./example/User/RegisterResult` },
     ])('/user','./sys/user/login'),
   },
   // app 

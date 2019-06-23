@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-no-bind */
 /* eslint-disable no-case-declarations */
 /* eslint-disable prefer-destructuring */
 import React from 'react';
@@ -10,10 +11,9 @@ import PageHeaderWrapper from '@/components/PageHeaderWrapper';
 import Toolbar from '@/components/Toolbar'
 import { Button } from 'antd'
 import SearchBar from '@/components/SearchBar'
-import columns from './columns'
+import FilterItems from './FilterItems'
 
 import styles from '@/pages/common.less';
-import UserFilter from './common/UserFilter';
 import UserInfo from './common/UserInfo';
 // import PasswdModal from './common/PasswdModal';
 
@@ -21,8 +21,8 @@ class UserInfoList extends React.Component {
 
   columnDefs = [
     {
-      headerName: Intler.getIntl('user.info.userName'),
-      field: 'userName',
+      headerName: Intler.getIntl('user.info.userCode'),
+      field: 'userCode',
       align: 'left',
       cellRenderer: 'infoCellRenderer',
     },
@@ -71,6 +71,7 @@ class UserInfoList extends React.Component {
     this.userInfoStore = userInfoStore || new UserInfoStore();
     this.state = {
       selectCount: 0,
+      queryParams:{}, // 存放lookup选择的条件
     };
   }
 
@@ -107,6 +108,7 @@ class UserInfoList extends React.Component {
         const { selectedRowKeys } = this.agStore.getSelect();
         this.userInfoStore.deleteRecord(selectedRowKeys).then(success => {
           if (success) this.handleSubmit();
+          this.setState({selectCount:0})
         });
         break;
       default:
@@ -122,25 +124,6 @@ class UserInfoList extends React.Component {
     const { selectCount } = this.state;
 
     const agPropPros = {
-      // toolBars: [
-      //   // 这是个数组 注意数组里每个元素要有 唯一的key
-      //   <Btns.search algin="left" key="search" onClick={() => this.handleSubmit()} />,
-      //   <Btns.add algin="left" key="add" onClick={() => this.handleBarOpe('add')} />,
-      //   <Btns.update
-      //     algin="left"
-      //     disabled={selectCount != 1}
-      //     key="edit"
-      //     onClick={() => this.handleBarOpe('edit')}
-      //   />,
-      //   <MPCConfirm
-      //     key="del"
-      //     disabled={selectCount < 1}
-      //     type="del"
-      //     onConfirm={() => this.handleBarOpe('delete')}
-      //   >
-      //     <Btns.del algin="left" disabled={selectCount < 1} key="delete" />
-      //   </MPCConfirm>,
-      // ],
       fetch: {
         // 这里是和后台交互的 不配置该项 需要自己维护数据源 DataSource  以及分页信息
         queryKey: 'SYS_USER_LIST_BY_DTO',
@@ -153,7 +136,8 @@ class UserInfoList extends React.Component {
         this.agStore.submit({}); // 调用store查询数据 页面一加载就查询
       },
       gridOptions: {
-        rowSelection:'single',    // 是否多选
+        // rowSelection:'single',    // 是否多选
+        rowSelection:'multiple',    // 是否多选
         onRowSelected:params=>{
           const {selectedRowKeys} = this.agStore.getSelect();
           this.setState({selectCount:selectedRowKeys.length},()=>{
@@ -224,10 +208,11 @@ class UserInfoList extends React.Component {
       },
     };
 
+    // 查询条件
     const searchBarProps = {
-      columns: columns(this,[]),
+      columns:FilterItems(this),
       onSearch: values => {
-        this.handleSubmit(values);
+        this.handleSubmit({...values,...this.state.queryParams});
       }
     };
     
@@ -236,16 +221,24 @@ class UserInfoList extends React.Component {
         <Toolbar
           appendLeft={
             <Button.Group>
-              <Btns.add /> 
-              <Btns.del 
-                disabled={selectCount == 0}
-              /> 
+              <Btns.add onClick={this.handleBarOpe.bind(this,'add')} /> 
+              <Btns.update 
+                onClick={this.handleBarOpe.bind(this,'edit')} 
+                disabled={selectCount != 1}
+              />
+              <MPCConfirm
+                key="del"
+                disabled={selectCount < 1}
+                type="del"
+                onConfirm={this.handleBarOpe.bind(this,'delete')}
+              >
+                <Btns.del algin="left" disabled={selectCount < 1} key="delete" />
+              </MPCConfirm>,
             </Button.Group>
             }
-          pullDown={<SearchBar key="grid" type="grid" {...searchBarProps} />}
+          pullDown={<SearchBar key="grid" type="grid" {...searchBarProps} onReady={(ref)=>{this.searchBarRef=ref}} />}
         >
-          <SearchBar key="inline" type="inline" group="abc" {...searchBarProps} />
-          {/* <UserFilter key="filter" handleSubmit={this.handleSubmit} /> */}
+          <SearchBar type="inline" group="simple" {...searchBarProps} onReady={(ref)=>{this.searchBarRef=ref}} />
         </Toolbar>
         <div className={styles.agListBox}>
           <AgGridPro key="dataGrid" columnDefs={this.columnDefs} {...agPropPros} />

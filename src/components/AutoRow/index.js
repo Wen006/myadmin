@@ -3,34 +3,23 @@
  */
 import React, { Fragment } from 'react'
 import { Row, Col } from 'antd'
+ 
+
+const rowStyles = {marginBottom: '8px'}
 
 export default ({ children, rowProps = {}, colProps, key = '' }) => {
-    const colDefalut = {
+    const colDefault = {
         lg: 8,
         md: 12,
         sm: 24,
     }
-    let colPs = colProps || colDefalut
-    const eles = React.Children.map(children, (child, index) => {
+    const colPs = colProps || colDefault
+    const ele = React.Children.map(children, (child, index) => {
         if (!child || !child.props) { return <Fragment /> }
-        const { fields, id, hidden, cdColPro, modalKey } = child.props
-        let { nameKey } = child.props
-        if (!nameKey) { nameKey = modalKey }
-        colPs = cdColPro || colProps || colDefalut
-        const reHtml = <Col {...colPs}>{child}</Col>;
-        let html = reHtml
-        if (hidden) { html = <Fragment /> }
-        if (fields && fields[id]) {
-            if (fields[id].isDisplayFlag) { html = <Fragment /> }
-            if (!fields[id].isDisplayFlag && fields[id].isDisplayFlag != undefined) { html = reHtml }
-        }
-
-        if (fields && fields[nameKey]) {
-            if (fields[nameKey].isDisplayFlag) { html = <Fragment /> }
-            if (!fields[nameKey].isDisplayFlag && fields[nameKey].isDisplayFlag != undefined) { html = reHtml }
-        }
-
-        return html
-    })
-    return (<Row {...rowProps}>{eles}</Row>)
+        const { hidden } = child.props  
+        if (hidden) { return <Fragment /> }
+        return <Col {...colPs}>{child}</Col>
+    });
+    return <Row style={rowStyles} {...rowProps}>{ele}</Row>
+    // return <Fragment>{ele}</Fragment>
 }

@@ -76,7 +76,7 @@ class SelectH extends React.PureComponent {
     const selectProps = lodash.omit(this.props, ['dataSource', 'code', 'showTip']);
     const { view = false, initialValue } = selectProps;
     return view ? (
-      <ViewRender>{this.valueFormatter(initialValue)}</ViewRender>
+      <ViewRender>{this.valueFormatter(initialValue||selectProps.value)}</ViewRender>
     ) : (
       <Select {...selectProps} style={{ width: 120 }}>
         {this.showTip ? (

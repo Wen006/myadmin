@@ -55,6 +55,13 @@ export default (Ele, type) => {
         ...formItemProps // FItem 属性 labelOptions
       } = this.props;
 
+      let reStyle;
+      if (view) {
+        // 当查看到时候
+        options.initialValue = initialValue || defaultValue;
+        reStyle = 'readBox'
+      }
+      
       // RadioH 比较特殊
       if (this.type == TypeEnums.RadioGroup)return <RadioH {...this.props} />;
       
@@ -65,13 +72,6 @@ export default (Ele, type) => {
         return getFieldDecorator(this.id, { initialValue:initialValue||defaultValue, ...fieldOptions })(
           <Input hidden {...options} />
         );
-      }
-
-      let reStyle;
-      if (view) {
-        // 当查看到时候
-        options.initialValue = initialValue || defaultValue;
-        reStyle = 'readBox'
       }
 
       return (

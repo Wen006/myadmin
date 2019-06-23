@@ -102,7 +102,7 @@ export default class RadioH extends React.PureComponent {
     if (view)
       return (
         <FItem {...formItemProps} label={this.label}>
-          <ViewRender>{this.valueFormatter(initialValue)}</ViewRender>
+          <ViewRender>{this.valueFormatter(initialValue||formItemProps.value)}</ViewRender>
         </FItem>
       );
     return (

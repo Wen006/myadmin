@@ -10,9 +10,14 @@
       icon: 'dashboard',
       routes: [
         {
-            path: `/system/user/info/userInfoIndex`,
-            name: 'UserManage',
-            component: `./sys/user/info/userInfoList`,
+          path: `/system/user/info/userInfoIndex`,
+          name: '用户信息',
+          component: `./sys/sm/user/info/userInfoList`,
+        },
+        {
+          path: `/system/user/info/userInfoEdit`,
+          name: '修改信息',
+          component: `./sys/sm/user/info/userInfoEdit`,
         },
         // {
         //     path: `/system/menu/info/menuInfoIndex`,

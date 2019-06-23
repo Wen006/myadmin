@@ -422,7 +422,7 @@ const btnNames = [
     iconType: 'plus',
   }, {
     btnName: 'back',
-    btnLocaleName: 'Back',
+    btnLocaleName: 'app.btn.back',
     iconType: 'left',
     btnType: 'default',
   }, {
@@ -450,7 +450,7 @@ const btnNames = [
     btnType: 'default',
   }, {
     btnName: 'save',
-    btnLocaleName: 'Save',
+    btnLocaleName: 'app.btn.save',
     iconType: 'save',
   }, {
     btnName: 'sure',
