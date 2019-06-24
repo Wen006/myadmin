@@ -74,10 +74,18 @@ export default {
     auth: 'wennn',
   },
   SYS_USER_GETONE: {
-    url: '/system/user/getOne',
+    url: '/sm/user/getOne',
     method: 'GET',
     mocktable: 'USER_INFO',
     mockhandler: 'getone',
+    auth: 'wennn',
+  },
+  SYS_USER_SAVE_PWD: {
+    url: '/sm/user/savePassword',
+    method: 'post',
+    mocktable: 'USER_INFO',
+    mockhandler: 'saveorupdate',
+    desc: '用户代码修改',
     auth: 'wennn',
   },
   SYS_MENU_LIST: {

@@ -9,13 +9,11 @@ import UserInfoStore from '@/stores/sys/user/UserInfoStore';
 import Navigator from '@/stores/common/Navigator';
 import PageHeaderWrapper from '@/components/PageHeaderWrapper';
 import Toolbar from '@/components/Toolbar'
-import { Button } from 'antd'
 import SearchBar from '@/components/SearchBar'
-import FilterItems from './FilterItems'
-
 import styles from '@/pages/common.less';
 import UserInfo from './common/UserInfo';
-// import PasswdModal from './common/PasswdModal';
+import UserPwdEdit from './common/UserPwdEdit'
+import FilterItems from './FilterItems'
 
 class UserInfoList extends React.Component {
 
@@ -172,7 +170,7 @@ class UserInfoList extends React.Component {
             return (
               <Act>
                 <Act.Item
-                  text="编辑"
+                  text={Intler.getIntl("common.title.edit")}
                   key="edit"
                   onClick={() => {
                     this.handleOpe('edit', record);
@@ -185,13 +183,22 @@ class UserInfoList extends React.Component {
                     this.handleOpe('delete', record);
                   }}
                 >
-                  <Act.Item text="删除" key="delete" />
-                </MPCConfirm>
-                <Act.Item
-                  text="修改密码"
-                  key="update_pwd"
-                  onClick={() => this.handleOpe('editPassword', record)}
-                />
+                  <Act.Item text={Intler.getIntl("common.title.delete")} key="delete" />
+                </MPCConfirm> 
+                <VPro
+                  tiggerTitle={Intler.getIntl("user.info.pwd.update")}
+                  cache={false}
+                  title={Intler.getIntl("user.info.pwd.update")}
+                  onReady={r => {
+                    this.vProApi = r;
+                  }}
+                >
+                  <UserPwdEdit 
+                    record={record}
+                    onClose={()=>{this.vProApi.showViewer(false)}}
+                    onSave={(value)=>{}} 
+                  />
+                </VPro> 
                 <MPCConfirm
                   key="reset"
                   type="reset"
@@ -199,7 +206,7 @@ class UserInfoList extends React.Component {
                     this.handleOpe('resetpwd', record);
                   }}
                 >
-                  <Act.Item text="重置密码" key="reset_pwd" />
+                  <Act.Item text={Intler.getIntl("user.info.pwd.reset")} key="reset_pwd" />
                 </MPCConfirm>
               </Act>
             );
@@ -220,7 +227,7 @@ class UserInfoList extends React.Component {
       <PageHeaderWrapper>
         <Toolbar
           appendLeft={
-            <Button.Group>
+            <Btns.Group>
               <Btns.add onClick={this.handleBarOpe.bind(this,'add')} /> 
               <Btns.update 
                 onClick={this.handleBarOpe.bind(this,'edit')} 
@@ -233,8 +240,8 @@ class UserInfoList extends React.Component {
                 onConfirm={this.handleBarOpe.bind(this,'delete')}
               >
                 <Btns.del algin="left" disabled={selectCount < 1} key="delete" />
-              </MPCConfirm>,
-            </Button.Group>
+              </MPCConfirm>
+            </Btns.Group>
             }
           pullDown={<SearchBar key="grid" type="grid" {...searchBarProps} onReady={(ref)=>{this.searchBarRef=ref}} />}
         >

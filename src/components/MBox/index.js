@@ -1,4 +1,4 @@
-import { message } from 'antd';
+import { message,Modal } from 'antd';
 
 export default {
   success: (content, duration, onClose) => {
@@ -35,4 +35,12 @@ export default {
   destroy: () => {
     message.destroy();
   },
+  confirm: ({title,content,onOk,onCancel}) =>{
+    Modal.confirm({
+      title,
+      content,
+      onOk,
+      onCancel,
+    });
+  }
 };

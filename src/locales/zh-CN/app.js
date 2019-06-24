@@ -11,4 +11,6 @@ export default {
     'app.btn.confirm.remove.title':'确认删除？',
     'app.btn.remove':'删除',
     'app.form.input.require':'必填',
+    'app.confirm.back':'确认退出',
+    'app.confirm.back.update':'信息已经修改，确认退出？',
 }

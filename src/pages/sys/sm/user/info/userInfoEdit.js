@@ -5,7 +5,6 @@ import UserInfoStore from '@/stores/sys/user/UserInfoStore';
 import Navigator from '@/stores/common/Navigator';
 import PageHeaderWrapper from '@/components/PageHeaderWrapper';
 import UserInfo from './common/UserInfo';
-import UserPwdEdit from './neditpwd/UserPwdEdit'
 
 export default class UserInfoEdit extends React.Component {
   constructor(props) {
@@ -43,7 +42,6 @@ export default class UserInfoEdit extends React.Component {
               }}
             />
           ) : null}
-          {/* <UserPwdEdit/> */}
         </Card>
       </PageHeaderWrapper>
     );

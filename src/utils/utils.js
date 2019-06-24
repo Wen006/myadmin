@@ -176,3 +176,23 @@ export function formatWan(val) {
   }
   return result;
 }
+
+export function toPromise(obj) {
+  if (obj != undefined) {
+    if (typeof obj === 'function') {
+      const fObj = obj();
+      if (fObj instanceof Promise) {
+        return fObj;
+      }
+      return new Promise((resolve, reject) => {
+        resolve(fObj);
+      })
+    }
+    return new Promise((resolve, reject) => {
+      resolve(obj);
+    })
+  }
+  return new Promise((resolve, reject) => {
+    resolve(obj);
+  })
+}

@@ -112,9 +112,10 @@ export default class BreadcrumbView extends PureComponent {
         )}
       </Breadcrumb.Item>
     );
+    const ele = extraBreadcrumbItems.filter(it=>it);
     return (
       <Breadcrumb className={styles.breadcrumb} separator={breadcrumbSeparator}>
-        {extraBreadcrumbItems}
+        {ele}
       </Breadcrumb>
     );
   };

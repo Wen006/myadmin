@@ -875,4 +875,6 @@ btnNames.forEach((btnCfg, key) => {
   Btns[`${btnName}`] = GenComp(btnLocaleName, btnType, iconType, btnName)
 })
 
+Btns.Group = Button.Group
+
 export default Btns

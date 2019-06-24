@@ -20,7 +20,7 @@ const getIcon = icon => {
   }
   if (typeof icon === 'string') {
     // return <Icon type={icon} />;
-    return <Iconfont type={icon} />
+    return <Iconfont type={icon} />;
   }
   return icon;
 };
