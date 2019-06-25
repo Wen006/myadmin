@@ -7,6 +7,7 @@ import { Form, Row, Col, Button, message, Input } from 'antd';
 import cx from 'classnames';
 import './style/index.less';
 import { InputH,SelectH, CheckboxH, RadioH, DatePickerH, RangePickerH, InputNumberH, InputLookUp } from '../FormMark';
+import Intler from '../Intler';
 
 const createForm = Form.create;
 
@@ -209,7 +210,7 @@ class SearchBar extends React.Component {
                 rules:[],
                 record,
                 options:{
-                  placeholder:`请输入${field.label}`,
+                  placeholder:`${Intler.getIntl("common.input.please.enter")}${field.label}`,
                 },
                 ...field.searchItem
               };
@@ -290,16 +291,16 @@ class SearchBar extends React.Component {
           </ComponentRow>
           <ComponentBtnGroup className="search-btns">
             <Button
-              title="查询"
+              title={Intler.getIntl("common.search")}
               type={type === 'grid' ? 'primary' : 'default'}
               onClick={e => this.searchForm()}
               htmlType="submit"
               icon="search"
             >
-              查询
+              {Intler.getIntl("common.search")}
             </Button>
-            <Button title="重置" onClick={e => this.resetForm()} icon="reload">
-              重置
+            <Button title={Intler.getIntl('common.reset')} onClick={e => this.resetForm()} icon="reload">
+              {Intler.getIntl("common.reset")}
             </Button>
           </ComponentBtnGroup>
         </Form>

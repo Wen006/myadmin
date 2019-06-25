@@ -99,7 +99,7 @@ export default {
   effects: {
     *getMenuData({ payload }, { put }) {
       const { routes, authority } = payload;
-      const {datas:menuData} =yield Global.callMethod({key:'SYS_MENU_INFO_GET_MENU',params:{}})
+      const {datas:menuData} =yield Global.callMethod({key:'SYS_MENU_QUERY_TREE',params:{}})
       // const menuData2 = filterMenuData(memoizeOneFormatter(routes, authority));
       const breadcrumbNameMap = memoizeOneGetBreadcrumbNameMap(menuData);
       yield put({

@@ -1,6 +1,7 @@
 import moment from 'moment';
 import React from 'react';
 import nzh from 'nzh/cn';
+import lodash from 'lodash'
 import { parse, stringify } from 'qs';
 
 export function fixedZero(val) {
@@ -175,6 +176,48 @@ export function formatWan(val) {
     );
   }
   return result;
+}
+
+/**
+ * 数组格式转树状结构
+ * @param   {array}     array
+ * @param   {String}    id
+ * @param   {String}    pid
+ * @param   {String}    children
+ * @return  {Array}
+ */
+export const arrayToTree = (array, id = 'id', pid = 'pid', children = 'children') => {
+  const data = lodash.cloneDeep(array);
+  const result = [];
+  const hash = {};
+  data.forEach((item, index) => {
+    hash[data[index][id]] = data[index];
+  });
+
+  data.forEach(item => {
+    const hashVP = hash[item[pid]];
+    if (hashVP) {
+      if (!hashVP[children]) (hashVP[children] = []);
+      hashVP[children].push(item);
+    } else {
+      result.push(item);
+    }
+  });
+  return result;
+};
+
+export function treeToArray(tree, key="children"){
+  return tree.reduce(function(con, item){
+    console.log(arguments)
+      const callee = arguments.callee;
+      con.push(item);
+      if (item[key] && item[key].length >0)
+          item[key].reduce(callee, con);
+      return con;
+  }, []).map(function(item){
+      item[key] = [];
+      return item;
+    })
 }
 
 export function toPromise(obj) {

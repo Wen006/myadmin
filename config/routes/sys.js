@@ -12,12 +12,26 @@
         {
           path: `/system/user/info/userInfoIndex`,
           name: '用户信息',
+          author: 'wennn',
           component: `./sys/sm/user/info/userInfoList`,
         },
         {
           path: `/system/user/info/userInfoEdit`,
           name: '修改信息',
+          author: 'wennn',
           component: `./sys/sm/user/info/userInfoEdit`,
+        },
+        {
+          path: `/system/menu/info/menuInfoIndex`,
+          name: '菜单管理',
+          author: 'wennn',
+          component: `./sys/sm/menu`,
+        },
+        {
+          path: `/system/role/info/roleInfoIndex`,
+          name: '角色管理',
+          author: 'wennn',
+          component: `./sys/sm/role/`,
         },
         // {
         //     path: `/system/menu/info/menuInfoIndex`,

@@ -64,8 +64,8 @@ export default class AgGridPro extends Component {
   addItems = [];
 
   defaultColDef = {
-    sortable: true,
-    resizable: true,
+    // sortable: true,
+    // resizable: true,
   };
 
   defaultGridOptions = {}

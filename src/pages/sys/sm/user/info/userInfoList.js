@@ -3,8 +3,7 @@
 /* eslint-disable prefer-destructuring */
 import React from 'react';
 import AgGridPro from '@/components/AgGrid/AgGridPro';
-import { AdRender, Act, VPro, Intler, Btns } from '@/components';
-import MPCConfirm from '@/components/MPCConfirm/MPCConfirm';
+import { AdRender, Act, VPro, Intler, Btns,MPCConfirm } from '@/components';
 import UserInfoStore from '@/stores/sys/user/UserInfoStore';
 import Navigator from '@/stores/common/Navigator';
 import PageHeaderWrapper from '@/components/PageHeaderWrapper';

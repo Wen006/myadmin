@@ -6,7 +6,7 @@ const lookUpConfigs = {
     desc: '用户选择---菜单管理，角色管理', // 解释干啥的，哪模块用到了，用逗号隔开
     auth: 'wennn', // 作者信息
     title: 'lookup.user.info.title', // 弹出框的标题 国际化key
-    api: 'SYS_USER_LIST', // service的api
+    api: 'SYS_USER_LIST_BY_DTO', // service的api
     columns: [
       {
         headerName: 'user.info.userName', // 国际化 key

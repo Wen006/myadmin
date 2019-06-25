@@ -88,14 +88,14 @@ export default {
     desc: '用户代码修改',
     auth: 'wennn',
   },
-  SYS_MENU_LIST: {
-    url: '/system/menu/listByDto',
-    method: 'POST',
-    mocktable: 'MENU_INFO',
-    mockhandler: 'list',
-  },
-  SYS_MENU_INFO_GET_MENU: {
+  SYS_MENU_QUERY_DATA: {
     url: '/sm/menu/queryMenuData',
+    method: 'get',
+    // mocktable: 'MENU_INFO',
+    // mockhandler: 'list',
+  },
+  SYS_MENU_QUERY_TREE: {
+    url: '/sm/menu/queryMenuTree',
     method: 'GET',
   },
   SYS_MENU_GETONE: {

@@ -4,8 +4,10 @@ import Act from './Action/Act';
 import MBox from './MBox';
 import VPro from './Viewer/VPro';
 // import ImportTerm from './Import/ImportTem';
+import MPCConfirm from './MPCConfirm'
+import Iconfont from './Iconfont'
 import Btns from './Button'
 import Intler from './Intler'
 import AutoRow from './AutoRow'
 
-export { DateRender, AdRender, Act, MBox, VPro, Btns,Intler,AutoRow };
+export { DateRender, AdRender, Act, MBox, VPro, Btns,Intler,AutoRow,Iconfont,MPCConfirm};
