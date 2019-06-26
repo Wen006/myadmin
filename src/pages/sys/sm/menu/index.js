@@ -163,7 +163,7 @@ class MenuInfoEdit extends React.Component {
   render() {
     const { form } = this.props;
     const { getFieldDecorator } = form;
-    const { checkedKeys, selectRow: item = {}, fetchTreeJson,searchValue } = this.menuInfoStore;
+    const { checkedKeys, selectRow, fetchTreeJson,searchValue } = this.menuInfoStore;
 
     const btns = ( 
       <Btns.Group className={styles.treeBtn}>
@@ -251,7 +251,6 @@ class MenuInfoEdit extends React.Component {
                   <AutoRow>
                     <FormItem label={Intler.getIntl('menu.info.icon')}>
                       {getFieldDecorator('icon', {
-                        initialValue: item.icon,
                       })(
                         <Input
                           disabled={!this.menuInfoStore.selectRow}
@@ -267,7 +266,7 @@ class MenuInfoEdit extends React.Component {
                               </Popover>
                             )
                           }
-                          prefix={<Iconfont type={item.icon || 'setting'} />}
+                          prefix={<Iconfont type={(selectRow&&selectRow.icon) || 'setting'} />}
                           onChange={this.handlerIconInput}
                         />
                       )}
@@ -290,7 +289,7 @@ class MenuInfoEdit extends React.Component {
                     />
                   </AutoRow>
                   <div className={styles.btnBar}>
-                    <Btns.save onClick={this.handleSave} disabled={!item} />
+                    <Btns.save onClick={this.handleSave} disabled={!selectRow} />
                   </div>
                 </Card>
               </Col>

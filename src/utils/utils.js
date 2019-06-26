@@ -186,7 +186,7 @@ export function formatWan(val) {
  * @param   {String}    children
  * @return  {Array}
  */
-export const arrayToTree = (array, id = 'id', pid = 'pid', children = 'children') => {
+export const arrayToTree = (array, id = 'id', pid = 'parentId', children = 'children') => {
   const data = lodash.cloneDeep(array);
   const result = [];
   const hash = {};
@@ -205,20 +205,7 @@ export const arrayToTree = (array, id = 'id', pid = 'pid', children = 'children'
   });
   return result;
 };
-
-export function treeToArray(tree, key="children"){
-  return tree.reduce(function(con, item){
-    console.log(arguments)
-      const callee = arguments.callee;
-      con.push(item);
-      if (item[key] && item[key].length >0)
-          item[key].reduce(callee, con);
-      return con;
-  }, []).map(function(item){
-      item[key] = [];
-      return item;
-    })
-}
+ 
 
 export function toPromise(obj) {
   if (obj != undefined) {

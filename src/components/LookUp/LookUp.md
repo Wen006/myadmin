@@ -1,4 +1,4 @@
-<LookUp lookUpKey="USER_INFO" 
+<LookUp lookUpKey="SM_USER" 
                 rowSelection="multiple" 
                 onOk={(select)=>{
                     console.log("onOk",select)

@@ -1,3 +1,5 @@
+/* eslint-disable react/jsx-no-bind */
+/* eslint-disable react/no-unused-state */
 /**
  * @description 角色管理和菜单公用一个model
  * @author wennn
@@ -7,9 +9,11 @@ import React, { Fragment } from 'react';
 import { Btns,Intler,MPCConfirm } from '@/components';
 import styles from '@/pages/common.less';
 import AgGridPro from '@/components/AgGrid/AgGridPro';
-import { Card,Icon, Input,Button } from 'antd';
+import { Card,Icon, Input,Button, Divider } from 'antd';
+import { observer } from 'mobx-react';
+import rStyles from './index.less'
   
- 
+@observer
 class RoleList extends React.Component {
     columns = [
         {
@@ -35,23 +39,9 @@ class RoleList extends React.Component {
         },
     ];
 
-    extra = (
-      <Button.Group className={styles.treeBtn}>
-        {/* <Button type="primary" onClick={this.handleSearch} icon="search" /> */}
-        <Button type="primary" onClick={() => {}} icon="plus" />
-        <MPCConfirm
-          type="del"
-          onConfirm={() => this.handleDel()}
-        >
-          <Button type="primary" onClick={() => {}} icon="delete" /> 
-        </MPCConfirm>
-      </Button.Group>
-    )
-
-     
-
   constructor(props) {
     super(props); 
+    this.roleStore = props.roleStore
   }
 
 
@@ -61,7 +51,10 @@ class RoleList extends React.Component {
   };
 
   handleSearch = (v) =>{  
-    this.agStore.submit({keyWord:v});
+    this.agStore.submit({keyWord:v}).then(d=>{
+      this.roleStore.clearInfo();
+      this.agStore.gridProApi.clearSelectRows();
+    });
   }
 
   handleChange = (e) =>{
@@ -77,43 +70,62 @@ class RoleList extends React.Component {
     this.agStore.gridProApi.autoSizeAll();
   }
 
+  handleOpe = (flag,data) =>{
+
+    switch (flag) {
+      case 'add':
+      case 'edit':
+        this.roleStore.editRecord(data);
+          break;
+      
+      default:
+        break;
+    }
+  }
+
   render() { 
 
     const agProps = {
         fetch: {
-            queryKey: 'SYS_USER_LIST_BY_DTO', // 后台api配置
+            queryKey: 'SYS_ROLE_LIST', // 后台api配置
             // queryMethod: Promise,                // 也可以自己定义请求方法 Promise对象
         },
         gridOptions: {
           rowSelection:'single',    // 是否多选
+          onSelectionChanged:this.roleStore.onSelectionChanged, 
           frameworkComponents: {
             actionCellRenderer: params  => (
-              <MPCConfirm
-                key="del"
-                type="del"
-                onConfirm={() => {
-                  this.handleOpe('delete', params.data);
-                }}
-              >
-                <Icon style={{ fontSize: '20px' }} type="delete" />
-              </MPCConfirm> 
+              <Fragment>
+                <MPCConfirm
+                  key="del"
+                  type="del"
+                  onConfirm={this.handleOpe.bind(this,'delete',params.data)}
+                >
+                  <Icon style={{ fontSize: '15px' }} type="delete" />
+                </MPCConfirm>
+              </Fragment>
             )
           }
         }
-        
     }
+ 
+
+    const extra = (
+      <Button.Group className={styles.treeBtn}>
+        {/* <Button type="primary" onClick={this.handleSearch} icon="search" /> */}
+        <Button type="primary" title={Intler.getIntl("common.title.new")} onClick={this.handleOpe.bind(this,'add',{})} icon="plus" />
+        <Button type="primary" title={'common.title.save'} onClick={this.handleOpe.bind(this,'save',{})} disabled={!this.roleStore.edittable} icon="save" />
+      </Button.Group>
+    )
    
     return (
       <div className={styles.treeWrap}>
         <Card 
-          title={
-            <Input.Search onSearch={this.handleSearch} placeholder={Intler.getIntl('common.search.keyword')} onChange={this.handleChange} />
-          }
-          bodyStyle={{
-            padding:'10px'
-          }}
+          title={<Input.Search onSearch={this.handleSearch} placeholder={Intler.getIntl('common.search.keyword')} onChange={this.handleChange} />}
+          // bodyStyle={{padding:'10px'}}
+          className={rStyles.content}
           bordered={false}
-          extra={this.extra}
+          extra={extra}
         >
           <AgGridPro 
             columnDefs={this.columns}

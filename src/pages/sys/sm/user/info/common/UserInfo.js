@@ -438,7 +438,7 @@ class UserInfo extends React.Component {
                 <InputLookUp
                   {...comFormItemProps}
                   label={Intler.getIntl('user.info.countryName')}
-                  lookUpKey="USER_INFO"
+                  lookUpKey="SM_USER"
                   modalKey="districtName"
                   id="countryName"
                   onClear={() => {

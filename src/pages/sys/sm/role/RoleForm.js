@@ -2,13 +2,15 @@
 /* eslint-disable react/destructuring-assignment */
 import React from 'react';
 import { Form } from 'antd';
-import {Intler, Btns, MBox} from '@/components'
+import {Intler, Btns, MBox, AutoRow} from '@/components'
 import { InputH } from '@/components/FormMark' 
 import lodash from 'lodash'
 import { toPromise } from '@/utils/utils'
 import {enBase64} from '@/utils/util.crypto'
 import Global from '@/stores/common/Global'
+import { observer } from 'mobx-react';
  
+@observer
 class RoleForm extends React.Component {
 
  
@@ -16,8 +18,10 @@ class RoleForm extends React.Component {
 
   constructor(props) {
     super(props);
-    const { form } = props
+    const { form,roleStore } = props
+    this.roleStore = roleStore
     this.form = form 
+    this.roleStore.initForm({form})
   }
 
   componentDidMount(){
@@ -25,7 +29,8 @@ class RoleForm extends React.Component {
     // 无论传入都是对象还是promise 还是funciton 一律转化未promise处理
     toPromise(record).then(data=>{
       this.setFormValue(data)
-    })
+    }) 
+    console.log("RoleForm") 
   }
 
   // 筛form值
@@ -66,41 +71,41 @@ class RoleForm extends React.Component {
     };
 
     const viewOptions = {
-        
+      disabled:!this.roleStore.edittable,
+      readOnly:!this.roleStore.edittable,
     }
 
     return (
-      <div style={{ width: '450px',margin:'0 auto' }}>
+      <div style={{ width: '450px' ,margin:'0 auto' }}>
         <InputH id="id" {...comFormItemProps} hidden />
         <Form layout="inline">
-          <InputH 
-            label={Intler.getIntl("user.info.userName")} 
-            id="userName" 
-            fieldOptions={{ rules: [] }} 
-            options={viewOptions} 
-            {...comFormItemProps}
-          />
-          <InputH 
-            label={Intler.getIntl("user.info.userCode")} 
-            id="userCode" 
-            fieldOptions={{ rules: [] }} 
-            options={viewOptions}
-            {...comFormItemProps}
-          />
-          <InputH
-            id="password"
-            label={Intler.getIntl("user.info.orgPassword")}
-            options={{
-              type: "password",
-            }}
-            {...comFormItemProps}
-          />
-          
+          <AutoRow colProps={{span:24,style:{marginTop:"10px"}}}>
+            <InputH 
+              label={Intler.getIntl("role.info.roleName")} 
+              id="roleName" 
+              fieldOptions={{ rules: [] }} 
+              options={viewOptions} 
+              {...comFormItemProps}
+            />
+            <InputH 
+              label={Intler.getIntl("role.info.roleCode")} 
+              id="roleCode" 
+              fieldOptions={{ rules: [] }} 
+              options={viewOptions}
+              {...comFormItemProps}
+            />
+            <InputH
+              label={Intler.getIntl("remark")}
+              id="remark"
+              options={viewOptions} 
+              {...comFormItemProps}
+            />
+          </AutoRow>
         </Form>
-        <Btns.Group>
+        {/* <Btns.Group>
           <Btns.back onClick={this.onClose} />
           <Btns.save onClick={this.onSave} />
-        </Btns.Group>
+        </Btns.Group> */}
       </div>
     );
   }

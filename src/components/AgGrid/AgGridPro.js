@@ -298,7 +298,7 @@ export default class AgGridPro extends Component {
         onRowSelected:(params)=>{
           const select = this.agGridStore.onSelectionChanged(params);
           if(onRowSelected) onRowSelected(params);
-        },
+        },...lodash.pick(gridOptions,['rowMultiSelectWithClick','suppressRowClickSelection'])
       })
       newColumnDefs.unshift({field:'',headerName:'',checkboxSelection:true,width:40,pinned:'left'})
     }

@@ -12,7 +12,7 @@ import { InputLookUp } from '@/components'
     form={form} 
     label={Intler.getIntl("user.info.mag")}  
     title="用户管理多多岛" 
-    lookUpKey="USER_INFO" 
+    lookUpKey="SM_USER" 
     rules={[]} 
     // 弹框弹出前调用 boolean
     openBefore={ 

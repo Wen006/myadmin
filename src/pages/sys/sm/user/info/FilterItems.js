@@ -32,7 +32,7 @@ export default (self) => [
     tableItem: {},
     searchItem:{
       type:'InputLookUp',
-      lookUpKey:'USER_INFO',
+      lookUpKey:'SM_USER',
       onOk:({selectedRows})=>{
         const {unitName,unitId} = selectedRows[0]
         self.setState({queryParams:{unitName,unitId,entityName:"",entityId:""}})
@@ -51,7 +51,7 @@ export default (self) => [
     formItem: {},
     searchItem: {
       type:'InputLookUp',
-      lookUpKey:'USER_INFO', 
+      lookUpKey:'SM_USER', 
       openBefore:()=>{ // 返回true 在弹出来选择
         const { unitId,unitName} = self.state.queryParams 
         if(unitName == "" || unitName == undefined) {

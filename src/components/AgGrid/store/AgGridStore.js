@@ -110,7 +110,7 @@ class AgGridStore {
     // 这里其实就是把分页至为 初始分页信息 然后查询
     this.pagination.pageNo = 1;
     this.clearSelect();
-    this.fetch(lodash.assign({ pageNo: 1 }, params));
+    return this.fetch(lodash.assign({ pageNo: 1 }, params));
   },400);
 
   // 从当前也查询
@@ -184,6 +184,12 @@ class AgGridStore {
     this.selectedRowKeys = selectedRows.map(it => it[this.rowKey]);
     this.selectedRows = selectedRows;
   };
+
+  clearRowData = () =>{
+    this.loading = true;
+    this.rowData = [];
+    this.loading = false;
+  }
  
 
   /* -------用户选择记录的函数 End------------------------------------------------*/

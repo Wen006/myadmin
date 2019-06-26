@@ -35,7 +35,7 @@ function userLogin(req, resp) {
   }
   console.log('用户登陆', userName, '==', password);
   if (
-    getTableData('USER_INFO').some(it => {
+    getTableData('SM_USER').some(it => {
       if (it.userName == userName) {
         currentUser = it;
         return true;

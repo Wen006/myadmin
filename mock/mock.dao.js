@@ -20,7 +20,7 @@ import { menuInfo, user } from './mock.data';
 const maxData = 300;
 
 const dbConfig = {
-  USER_INFO: {
+  SM_USER: {
     'userName': '@cname',
     'entityName|1': ['销售部', '总经理', '财务部', '人力资源部'],
     'entityCode|+1': 10000,
@@ -34,7 +34,12 @@ const dbConfig = {
     'address': '@city(true)',
     'remark': '@city(true)',
   },
-  MENU_INFO: {},
+  SM_ROLE: { 
+    'roleName|1': ['销售部', '总经理', '财务部', '人力资源部'],
+    'roleCode|+1': 10000,
+    'remark|1':['测试','说明','角色'],
+  },
+  SM_MENU: {},
   AD_LOV_LIST: {},
 };
 
@@ -45,7 +50,7 @@ Object.keys(dbConfig).forEach(it => {
 });
 
 // 无法模拟的数据在这里替换 在./dbData.js 里定义好数据
-dbs.USER_INFO.push(user);
+dbs.SM_USER.push(user);
 dbs.MENU_INFO = menuInfo;
 
 /**

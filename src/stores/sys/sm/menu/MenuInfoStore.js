@@ -65,7 +65,7 @@ export default class MenuInfoStore {
     this.selectRow = datas;
     this.selectedKeys = [`${datas.itemid}`];
     // 页面数据重新渲染 无需查询刷新
-    this.treeJson = this.listToTree(Object.values(this.menuMap)); 
+    this.treeJson = this.listToTree(lodash.values(this.menuMap)); 
     return datas;
   };
 
@@ -89,7 +89,7 @@ export default class MenuInfoStore {
       this.menuMap[it.itemid] = it;
       return it;
     })
-    this.treeJson = this.listToTree(Object.values(this.menuMap));
+    this.treeJson = this.listToTree(lodash.values(this.menuMap));
     return menuData;
   };
 
@@ -183,7 +183,7 @@ export default class MenuInfoStore {
     this.selectedKeys = [`${editNode.itemid}`];
     this.selectRow = editNode;
 
-    this.treeJson = this.listToTree(Object.values(this.menuMap));
+    this.treeJson = this.listToTree(lodash.values(this.menuMap));
     return editNode;
   };
 
@@ -199,7 +199,7 @@ export default class MenuInfoStore {
   handleSearch = lodash.debounce((value) =>{
     let expandedKeys = [];
     if (value) {
-      expandedKeys = Object.values(this.menuMap)
+      expandedKeys = lodash.values(this.menuMap)
         .filter(item => lodash.includes(item.menuName, value))
         .map(it => `${it.id || it.itemid}`);
     }

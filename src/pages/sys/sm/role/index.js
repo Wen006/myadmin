@@ -9,10 +9,16 @@ import PageHeaderWrapper from '@/components/PageHeaderWrapper';
 import { Row,Col, Card } from 'antd';
 import RoleList from './RoleList'
 import RoleInfo from './RoleInfo'
- 
+import RoleStore from './stores/RoleStore'
+  
 export default class RoleIndex extends React.Component {
   constructor(props) {
     super(props);
+    this.roleStore =  new RoleStore();
+  }
+
+  componentDidMount(){
+   
   }
  
   render() { 
@@ -22,12 +28,12 @@ export default class RoleIndex extends React.Component {
           <Row>
             <Col span={10}>
               <Card bordered hoverable={false}>
-                <RoleList />
+                <RoleList roleStore={this.roleStore} />
               </Card>
             </Col>
             <Col span={14}>
               <Card bordered hoverable={false}>
-              <RoleInfo />
+                <RoleInfo roleStore={this.roleStore} />
               </Card>
             </Col>
           </Row>
