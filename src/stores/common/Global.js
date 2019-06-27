@@ -16,12 +16,7 @@ class Global {
 
   // 统一请求方法
   callMethod = async ({ key, params }) => {
-    try { 
-      const {success=false,...other} = await callMethod({ key, params });
-      return {success,...other};
-    } catch (error) {
-      return {success:false}
-    }
+    return callMethod({ key, params });
   };
 
   // 带遮照 这个是对非弹框遮照

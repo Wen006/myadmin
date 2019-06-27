@@ -56,7 +56,13 @@ export async function callMethod({ key, params }) {
         lodash.pick(newOptions, ['method', 'url', 'headers'])
       )}`
     );
-  return request(url,newOptions);
+
+    try { 
+      const {success=false,...other} = await request(url,newOptions);
+      return {success,...other};
+    } catch (error) {
+      return {success:false}
+    }
 }
 
 // 这个用于某些业务自定义的请求 ，比如上传等等
