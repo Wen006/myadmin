@@ -19,7 +19,9 @@ window.addEventListener('sw.updated', e => {
     // Send skip-waiting event to waiting SW with MessageChannel
     await new Promise((resolve, reject) => {
       const channel = new MessageChannel();
+      console.log("MessageChannel",channel)
       channel.port1.onmessage = event => {
+        console.log("onmessage",event)
         if (event.data.error) {
           reject(event.data.error);
         } else {

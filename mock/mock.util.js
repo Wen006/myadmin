@@ -1,3 +1,5 @@
+/* eslint-disable global-require */
+/* eslint-disable import/no-dynamic-require */
 /* eslint-disable no-console */
 /* eslint-disable no-param-reassign */
 /* eslint-disable no-shadow */
@@ -20,6 +22,15 @@ try{
   api = apiConf.default || apiConf;
 }catch(e){
   console.log("装载配置url失败",e)
+}
+
+let apiProxy;
+try{ 
+  const appConfPath = join(__dirname,'../src/utils/app.conf.js');
+  const appConf = require(appConfPath);
+  apiProxy = (appConf.default || appConf).apiProxy;
+}catch(e){
+  console.log("装载配置apiConfPath失败",e)
 }
 // 全局code规范
 const codeMessage = {
@@ -120,7 +131,7 @@ const getMockPre = function(key) {
   if (method == 'FORMPOST') {
     method = 'POST';
   }
-  const pre = `${method} ${api[key].url}`;
+  const pre = apiProxy?`${method} ${apiProxy}${api[key].url}`:`${method} ${api[key].url}`;
   // console.log(`Mock 拦截器：${pre}`);
   return pre;
 };

@@ -12,7 +12,8 @@ db
       login:{
           status:'no',
           info:{},
-      }
+      },
+      apiUrl:{},
     },
     database: {},
   })

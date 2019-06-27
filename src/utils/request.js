@@ -1,3 +1,7 @@
+/* eslint-disable prefer-template */
+/* eslint-disable consistent-return */
+/* eslint-disable no-underscore-dangle */
+/* eslint-disable no-unused-vars */
 /* eslint-disable no-param-reassign */
 /**
  * @description 统一请求工具类
@@ -11,13 +15,13 @@ import lodash from 'lodash'
 import qs from 'qs'
 import { notification } from 'antd';
 import router from 'umi/router';
-import hash from 'hash.js';
-import Log from '@/utils/utils.log'
+import hash from 'hash.js'; 
 import { formatMessage, setLocale, getLocale } from 'umi/locale';
 
-
-const logger = new Log("Request")
-
+const ERRORSTR = {
+  NETWORK_ERROR:"Network Error",
+}
+ 
 const codeMessage = {
   200: '服务器成功返回请求的数据。',
   201: '新建或修改数据成功。',
@@ -35,6 +39,8 @@ const codeMessage = {
   503: '服务不可用，服务器暂时过载或维护。',
   504: '网关超时。',
 };
+
+const failedReturn = {success:false}
 
 // axios配置
 const defaultAxiosCfg = {
@@ -195,20 +201,63 @@ export default function request(url, option, expirys=false) {
   return fetch(url, option)
     // .then(checkStatus)
     // .then(response => cachedSave(response, hashcode))
-    .then(response => {
+    .then(response => { // 这个是业务后台异常处理过了 正常返回moduleReturn 结构
       // `data` 由服务器提供的响应
       // `status` 来自服务器响应的 HTTP 状态码
       // `statusText` 来自服务器响应的 HTTP 状态信息
       // `headers` 服务器响应的头
       // `config` 是为请求提供的配置信息
-      const { status, statusText, data } = response; 
-
+      const { status, statusText, data } = response;
+       // environment should not be used
+      if (status === 403) {
+        router.push('/exception/403');
+        return failedReturn;
+      }
+      if (status <= 504 && status >= 500) {
+        router.push('/exception/500');
+        return failedReturn;
+      }
+      const { code,success,...other } = data
+      if(!success&&code){
+        if(code.includes("ERROR")){
+          notification.error({
+            message: `出错了 ${code}`,
+            description:other.returnMessage,
+          });
+          return failedReturn;
+        }
+        if(code.includes("EXCEPTION")){
+          notification.error({
+            message: `不好意思，系统出了点问题 ${code}`,
+            description:other.returnMessage,
+          });
+          return failedReturn;
+        }
+        if(code.includes("SYSTEM_LOGIN_506") || code.includes("SYSTEM_LOGIN_503")){
+          notification.error({
+            message: `用户Session过期，请重新登陆。`,
+            description:other.returnMessage,
+            onClose:()=>{
+              window.g_app._store.dispatch({
+                type: 'login/logout',
+              });
+            }
+          });
+          return failedReturn;
+        }
+      }
       return data;
     })
-    .catch(e => {
-      console.log(e,'error')
-      const status = e.name;
-      if (status === 401) {
+    .catch(e => { // 这是网络请求的一些错误 status > 400 的 
+     const { data,status } =  e.response
+     const {error,// "Not Found"
+     message,     // "No message available"
+     path,        // "/api/sm/menu/queryMenuData"
+    //  status,      // 404
+     timestamp,   // 1561625814667
+    } = data;
+     
+      if (status === 401) { // 就是没有登陆 直接跳到登陆页面
         // @HACK
         /* eslint-disable no-underscore-dangle */
         window.g_app._store.dispatch({
@@ -216,17 +265,31 @@ export default function request(url, option, expirys=false) {
         });
         return;
       }
+
+      if(status > 403){
+        const description = codeMessage[status];
+        if(description){
+          notification.error({
+            message: `出错了 ${status}`,
+            description,
+          });
+          console.error("请求出错URL:"+path);
+        }
+        return failedReturn;
+      }
+      
       // environment should not be used
       if (status === 403) {
         router.push('/exception/403');
-        return;
+        return failedReturn; 
       }
       if (status <= 504 && status >= 500) {
         router.push('/exception/500');
-        return;
+        return failedReturn;
       }
       if (status >= 404 && status < 422) {
         router.push('/exception/404');
+        return failedReturn;
       }
     });
 }

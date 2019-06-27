@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-no-bind */
 /* eslint-disable no-case-declarations */
 /* eslint-disable prefer-destructuring */
-import React from 'react';
+import React, { Fragment } from 'react';
 import AgGridPro from '@/components/AgGrid/AgGridPro';
 import { AdRender, Act, VPro, Intler, Btns,MPCConfirm } from '@/components';
 import UserInfoStore from '@/stores/sys/user/UserInfoStore';
@@ -243,7 +243,9 @@ class UserInfoList extends React.Component {
             </Btns.Group>
             }
           pullDown={<SearchBar key="grid" type="grid" {...searchBarProps} onReady={(ref)=>{this.searchBarRef=ref}} />}
+          // pullDown={<Fragment>pullDown</Fragment>}
         >
+          {/* <Fragment>pullUp</Fragment> */}
           <SearchBar type="inline" group="simple" {...searchBarProps} onReady={(ref)=>{this.searchBarRef=ref}} />
         </Toolbar>
         <div className={styles.agListBox}>
