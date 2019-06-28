@@ -51,7 +51,7 @@ export default {
     auth: 'wennn',
   },
   SYS_USER_EDIT_BY_ID: {
-    url: '/sm/user/editUserInfo',
+    url: '/sm/user/getUserInfo',
     method: 'get',
     mocktable: 'SM_USER',
     mockhandler: 'getone',
@@ -973,7 +973,7 @@ export default {
     desc: '加签 转办  沟通 报账 人',
   },
   SYS_SELECT_USER_BY_ID: {
-    url: '/userInfo/editUserInfo',
+    url: '/userInfo/getUserInfo',
     method: 'GET',
     auth: 'wennn',
     mockhandler: 'getone',

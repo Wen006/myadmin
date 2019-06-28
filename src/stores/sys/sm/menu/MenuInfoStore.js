@@ -94,7 +94,7 @@ export default class MenuInfoStore {
   };
 
   listToTree = menuList => {
-    const treeJson = arrayToTree(menuList.filter(_ => _.mpid !== '-1'), 'itemid', 'mpid');
+    const treeJson = arrayToTree(menuList.filter(_ => _.mpid !== '-1'), 'itemid', 'parentId');
     return treeJson;
   };
 
