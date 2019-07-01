@@ -40,7 +40,13 @@ const dbConfig = {
     'remark|1':['测试','说明','角色'],
   },
   SM_MENU: {},
-  AD_LOV_LIST: {},
+  AD_LOV_LIST: {
+    listCode: "ECCLAIM_PAYMENT_TYPE",
+    listDesc: "0",
+    listName: "发票类型",
+    'status|1': ["0",'1'],
+    'usingFlag|1':['0','1'],
+  },
 };
 
 const dbs = {}; // 模拟数据库

@@ -219,21 +219,22 @@ export default function request(url, option, expirys=false) {
       }
       const { code,success,...other } = data
       if(!success&&code){
-        if(code.includes("ERROR")){
+        const vCode = lodash.toString(code);
+        if(vCode.includes("ERROR")){
           notification.error({
             message: `出错了 ${code}`,
             description:other.returnMessage,
           });
           return failedReturn;
         }
-        if(code.includes("EXCEPTION")){
+        if(vCode.includes("EXCEPTION")){
           notification.error({
             message: `不好意思，系统出了点问题 ${code}`,
             description:other.returnMessage,
           });
           return failedReturn;
         }
-        if(code.includes("SYSTEM_LOGIN_506") || code.includes("SYSTEM_LOGIN_503")){
+        if(vCode.includes("SYSTEM_LOGIN_506") || vCode.includes("SYSTEM_LOGIN_503")){
           notification.error({
             message: `用户Session过期，请重新登陆。`,
             description:other.returnMessage,

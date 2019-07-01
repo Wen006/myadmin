@@ -61,7 +61,8 @@ export async function callMethod({ key, params }) {
       const {success=false,...other} = await request(url,newOptions);
       return {success,...other};
     } catch (error) {
-      return {success:false}
+      console.error(error);
+      return {success:false};
     }
 }
 

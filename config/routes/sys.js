@@ -33,6 +33,12 @@
           author: 'wennn',
           component: `./sys/sm/role/`,
         },
+        {
+          path: `/system/ad/lovlist/lovlistIndex`,
+          name: '角色管理',
+          author: 'wennn',
+          component: `./sys/ad/lovlist/adLovList`,
+        },
         // {
         //     path: `/system/menu/info/menuInfoIndex`,
         //     name: 'MenuManage',

@@ -138,6 +138,16 @@ export default class GlobalHeaderRight extends PureComponent {
             console.log('enter', value); // eslint-disable-line
           }}
         />
+        <span>
+          <a
+            // target="_blank"
+            href="javascript:;"
+            // rel="noopener noreferrer"
+            className={styles.action}
+          >
+            <Icon type="lock" />
+          </a>
+        </span>
         <Tooltip title={formatMessage({ id: 'component.globalHeader.help' })}>
           <a
             target="_blank"

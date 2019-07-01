@@ -1,6 +1,6 @@
 
 module.exports = { 
-  apiProxy:'http://localhost:8888/api',
+  // apiProxy:'http://localhost:8888/api',
   // apiProxy:'/api',
   // 路由配置
   sysBoot: {

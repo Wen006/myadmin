@@ -11,12 +11,12 @@ export default {
     desc: '用户登陆',
     auth: 'wennn',
   },
-  SYSTEM_LOCALE_TIME: {
-    url: '/security/getTimeZoneDateTime',
-    method: 'get',
-    desc: '获取当前用的时间',
-    auth: 'wennn',
-  },
+  // SYSTEM_LOCALE_TIME: {
+  //   url: '/security/getTimeZoneDateTime',
+  //   method: 'get',
+  //   desc: '获取当前用的时间',
+  //   auth: 'wennn',
+  // },
   SYSTEM_CHECK: {
     url: '/security/check',
     method: 'get',
@@ -35,12 +35,12 @@ export default {
     desc: '用户退出登陆',
     auth: 'wennn',
   },
-  SYS_USER_INFO_CHANGE_ROLE: {
-    url: '/security/changeLoginRole',
-    method: 'GET',
-    desc: '用户切换角色',
-    auth: 'wennn',
-  },
+  // SYS_USER_INFO_CHANGE_ROLE: {
+  //   url: '/security/changeLoginRole',
+  //   method: 'GET',
+  //   desc: '用户切换角色',
+  //   auth: 'wennn',
+  // },
 
   SYS_USER_LIST_BY_DTO: {
     url: '/sm/user/listByDto',
@@ -112,6 +112,17 @@ export default {
     // mocktable: 'SM_ROLE',
     // mockhandler: 'list',
   },
+  SYS_AD_LOVLIST_BY_DTO: {
+    url: '/ad/lovlist/listByDto',
+    method: 'get',
+    mockhandler: 'list',
+    mocktable: 'AD_LOV_LIST',
+    desc: '字典表',
+    auth: 'wennn',
+  },
+
+
+
   SYS_MENU_GETONE: {
     url: '/system/menu/getOne',
     method: 'GET',

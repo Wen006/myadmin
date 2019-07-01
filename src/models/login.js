@@ -16,6 +16,7 @@ export default {
   namespace: 'login',
 
   state: {
+    returnMessage:'',
     status: undefined,
     isCaptcha: false, // 是否要验证码
     isEncode: true, // 是否加密
@@ -23,7 +24,9 @@ export default {
 
   effects: {
     *login({ payload }, { call, put }) {
-      const {success,datas,returnMessage} = yield call(callMethod, {key:api.sysUserInfoLogin,params:payload});
+      const  data = yield call(callMethod, {key:api.sysUserInfoLogin,params:payload});
+      console.log("login",data)
+      const {success,datas,returnMessage} = data
       yield put({
         type: 'changeLoginStatus',
         payload: {
@@ -85,7 +88,10 @@ export default {
 
   reducers: {
     changeLoginStatus(state, { payload }) {
+      console.log("changeLoginStatus",payload)
+
       setAuthority(payload.currentAuthority);
+      console.log("bakc")
       return {
         ...state,
         status: payload.status,
