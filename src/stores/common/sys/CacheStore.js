@@ -32,14 +32,14 @@ class CacheStore {
     if (this.codeMap[code]) return this.codeMap[code];
     if (!reqMap[code]) {
       reqMap[code] = callMethod({
-        key: 'SYS_AD_LOV_LIST_FIND_BY_CODE',
+        key: 'AD_LOV_LIST_FIND_BY_CODE',
         params: { listCode: code },
       });
     }
     const { success, datas } = await reqMap[code];
     if (success) {
-      this.codeMap[code] = datas;
-      return datas;
+      this.codeMap[code] = datas[code] || datas;
+      return this.codeMap[code];
     }
     return [];
   };

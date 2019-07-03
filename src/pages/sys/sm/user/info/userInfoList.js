@@ -18,28 +18,28 @@ class UserInfoList extends React.Component {
 
   columnDefs = [
     {
-      headerName: Intler.getIntl('user.info.userCode'),
+      headerName: Intler.getIntl('sm.user.userCode'),
       field: 'userCode',
       align: 'left',
       cellRenderer: 'infoCellRenderer',
     },
     {
-      headerName: Intler.getIntl('user.info.userName'),
+      headerName: Intler.getIntl('sm.user.userName'),
       field: 'userName',
       align: 'left',
     },
     {
-      headerName: Intler.getIntl('user.info.unitName'),
+      headerName: Intler.getIntl('sm.user.unitName'),
       field: 'unitName',
       align: 'left',
     },
     {
-      headerName: Intler.getIntl('user.info.entityName'),
+      headerName: Intler.getIntl('sm.user.entityName'),
       field: 'entityName',
       align: 'left',
     },
     {
-      headerName: Intler.getIntl('user.info.email'),
+      headerName: Intler.getIntl('sm.user.email'),
       field: 'email',
       align: 'left',
     },
@@ -156,6 +156,7 @@ class UserInfoList extends React.Component {
             >
               <UserInfo
                 record={params.data}
+                view
                 userInfoStore={this.userInfoStore}
                 onClose={() => {
                   this.vProApi.showViewer(false);
@@ -185,9 +186,9 @@ class UserInfoList extends React.Component {
                   <Act.Item text={Intler.getIntl("common.title.delete")} key="delete" />
                 </MPCConfirm> 
                 <VPro
-                  tiggerTitle={Intler.getIntl("user.info.pwd.update")}
+                  tiggerTitle={Intler.getIntl("sm.user.pwd.update")}
                   cache={false}
-                  title={Intler.getIntl("user.info.pwd.update")}
+                  title={Intler.getIntl("sm.user.pwd.update")}
                   onReady={r => {
                     this.vProApi = r;
                   }}
@@ -205,7 +206,7 @@ class UserInfoList extends React.Component {
                     this.handleOpe('resetpwd', record);
                   }}
                 >
-                  <Act.Item text={Intler.getIntl("user.info.pwd.reset")} key="reset_pwd" />
+                  <Act.Item text={Intler.getIntl("sm.user.pwd.reset")} key="reset_pwd" />
                 </MPCConfirm>
               </Act>
             );

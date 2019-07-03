@@ -52,7 +52,7 @@ const AlertMask = ({ agGridStore, activePanel, clearSelectRows }) => {
 
 @observer
 export default class AgGridPro extends Component {
-  static exports = ['reloadToolBar', 'getSelectRows', 'clearSelectRows', 'reset', 'submit','autoSizeAll','sizeToFit'];
+  static exports = ['reloadToolBar', 'getSelectRows','addItem', 'clearSelectRows', 'reset', 'submit','autoSizeAll','sizeToFit'];
 
   // 新增的时候保存最后一个记录的id
   cacheMaxItemId = undefined;
@@ -164,10 +164,14 @@ export default class AgGridPro extends Component {
   };
 
   // 新增一行数据
-  addItem = (initItem = {}, addInde = 0) => {
+  addItem = ({initItem = {}, addInde = this.agGridStore.rowData.length,selected=false}) => {
     const item = lodash.assign({ itemid: this.getItemId() }, initItem);
     const transaction = { add: [item], addIndex: addInde };
     this.gridApi.updateRowData(transaction);
+    const addRowNode = this.gridApi.getRowNode(this.agGridStore.rowData.length)
+    if(addRowNode){ 
+      addRowNode.setSelected(selected);
+    }
     this.addItems.push(item);
   };
 
@@ -308,7 +312,7 @@ export default class AgGridPro extends Component {
         <div className={styles.agTablePro}>
           <AgGridTop {...toolBar} toolPanel={toolPanel} />
           {/* <div style={{ padding: '0 4px' }}>{toolPanel && toolPanel()}</div> */}
-          {activePanel !== false && this.agGridStore.rowSelection != 'none' &&(
+          {activePanel !== false &&(
             <AlertMask
               key={this.agGridStore.selectedRowKeys.length}
               agGridStore={this.agGridStore}

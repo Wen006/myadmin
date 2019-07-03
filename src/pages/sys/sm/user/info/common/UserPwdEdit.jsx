@@ -15,10 +15,10 @@ class UserPwdEdit extends React.Component {
 
   passOptions = {
     rules: [
-      { required: true, message: Intler.getIntl("user.info.pwd.validator.require") },
-      { whitespace: true, message: Intler.getIntl("user.info.pwd.validator.not.null") },
-      { max: 20, message: Intler.getIntl("user.info.pwd.validator.not.long") },
-      {pattern: '(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[^a-zA-Z0-9]).{8,20}',message: Intler.getIntl("user.info.pwd.validator.rule")},
+      { required: true, message: Intler.getIntl("sm.user.pwd.validator.require") },
+      { whitespace: true, message: Intler.getIntl("sm.user.pwd.validator.not.null") },
+      { max: 20, message: Intler.getIntl("sm.user.pwd.validator.not.long") },
+      {pattern: '(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[^a-zA-Z0-9]).{8,20}',message: Intler.getIntl("sm.user.pwd.validator.rule")},
     ],
   };
 
@@ -86,7 +86,7 @@ class UserPwdEdit extends React.Component {
   rePwdValidator = (rule, value, callback) => {
     const newPwd = this.form.getFieldValue("newPassword");
     if (value && value !== newPwd) {
-      callback(Intler.getIntl('user.info.pwd.validator.repwderror'));
+      callback(Intler.getIntl('sm.user.pwd.validator.repwderror'));
     } else {
       callback();
     }
@@ -104,14 +104,14 @@ class UserPwdEdit extends React.Component {
         <InputH id="id" {...comFormItemProps} hidden />
         <Form layout="inline">
           <InputH 
-            label={Intler.getIntl("user.info.userName")} 
+            label={Intler.getIntl("sm.user.userName")} 
             id="userName" 
             fieldOptions={{ rules: [] }} 
             options={this.viewOptions} 
             {...comFormItemProps}
           />
           <InputH 
-            label={Intler.getIntl("user.info.userCode")} 
+            label={Intler.getIntl("sm.user.userCode")} 
             id="userCode" 
             fieldOptions={{ rules: [] }} 
             options={this.viewOptions}
@@ -119,7 +119,7 @@ class UserPwdEdit extends React.Component {
           />
           <InputH
             id="password"
-            label={Intler.getIntl("user.info.orgPassword")}
+            label={Intler.getIntl("sm.user.orgPassword")}
             options={{
               type: "password",
             }}
@@ -127,7 +127,7 @@ class UserPwdEdit extends React.Component {
           />
           <InputH
             id="newPassword"
-            label={Intler.getIntl("user.info.newPassword")}
+            label={Intler.getIntl("sm.user.newPassword")}
             options={{
               type: "password",
             }}
@@ -136,13 +136,13 @@ class UserPwdEdit extends React.Component {
           />
           <InputH
             id="rePassword"
-            label={Intler.getIntl("user.info.rePassword")}
+            label={Intler.getIntl("sm.user.rePassword")}
             options={{
               type: "password",
             }}
             fieldOptions={{
               rules: [
-                { required: true, message: Intler.getIntl("user.info.rePassword") },
+                { required: true, message: Intler.getIntl("sm.user.rePassword") },
                 { validator: this.rePwdValidator },
               ],
             }}

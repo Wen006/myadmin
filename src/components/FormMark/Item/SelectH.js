@@ -35,8 +35,8 @@ class SelectH extends React.PureComponent {
   codeToStdData = (dataSource = []) => {
     const dataMap = [];
     dataSource.forEach(item => {
-      const { CODE_NAME, CODE_VALUE } = item;
-      dataMap[CODE_VALUE] = CODE_NAME;
+      const { codeName, codeValue } = item;
+      dataMap[codeValue] = codeName;
     });
     return { dataMap, dataSource };
   };
@@ -85,10 +85,10 @@ class SelectH extends React.PureComponent {
           </Option>
         ) : null}
         {dataSource.map(ele => {
-          const { CODE_NAME, CODE_VALUE, LANGUAGE_CODE, ...other } = ele;
+          const { codeName, codeValue, LANGUAGE_CODE, ...other } = ele;
           return (
-            <Option key={CODE_VALUE} value={CODE_VALUE} {...other}>
-              {CODE_NAME}
+            <Option key={codeValue} value={codeValue} {...other}>
+              {codeName}
             </Option>
           );
         })}

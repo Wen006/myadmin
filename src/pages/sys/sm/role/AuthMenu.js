@@ -88,7 +88,10 @@ export default class AuthMenu extends React.Component{
               checkable={this.roleStore.edittable}
               className={styles.roleCon}
               checkedKeys={this.roleStore.menuCheckKeys}
-              onCheck={(checkedKeys)=>{
+              onCheck={(checkedKeys,b)=>{
+                const { halfCheckedKeys,checkedNodes} = b;
+                console.log(checkedKeys,halfCheckedKeys,b)
+                this.roleStore.halfCheckedKeys = halfCheckedKeys;
                 this.roleStore.menuCheckKeys = checkedKeys;
               }}
             >

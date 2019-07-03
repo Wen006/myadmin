@@ -22,12 +22,12 @@ export default class AdRender extends React.Component {
 
   componentDidMount() {
     if (this.dataSource.length > 0) {
-      const showItem = this.dataSource.filter(it => this.value == it.CODE_VALUE)[0] || {};
-      this.setState({ value: showItem.CODE_NAME || this.value });
+      const showItem = this.dataSource.filter(it => this.value == it.codeValue)[0] || {};
+      this.setState({ value: showItem.codeName || this.value });
     } else if (this.code) {
       Global.findAdLovByCode(this.code).then(data => {
-        const showItem = data.filter(it => this.value == it.CODE_VALUE)[0] || {};
-        this.setState({ value: showItem.CODE_NAME });
+        const showItem = data.filter(it => this.value == it.codeValue)[0] || {};
+        this.setState({ value: showItem.codeName });
       });
     }
   }

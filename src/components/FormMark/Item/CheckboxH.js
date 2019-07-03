@@ -48,16 +48,16 @@ const WrapCheck = (Ele, type) => {
     codeToStdData = (dataSource = []) => {
       const dataMap = [];
       dataSource.forEach(item => {
-        const { label, value, CODE_NAME, CODE_VALUE } = item;
+        const { label, value, codeName, codeValue } = item;
         if (label) {
           // 说明是自定义的
-          lodash.omit(item, ['CODE_NAME', 'CODE_VALUE']);
+          lodash.omit(item, ['codeName', 'codeValue']);
           dataMap[label] = value;
         } else {
           // 代码表的
-          lodash.omit(item, ['CODE_NAME', 'CODE_VALUE']);
-          lodash.assign(item, { label: CODE_NAME, value: CODE_VALUE });
-          dataMap[CODE_VALUE] = CODE_NAME;
+          lodash.omit(item, ['codeName', 'codeValue']);
+          lodash.assign(item, { label: codeName, value: codeValue });
+          dataMap[codeValue] = codeName;
         }
       });
       return { dataMap, dataSource };

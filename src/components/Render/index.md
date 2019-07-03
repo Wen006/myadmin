@@ -21,8 +21,8 @@
   <DateRender value={text} config={{format:'yyyy-MM-dd'}} />
   
   const dataSource=[
-    {CODE_NAME:'是',CODE_VALUE:"01"},
-    {CODE_NAME:'否',CODE_VALUE:"02"},
+    {codeName:'是',codeValue:"01"},
+    {codeName:'否',codeValue:"02"},
   ]
   <AdRender 
   	value={"01"} 
@@ -51,8 +51,8 @@ const columnDefs = [
           // code:'GENDER', 
           // 2.指定字典数据集
           dataSource:[
-            {CODE_NAME:"男",CODE_VALUE:"01"},
-            {CODE_NAME:"女",CODE_VALUE:"02"}
+            {codeName:"男",codeValue:"01"},
+            {codeName:"女",codeValue:"02"}
           ]
         }
       }
@@ -149,7 +149,7 @@ const gridProps ={
 | 参数       | 说明             | 类型   | 例子                               | 默认值 |
 | ---------- | ---------------- | ------ | ---------------------------------- | ------ |
 | code       | 对应代码表的code | string | COMMON_Y_N                         | -      |
-| dataSource | 指定字典数据源   | Array  | [{CODE_VALUE:'01',CODE_NAME:"是"}] | []     |
+| dataSource | 指定字典数据源   | Array  | [{codeValue:'01',codeName:"是"}] | []     |
 
 ```javascript
 const rowData = [{id:1,comYN:'Y',age:12}]
@@ -166,8 +166,8 @@ const columnDefs = [
             code:'COMMON_Y_N',
             //2.直接写上dataSource
             // dataSource: [
-            //   { CODE_NAME: '是', CODE_VALUE: '1' },
-            //   { CODE_NAME: '否', CODE_VALUE: '0' },
+            //   { codeName: '是', codeValue: '1' },
+            //   { codeName: '否', codeValue: '0' },
             // ],
           },
         },

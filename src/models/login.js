@@ -24,14 +24,13 @@ export default {
 
   effects: {
     *login({ payload }, { call, put }) {
-      const  data = yield call(callMethod, {key:api.sysUserInfoLogin,params:payload});
-      console.log("login",data)
-      const {success,datas,returnMessage} = data
+      const  {success,datas,returnMessage} = yield call(callMethod, {key:api.sysUserInfoLogin,params:payload});
+      
       yield put({
         type: 'changeLoginStatus',
         payload: {
           status:success?"ok":"error",
-          currentAuthority:datas.currentAuthority||'guest',
+          currentAuthority:(datas&&datas.currentAuthority)||'guest',
           returnMessage,
         },
       });
@@ -87,11 +86,8 @@ export default {
   },
 
   reducers: {
-    changeLoginStatus(state, { payload }) {
-      console.log("changeLoginStatus",payload)
-
-      setAuthority(payload.currentAuthority);
-      console.log("bakc")
+    changeLoginStatus(state, { payload }) { 
+      setAuthority(payload.currentAuthority); 
       return {
         ...state,
         status: payload.status,

@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react'
-import { Intler,MPCConfirm } from '@/components'
+import { Intler,MPCConfirm, Btns } from '@/components'
 import AgGridPro from '@/components/AgGrid/AgGridPro'
 import { Icon } from 'antd'
 
@@ -7,23 +7,23 @@ export default class AuthUser extends React.Component{
 
     columnDefs = [
         {
-          headerName: Intler.getIntl('user.info.userCode'),
+          headerName: Intler.getIntl('sm.user.userCode'),
           field: 'userCode',
           align: 'left',
           cellRenderer: 'infoCellRenderer',
         },
         {
-          headerName: Intler.getIntl('user.info.userName'),
+          headerName: Intler.getIntl('sm.user.userName'),
           field: 'userName',
           align: 'left',
         },
         {
-          headerName: Intler.getIntl('user.info.unitName'),
+          headerName: Intler.getIntl('sm.user.unitName'),
           field: 'unitName',
           align: 'left',
         },
         {
-          headerName: Intler.getIntl('user.info.entityName'),
+          headerName: Intler.getIntl('sm.user.entityName'),
           field: 'entityName',
           align: 'left',
         }
@@ -46,8 +46,11 @@ export default class AuthUser extends React.Component{
     render(){
 
         const agProps = {
+            // toolPanel:()=>(<div>
+            //     <Btns.add />
+            // </div>),
             fetch: {
-                queryKey: 'SYS_USER_LIST_BY_DTO', // 后台api配置
+                queryKey: 'SYS_USER_LIST_BY_ROLE', // 后台api配置
                 // queryMethod: Promise,                // 也可以自己定义请求方法 Promise对象
             },
             gridOptions: {

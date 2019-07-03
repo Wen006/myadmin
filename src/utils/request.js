@@ -48,6 +48,10 @@ const defaultAxiosCfg = {
   timeout: 1800000,
 };
 
+const ERROR_MSG={
+  "Network Error":"请检查一下网络"
+}
+
 // 添加请求拦截器
 axios.interceptors.request.use(conf => {
   lodash.assign(conf.headers,{
@@ -234,7 +238,7 @@ export default function request(url, option, expirys=false) {
           });
           return failedReturn;
         }
-        if(vCode.includes("SYSTEM_LOGIN_506") || vCode.includes("SYSTEM_LOGIN_503")){
+        if(vCode.includes("SYSTEM_LOGIN_506")){
           notification.error({
             message: `用户Session过期，请重新登陆。`,
             description:other.returnMessage,
@@ -250,14 +254,20 @@ export default function request(url, option, expirys=false) {
       return data;
     })
     .catch(e => { // 这是网络请求的一些错误 status > 400 的 
-     const { data,status } =  e.response
+     const { message } =  e
+     if(ERROR_MSG[message]){
+        notification.error({
+          message: `不好意思，出错了 ${message}`,
+          description:ERROR_MSG[message],
+        });
+       return lodash.assign({},failedReturn,{returnMessage:ERROR_MSG[message]})
+     }
+
      const {error,// "Not Found"
-     message,     // "No message available"
      path,        // "/api/sm/menu/queryMenuData"
-    //  status,      // 404
+     status,      // 404
      timestamp,   // 1561625814667
-    } = data;
-     
+    } = e.response;
       if (status === 401) { // 就是没有登陆 直接跳到登陆页面
         // @HACK
         /* eslint-disable no-underscore-dangle */

@@ -12,7 +12,6 @@ import { observer } from 'mobx-react';
  
 @observer
 class RoleForm extends React.Component {
-
  
   viewOptions = { disabled: true, readOnly: true }
 
@@ -25,42 +24,17 @@ class RoleForm extends React.Component {
   }
 
   componentDidMount(){
-    const {record} = this.props
+    const {record,onReady} = this.props
     // 无论传入都是对象还是promise 还是funciton 一律转化未promise处理
     toPromise(record).then(data=>{
       this.setFormValue(data)
     }) 
-    console.log("RoleForm") 
+    
   }
 
   // 筛form值
   setFormValue = (values) =>{
     this.form.setFieldsValue(lodash.pick(values,this.formFields))
-  }
- 
-  // 保存的时候
-  onSave = () =>{
-    this.form.validateFieldsAndScroll((error,values)=>{
-      if(!error){
-        if(this.props.onSave) {
-          this.props.onSave(values);
-        }else{
-          const params = {
-            ...values,
-            password:enBase64(values.password),
-            newPassword:enBase64(values.newPassword),
-          };
-          Global.callMethodWithSpin({key:'SYS_USER_SAVE_PWD',params}).then(({success,returnMessage})=>{
-            if(success) {
-              MBox.success(Intler.getIntl("common.save.success"));
-              this.onClose();
-            }else{
-              MBox.error(returnMessage);
-            }
-          })
-        }
-      }
-    })
   }
   
   render() { 
@@ -81,14 +55,14 @@ class RoleForm extends React.Component {
         <Form layout="inline">
           <AutoRow colProps={{span:24,style:{marginTop:"10px"}}}>
             <InputH 
-              label={Intler.getIntl("role.info.roleName")} 
+              label={Intler.getIntl("sm.role.roleName")} 
               id="roleName" 
               fieldOptions={{ rules: [] }} 
               options={viewOptions} 
               {...comFormItemProps}
             />
             <InputH 
-              label={Intler.getIntl("role.info.roleCode")} 
+              label={Intler.getIntl("sm.role.roleCode")} 
               id="roleCode" 
               fieldOptions={{ rules: [] }} 
               options={viewOptions}

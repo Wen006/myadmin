@@ -10,7 +10,7 @@ import { InputLookUp } from '@/components'
 <InputLookUp 
     id="userName" 
     form={form} 
-    label={Intler.getIntl("user.info.mag")}  
+    label={Intler.getIntl("sm.user.mag")}  
     title="用户管理多多岛" 
     lookUpKey="SM_USER" 
     rules={[]} 

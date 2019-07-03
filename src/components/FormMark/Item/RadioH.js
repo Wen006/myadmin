@@ -51,14 +51,14 @@ export default class RadioH extends React.PureComponent {
     const { dataSource = [] } = this.state;
     const item = {};
     dataSource.some(it => {
-      const { CODE_NAME, CODE_VALUE } = it;
-      if (initialValue == CODE_VALUE || initialValue == CODE_NAME) {
+      const { codeName, codeValue } = it;
+      if (initialValue == codeValue || initialValue == codeName) {
         lodash.assign(item, it);
         return true;
       }
       return false;
     });
-    return item.CODE_NAME;
+    return item.codeName;
   };
 
   valueFormatter = initialValue => {
@@ -114,14 +114,14 @@ export default class RadioH extends React.PureComponent {
         })(
           <RadioGroup {...otherOptions} style={reStyle}>
             {dataSource.map(ele => {
-              const { CODE_NAME, CODE_VALUE, LANGUAGE_CODE, ...other } = ele;
+              const { codeName, codeValue, LANGUAGE_CODE, ...other } = ele;
               return this.type == RadioH.defaultType.Radio ? (
-                <Radio key={CODE_VALUE} value={CODE_VALUE} {...other}>
-                  {CODE_NAME}
+                <Radio key={codeValue} value={codeValue} {...other}>
+                  {codeName}
                 </Radio>
               ) : (
-                <RadioButton key={CODE_VALUE} value={CODE_VALUE} {...other}>
-                  {CODE_NAME}
+                <RadioButton key={codeValue} value={codeValue} {...other}>
+                  {codeName}
                 </RadioButton>
               );
             })}

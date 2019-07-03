@@ -166,9 +166,9 @@ class AdLovList extends React.Component {
                   <Act.Item text={Intler.getIntl("common.title.delete")} key="delete" />
                 </MPCConfirm> 
                 <VPro
-                  tiggerTitle={Intler.getIntl("user.info.pwd.update")}
+                  tiggerTitle={Intler.getIntl("sm.user.pwd.update")}
                   cache={false}
-                  title={Intler.getIntl("user.info.pwd.update")}
+                  title={Intler.getIntl("sm.user.pwd.update")}
                   onReady={r => {
                     this.vProApi = r;
                   }}
@@ -182,7 +182,7 @@ class AdLovList extends React.Component {
                     this.handleOpe('resetpwd', record);
                   }}
                 >
-                  <Act.Item text={Intler.getIntl("user.info.pwd.reset")} key="reset_pwd" />
+                  <Act.Item text={Intler.getIntl("sm.user.pwd.reset")} key="reset_pwd" />
                 </MPCConfirm>
               </Act>
             );

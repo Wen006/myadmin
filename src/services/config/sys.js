@@ -100,24 +100,73 @@ export default {
     desc: '系统菜单查询',
     method: 'GET',
   },
+  SYS_MENU_DELETE: {
+    url: '/sm/menu/delete',
+    desc: '系统菜单删除，传id数组',
+    mocktable:'SM_MENU',
+    mockhandler:'delete',
+    method: 'DELETE',
+  },
+  SYS_MENU_SAVE_OR_UPDATE: {
+    url: '/sm/menu/saveOrUpdate',
+    desc: '系统菜单保存',
+    mocktable:'SM_MENU',
+    mockhandler:'saveorupdate',
+    method: 'POST',
+  },
   SYS_ROLE_LIST: {
     url: '/sm/role/listByDto',
     method: 'get',
     mocktable: 'SM_ROLE',
     mockhandler: 'list',
+    auth:'wennn',
+    desc:'# 角色管理获取角色列表'
+  },
+  SYS_ROLE_QUERY_FOR_USER: {
+    url: '/sm/role/querySmRoleForUser',
+    method: 'get',
+    mocktable: 'SM_ROLE',
+    mockhandler: 'list2',
+    auth:'wennn',
+    desc:'# 角色管理获取角色列表'
   },
   SYS_GET_MENUID_BY_ROLE: {
-    url: '/sm/role/getMenuIdByRole',
+    url: '/sm/role/getMenuIdByRoleId',
     method: 'get',
     // mocktable: 'SM_ROLE',
     // mockhandler: 'list',
+    desc:'# 角色管理通过角色获取选择的菜单id'
   },
-  SYS_AD_LOVLIST_BY_DTO: {
+  SYS_ROLE_SAVE_OR_UPDATE: {
+    url: '/sm/role/saveOrUpdate',
+    method: 'POST',
+    mockhandler: 'saveorupdate',
+    mocktable: 'SM_ROLE',
+    auth:'wennn',
+    desc:'#角色管理 保存角色信息'
+  },
+  SYS_USER_LIST_BY_ROLE: {
+    url: '/sm/user/listByRole',
+    method: 'get',
+    mockhandler: 'list',
+    mocktable: 'SM_USER',
+    desc: '#角色管理 通过角色获取该角色下用户信息',
+    auth: 'wennn', 
+  },
+  AD_LOVLIST_BY_DTO: {
     url: '/ad/lovlist/listByDto',
     method: 'get',
     mockhandler: 'list',
     mocktable: 'AD_LOV_LIST',
     desc: '字典表',
+    auth: 'wennn',
+  },
+  AD_LOV_LIST_FIND_BY_CODE: {
+    url: '/ad/lovlist/getAdLovListByCode',
+    method: 'get',
+    mockhandler: 'list',
+    mocktable: 'AD_LOV_LIST',
+    desc: '查询代码表通过listCode',
     auth: 'wennn',
   },
 
@@ -137,18 +186,8 @@ export default {
     mockhandler: 'delete',
     mocktable: 'SM_MENU',
   },
-  SYS_MENU_SAVE_OR_UPDATE: {
-    url: '/system/menu/saveOrUpdate',
-    method: 'POST',
-    mockhandler: 'saveorupdate',
-    mocktable: 'SM_MENU',
-  },
-  SYS_ROLE_LIST: {
-    url: '/system/role/listByDto',
-    method: 'POST',
-    mocktable: 'SM_ROLE',
-    mockhandler: 'list',
-  },
+
+
   SYS_ROLE_GETONE: {
     url: '/system/role/getOne',
     method: 'POST',
@@ -163,12 +202,7 @@ export default {
     mockhandler: 'delete',
     mocktable: 'SM_ROLE',
   },
-  SYS_ROLE_SAVE_OR_UPDATE: {
-    url: '/system/role/saveOrUpdate',
-    method: 'POST',
-    mockhandler: 'saveorupdate',
-    mocktable: 'SM_ROLE',
-  },
+
   SYS_MENUNEW_LIST: {
     url: '/system/menunew/listByDto',
     method: 'POST',
@@ -202,12 +236,7 @@ export default {
     mockhandler: 'list2',
     mocktable: 'AD_LOV_LIST',
   },
-  SYS_AD_LOV_LIST_FIND_BY_CODE: {
-    url: '/system/ad/adLovList/getAdLovListByCode',
-    method: 'POST',
-    desc: '查询代码表通过listCode',
-    auth: 'wennn',
-  },
+  
   SYS_MD_CURRENCY_LIST: {
     url: '',
     method: '',

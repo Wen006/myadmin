@@ -1,3 +1,3 @@
 export default {
-    'lookup.user.info.title':'选择用户',
+    'lookup.sm.user.title':'选择用户',
 }

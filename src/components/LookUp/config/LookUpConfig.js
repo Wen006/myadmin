@@ -5,27 +5,27 @@ const lookUpConfigs = {
   SM_USER: {
     desc: '用户选择---菜单管理，角色管理', // 解释干啥的，哪模块用到了，用逗号隔开
     auth: 'wennn', // 作者信息
-    title: 'lookup.user.info.title', // 弹出框的标题 国际化key
+    title: 'lookup.sm.user.title', // 弹出框的标题 国际化key
     api: 'SYS_USER_LIST_BY_DTO', // service的api
     columns: [
       {
-        headerName: 'user.info.userName', // 国际化 key
+        headerName: 'sm.user.userName', // 国际化 key
         field: 'userName',
       },
       {
-        headerName: 'user.info.userCode',
+        headerName: 'sm.user.userCode',
         field: 'userCode',
       },
     ],
     condition: {
       inputItems: [
         {
-          label: 'user.info.userName', // 国际化 key
+          label: 'sm.user.userName', // 国际化 key
           key: 'userName',
           type: 'string',
         },
         {
-          label: 'user.info.userCode',
+          label: 'sm.user.userCode',
           key: 'userCode',
           type: 'number',
         },
@@ -38,12 +38,12 @@ const lookUpConfigs = {
     desc: '菜单选择',
     columns: [
       {
-        headerName: 'menu.info.menuName',
+        headerName: 'sm.menu.menuName',
         field: 'menuName',
         width: '40%',
       },
       {
-        headerName: 'menu.info.menuCode',
+        headerName: 'sm.menu.menuCode',
         field: 'menuCode',
         width: '50%',
       },
@@ -51,12 +51,43 @@ const lookUpConfigs = {
     condition: {
       inputItems: [
         {
-          label: 'menu.info.menuName',
+          label: 'sm.menu.menuName',
           key: 'menuName',
         },
         {
-          label: 'menu.info.menuCode',
+          label: 'sm.menu.menuCode',
           key: 'menuCode',
+        },
+      ],
+    },
+  },
+
+  LOOKUP_SM_ROLE_LIST:{
+    desc: '用户选择---菜单管理，角色管理', // 解释干啥的，哪模块用到了，用逗号隔开
+    auth: 'wennn', // 作者信息
+    title: 'lookup.sm.role.title', // 弹出框的标题 国际化key
+    api: 'SM_ROLE_SELECT_FOR_USER', // service的api
+    columns: [
+      {
+        headerName: 'sm.role.roleName', // 国际化 key
+        field: 'userName',
+      },
+      {
+        headerName: 'sm.role.roleCode',
+        field: 'userCode',
+      },
+    ],
+    condition: {
+      inputItems: [
+        {
+          label: 'sm.role.roleName', // 国际化 key
+          key: 'roleName',
+          type: 'string',
+        },
+        {
+          label: 'sm.role.roleCode',
+          key: 'roleCode',
+          type: 'string',
         },
       ],
     },

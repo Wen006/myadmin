@@ -72,10 +72,10 @@ export default class SelectCell extends React.Component {
           </Option>
         ) : null}
         {dataSource.map(ele => {
-          const { CODE_NAME, CODE_VALUE, LANGUAGE_CODE, ...other } = ele;
+          const { codeName, codeValue, LANGUAGE_CODE, ...other } = ele;
           return (
-            <Option key={CODE_VALUE} value={CODE_VALUE} {...other}>
-              {CODE_NAME}
+            <Option key={codeValue} value={codeValue} {...other}>
+              {codeName}
             </Option>
           );
         })}

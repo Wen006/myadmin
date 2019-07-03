@@ -1,9 +1,8 @@
 import React, { Fragment, Suspense } from 'react'
 import { Tabs, Radio } from 'antd';
-import RoleForm from './RoleForm'
+import { observer } from 'mobx-react';
 import { Btns } from '@/components';
 import styles from './index.less'
-import { observer } from 'mobx-react';
 
 const { TabPane } = Tabs;
  

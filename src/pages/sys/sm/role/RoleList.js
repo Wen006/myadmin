@@ -17,13 +17,13 @@ import rStyles from './index.less'
 class RoleList extends React.Component {
     columns = [
         {
-            headerName: Intler.getIntl('menu.info.menuName'),
+            headerName: Intler.getIntl('sm.menu.menuName'),
             field: 'roleName',
             key: 'roleName',
             width: 120,
         },
         {
-            headerName: Intler.getIntl('menu.info.menuCode'),
+            headerName: Intler.getIntl('sm.menu.menuCode'),
             field: 'roleCode',
             key: 'roleCode',
             align: 'center',
@@ -42,6 +42,7 @@ class RoleList extends React.Component {
   constructor(props) {
     super(props); 
     this.roleStore = props.roleStore
+    this.form = props.form
   }
 
 
@@ -74,10 +75,15 @@ class RoleList extends React.Component {
 
     switch (flag) {
       case 'add':
+        const nData = this.roleStore.editRecord(data);
+        this.agStore.gridProApi.addItem({initItem:nData,selected:true})
+        break;
       case 'edit':
         this.roleStore.editRecord(data);
           break;
-      
+      case 'save':
+        this.roleStore.saveRoleInfo();
+        break;
       default:
         break;
     }

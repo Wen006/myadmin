@@ -1,7 +1,7 @@
 // import { observable } from 'mobx';
 import { callMethod } from '@/services/ServiceHandler';
 import db from '@/utils/util.db'
-// import { GSpinStore } from 'plugins/Loader/GSpin';
+import { GSpinStore } from '@/components/Loader/GSpin';
 import CacheStore from './sys/CacheStore';
 
 class Global {
@@ -21,9 +21,9 @@ class Global {
 
   // 带遮照 这个是对非弹框遮照
   callMethodWithSpin = async ({ key, params }) => {
-    // GSpinStore.show();
+    GSpinStore.show();
     const ret = await this.callMethod({ key, params });
-    // GSpinStore.hide();
+    GSpinStore.hide();
     return ret;
   };
 

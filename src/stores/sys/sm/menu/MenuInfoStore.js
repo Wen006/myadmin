@@ -8,12 +8,12 @@ import { arrayToTree } from '@/utils/utils';
 
 const api = {
   queryMenuData: 'SYS_MENU_QUERY_DATA',
-  saveOrUpdateMenuInfo: 'SYS_MENU_INFO_SAVE_OR_UPDATE',
+  saveOrUpdateMenuInfo: 'SYS_MENU_SAVE_OR_UPDATE',
   // getMenu: `${APIURL}/menuInfo/getMenu`,
   // listByDto: `${APIURL}/menuInfo/listByDto`,
   // queryMenuInfo: `${APIURL}/menuInfo/queryMenuInfo`,
   // queryMenuLangInfo: `${APIURL}/menuInfoLang/queryByParam`,
-  deleteMulti: `SYS_MENU_INFO_DELETE`,
+  deleteMulti: `SYS_MENU_DELETE`,
 };
 
 export default class MenuInfoStore {
@@ -53,9 +53,9 @@ export default class MenuInfoStore {
       params,
     });
     if (success) {
-      MBox.success(Intler.getIntl('SaveSuc'));
+      MBox.success(Intler.getIntl('common.save.success'));
     } else {
-      MBox.error(returnMessage);
+      MBox.error(returnMessage||Intler.getIntl('common.save.fail'));
       return {};
     }
     // 保存成功后将数据给当前编辑的变量（主要id） 然后跟新一下
@@ -150,7 +150,7 @@ export default class MenuInfoStore {
     const uniqueId = `${new Date().getTime()}`;
     const editNode = {
       id:'', // 页面有隐藏字段  避免是父亲id
-      bpid: 0,
+      parentId: 0,
       mpid: -1,
       icon: 'setting',
       remark: null,
@@ -166,10 +166,9 @@ export default class MenuInfoStore {
     lodash.assign(
       editNode,
       !selectRow
-        ? { bpid: 0, mpid: -1 }
+        ? { parentId: 0 }
         : {
-            bpid: selectRow.itemid,
-            mpid: selectRow.itemid,
+            parentId: selectRow.itemid,
           }
     );
 

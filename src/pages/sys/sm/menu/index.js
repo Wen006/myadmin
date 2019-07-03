@@ -20,7 +20,6 @@ import {
   Input,
   Icon,
   Tag,
-  Popconfirm,
   Divider,
   Popover,
 } from 'antd';
@@ -30,6 +29,7 @@ import { InputH, InputNumberH } from '@/components/FormMark';
 import { Btns, Iconfont, AutoRow, Intler,MPCConfirm } from '@/components';
 import { IconItems } from '@/utils/app.const';
 import PageHeaderWrapper from '@/components/PageHeaderWrapper';
+import {DefaultField} from '@/pages/plugins'
 
 import styles from '@/pages/common.less';
 import { observer } from 'mobx-react';
@@ -62,7 +62,7 @@ const ChoseIcon = ({ item, handleChoseIcon }) => {
  
 @observer
 class MenuInfoEdit extends React.Component {
-  formFields =["id","itemid","parentId","menuName","menuCode","parentName","taxisNo","icon","url","remark"];
+  formFields =["id","deleteFlag","modificationNum","createdBy","createdDate","lastUpdBy","lastUpdDate","originApp","originFlag","itemid","parentId","menuName","menuCode","parentName","taxisNo","icon","url","remark"];
 
   treeProps = [
     'autoExpandParent',
@@ -121,7 +121,6 @@ class MenuInfoEdit extends React.Component {
     const item = lodash.pick(selectRow, this.formFields);
     const { menuMap, expandedKeys } = this.menuInfoStore;
     item.parentName = item.parentId && menuMap[item.parentId] ? menuMap[item.parentId].menuName : '';
-    console.log(item)
     const nExpandedKeys = [].concat(expandedKeys);
     const { form } = this.props;
     if (!nExpandedKeys.some(it => it.itemid == item.itemid)) {
@@ -141,7 +140,7 @@ class MenuInfoEdit extends React.Component {
 
   // 删除主表
   handleDel = () => {
-    this.menuInfoStore.deleteMulti(this.menuInfoStore.checkedKeys.join(',')).then(success => {
+    this.menuInfoStore.deleteMulti(this.menuInfoStore.checkedKeys).then(success => {
       if (success) {
         this.props.form.resetFields();
       }
@@ -158,7 +157,6 @@ class MenuInfoEdit extends React.Component {
   handlerIconInput = e => {
     this.menuInfoStore.selectRow.icon = e.target.value;
   };
- 
 
   render() {
     const { form } = this.props;
@@ -219,29 +217,29 @@ class MenuInfoEdit extends React.Component {
               <Col span={17}>
                 <Card
                   loading={this.menuInfoStore.loading}
-                  title={Intler.getIntl('menu.info.title.basicinfo')}
+                  title={Intler.getIntl('sm.menu.title.basicinfo')}
                   disabled
                   bordered={false}
                 >
                   {/* 设置的隐藏域 */}
-                  <InputH id="id" hidden form={form} />
+                  <DefaultField form={form} />
                   <InputH id="itemid" hidden form={form} />
                   <InputH id="parentId" hidden form={form} />
                   {/* 显示区域 */}
                   <AutoRow {...autRowProps}>
-                    <InputH label={Intler.getIntl('menu.info.menuName')} id="menuName" {...comFormProps} />
-                    <InputH label={Intler.getIntl('menu.info.menuCode')} id="menuCode" {...comFormProps} />
+                    <InputH label={Intler.getIntl('sm.menu.menuName')} id="menuName" {...comFormProps} />
+                    <InputH label={Intler.getIntl('sm.menu.menuCode')} id="menuCode" {...comFormProps} />
                   </AutoRow>
                   <AutoRow {...autRowProps}>
                     <InputH
-                      label={Intler.getIntl('menu.info.parentName')}
+                      label={Intler.getIntl('sm.menu.parentName')}
                       id="parentName"
                       fieldOptions={{ rules: [] }}
                       {...comFormProps}
                       options={{ disabled: true }}
                     />
                     <InputNumberH
-                      label={Intler.getIntl('menu.info.taxisNo')}
+                      label={Intler.getIntl('sm.menu.taxisNo')}
                       id="taxisNo"
                       style={{width:'100px'}}
                       options={{style:{width:'100%'}}}
@@ -249,7 +247,7 @@ class MenuInfoEdit extends React.Component {
                     />
                   </AutoRow>
                   <AutoRow>
-                    <FormItem label={Intler.getIntl('menu.info.icon')}>
+                    <FormItem label={Intler.getIntl('sm.menu.icon')}>
                       {getFieldDecorator('icon', {
                       })(
                         <Input
@@ -260,7 +258,7 @@ class MenuInfoEdit extends React.Component {
                                 content={
                                   <ChoseIcon key="ChoseIcon" item={IconItems} handleChoseIcon={this.handlerIcon} />
                                 }
-                                title={Intler.getIntl('menu.info.icon')}
+                                title={Intler.getIntl('sm.menu.icon')}
                               >
                                 <Icon type="picture" />
                               </Popover>
@@ -274,7 +272,7 @@ class MenuInfoEdit extends React.Component {
                   </AutoRow>
                   <AutoRow colProps={{ span: 24 }}>
                     <InputH
-                      label={Intler.getIntl('menu.info.path')}
+                      label={Intler.getIntl('sm.menu.path')}
                       id="url"
                       fieldOptions={{ rules: [] }}
                       {...comFormProps}
@@ -282,7 +280,7 @@ class MenuInfoEdit extends React.Component {
                   </AutoRow>
                   <AutoRow colProps={{ span: 24 }}>
                     <InputH
-                      label={Intler.getIntl('menu.info.remark')}
+                      label={Intler.getIntl('sm.menu.remark')}
                       id="remark"
                       fieldOptions={{ rules: [] }}
                       {...comFormProps}

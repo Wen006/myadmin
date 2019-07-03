@@ -4,12 +4,13 @@ import { observable } from 'mobx';
 import Global from '@/stores/common/Global';
 import { arrayToTree } from '@/utils/utils'
 import {getNowTime} from '@/utils/util.date'
+import { MBox, Intler } from '@/components';
 
 export default class RoleStore {
 
-    formFields = ['remark','roleName','roleCode']
+    formFields = ['remark','roleName','roleCode','id']
 
-    selectRoleRowNodes;
+    selectRoleRowNode;
 
     editRow;
 
@@ -24,11 +25,13 @@ export default class RoleStore {
 
     @observable
     menuCheckKeys = []
+
+    halfCheckedKeys = [];
  
     // 角色切换时
     onSelectionChanged = (params) =>{ 
        this.selectRoleRowNode = params.api.getSelectedNodes()[0];
-       console.log('onSelectionChanged',this.selectRoleRowNode,params.api.getSelectedNodes())
+       console.log(this.selectRoleRowNode)
        if(this.selectRoleRowNode){
            this.editRecord(this.selectRoleRowNode.data)
        }else{
@@ -52,6 +55,7 @@ export default class RoleStore {
         this.editRow = data
         this.setFormValues(this.editRow);
         this.edittable = true;
+        return data;
     }
 
     // 初始化角色表单
@@ -101,7 +105,7 @@ export default class RoleStore {
     }
 
     fetchAuthMenuKey = async (roleInfo) =>{
-        const {success,datas} = await Global.callMethod({key:'SYS_GET_MENUID_BY_ROLE',params:{roleId:roleInfo.id}});
+        const {success,datas} = await Global.callMethod({key:'SYS_GET_MENUID_BY_ROLE',params:{id:roleInfo.id}});
         if(success) this.menuCheckKeys = datas;
         return this.menuCheckKeys;
     }
@@ -110,6 +114,39 @@ export default class RoleStore {
         if(this.userAgStore){this.userAgStore.submit({roleId:(roleInfo.id||-1)});}
     }
 
+    saveRoleInfo = () =>{
+        this.form.validateFieldsAndScroll((error,values)=>{
+            if(!error){
+                const params = {
+                    ...values,
+                    menuIds:this.getMenuKeysForSave(),
+                }
+                Global.callMethodWithSpin({key:'SYS_ROLE_SAVE_OR_UPDATE',params}).then(({success,datas,returnMessage})=>{
+                    if(success){
+                        MBox.success(Intler.getIntl("common.save.success"));
+                        if(this.selectRoleRowNode) this.selectRoleRowNode.updateData(lodash.assign(this.selectRoleRowNode.data,datas));
+                        this.setFormValues(datas);
+                    }else{
+                        MBox.error(returnMessage||Intler.getIntl("common.save.fail"))
+                    }
+                });    
+            }
+        })
+    }
+
+    // 获取叶子节点保存
+    getMenuKeysForSave = ()=>{
+        // if(!this.checkedNodes) return []; 
+        // const selectLeaf = []
+        // console.log(this.checkedNodes)
+        // this.checkedNodes.forEach(ele=>{
+        //     if(!ele.props.children){
+        //       selectLeaf.push(ele.key)
+        //     }
+        // })
+        // return selectLeaf;
+        return [].concat(this.menuCheckKeys).concat(this.halfCheckedKeys)
+    } 
 
 
 }
