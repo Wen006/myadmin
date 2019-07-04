@@ -145,6 +145,14 @@ export default {
     auth:'wennn',
     desc:'#角色管理 保存角色信息'
   },
+  SYS_ROLE_DELETE: {
+    url: '/sm/role/delete',
+    method: 'DELETE',
+    mockhandler: 'delete',
+    mocktable: 'SM_ROLE',
+    auth:'wennn',
+    desc:'#角色管理， 角色删除'
+  },
   SYS_USER_LIST_BY_ROLE: {
     url: '/sm/user/listByRole',
     method: 'get',
@@ -196,12 +204,7 @@ export default {
     mockhandler: 'getone',
     mocktable: 'SM_ROLE',
   },
-  SYS_ROLE_DELMULT: {
-    url: '/system/role/deleteMulit',
-    method: 'DELETE',
-    mockhandler: 'delete',
-    mocktable: 'SM_ROLE',
-  },
+
 
   SYS_MENUNEW_LIST: {
     url: '/system/menunew/listByDto',

@@ -29,15 +29,15 @@ const PageHeaderWrapper = ({ children, contentWidth, wrapperClassName, top, ...r
       {value => (
         <PageHeader
           wide={contentWidth === 'Fixed'}
-          home={<FormattedMessage id="menu.home" defaultMessage="Home" />}
+          home={<Fragment>{getIcon('home')}<FormattedMessage id="menu.home" defaultMessage="Home" /></Fragment>}
           {...value}
           key="pageheader"
           {...restProps}
           linkElement={Link}
           itemRender={item => {
-            if (item.locale) {
-              return <FormattedMessage id={item.locale} defaultMessage={item.title} />;
-            } 
+            // if (item.locale) {
+            //   return <FormattedMessage id={item.locale} defaultMessage={item.title} />;
+            // } 
             return <Fragment>{getIcon(item.icon)}{item.title || item.name}</Fragment>
           }}
         />

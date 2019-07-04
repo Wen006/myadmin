@@ -24,6 +24,8 @@ export default {
     'form.filter.condition.complex':'复杂查询',
     'common.save.success':'保存成功',
     'common.save.fail':'保存失败',
+    'common.delete.success':'删除成功',
+    'common.delete.fail':'删除失败',
     'common.submit.success':'提交成功',
     'common.submit.fail':'提交失败',
     'common.title.delete':'删除',

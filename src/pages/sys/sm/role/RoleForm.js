@@ -57,14 +57,14 @@ class RoleForm extends React.Component {
             <InputH 
               label={Intler.getIntl("sm.role.roleName")} 
               id="roleName" 
-              fieldOptions={{ rules: [] }} 
+              // fieldOptions={{ rules: [] }} 
               options={viewOptions} 
               {...comFormItemProps}
             />
             <InputH 
               label={Intler.getIntl("sm.role.roleCode")} 
               id="roleCode" 
-              fieldOptions={{ rules: [] }} 
+              // fieldOptions={{ rules: [] }} 
               options={viewOptions}
               {...comFormItemProps}
             />
@@ -72,6 +72,7 @@ class RoleForm extends React.Component {
               label={Intler.getIntl("remark")}
               id="remark"
               options={viewOptions} 
+              fieldOptions={{ rules: [] }} 
               {...comFormItemProps}
             />
           </AutoRow>

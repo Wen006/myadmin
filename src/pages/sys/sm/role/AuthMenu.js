@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react'
-import { Tree, Card } from 'antd'
+import { Tree, Card, Button } from 'antd'
 import styles from '@/pages/common.less'
 import { observer } from 'mobx-react';
 
@@ -85,13 +85,11 @@ export default class AuthMenu extends React.Component{
             <Tree
               showLine
               draggable
+              ref={r=>this.roleStore.treeRef=r}
               checkable={this.roleStore.edittable}
               className={styles.roleCon}
               checkedKeys={this.roleStore.menuCheckKeys}
-              onCheck={(checkedKeys,b)=>{
-                const { halfCheckedKeys,checkedNodes} = b;
-                console.log(checkedKeys,halfCheckedKeys,b)
-                this.roleStore.halfCheckedKeys = halfCheckedKeys;
+              onCheck={(checkedKeys)=>{
                 this.roleStore.menuCheckKeys = checkedKeys;
               }}
             >

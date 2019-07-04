@@ -104,8 +104,10 @@ class UserInfoList extends React.Component {
       case 'delete':
         const { selectedRowKeys } = this.agStore.getSelect();
         this.userInfoStore.deleteRecord(selectedRowKeys).then(success => {
-          if (success) this.handleSubmit();
-          this.setState({selectCount:0})
+          if (success) {
+            this.handleSubmit();
+            this.setState({selectCount:0})
+          }
         });
         break;
       default:

@@ -24,14 +24,13 @@ export default class RoleStore {
     treeJson=[];
 
     @observable
-    menuCheckKeys = []
+    menuCheckKeys = [] 
 
-    halfCheckedKeys = [];
+    treeRef;
  
     // 角色切换时
     onSelectionChanged = (params) =>{ 
        this.selectRoleRowNode = params.api.getSelectedNodes()[0];
-       console.log(this.selectRoleRowNode)
        if(this.selectRoleRowNode){
            this.editRecord(this.selectRoleRowNode.data)
        }else{
@@ -134,18 +133,22 @@ export default class RoleStore {
         })
     }
 
+    delRoleInfo = async (ids) =>{
+        const {success,datas,returnMessage} = await Global.callMethodWithSpin({key:'SYS_ROLE_DELETE',params:ids})
+        if(success){
+            MBox.success(Intler.getIntl("common.delete.success"));
+        }else{
+            MBox.error(returnMessage||Intler.getIntl("common.delete.fail"))
+        } 
+    }
+
     // 获取叶子节点保存
-    getMenuKeysForSave = ()=>{
-        // if(!this.checkedNodes) return []; 
-        // const selectLeaf = []
-        // console.log(this.checkedNodes)
-        // this.checkedNodes.forEach(ele=>{
-        //     if(!ele.props.children){
-        //       selectLeaf.push(ele.key)
-        //     }
-        // })
-        // return selectLeaf;
-        return [].concat(this.menuCheckKeys).concat(this.halfCheckedKeys)
+    getMenuKeysForSave = ()=>{ 
+        if(this.treeRef&&this.treeRef.tree){
+            const { halfCheckedKeys,checkedKeys } = this.treeRef.tree.state
+            return [].concat(halfCheckedKeys).concat(checkedKeys);
+        }
+        return  [];
     } 
 
 

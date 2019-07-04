@@ -161,7 +161,7 @@ class MenuInfoEdit extends React.Component {
   render() {
     const { form } = this.props;
     const { getFieldDecorator } = form;
-    const { checkedKeys, selectRow, fetchTreeJson,searchValue } = this.menuInfoStore;
+    const { selectRow, fetchTreeJson,searchValue } = this.menuInfoStore;
 
     const btns = ( 
       <Btns.Group className={styles.treeBtn}>
@@ -264,7 +264,7 @@ class MenuInfoEdit extends React.Component {
                               </Popover>
                             )
                           }
-                          prefix={<Iconfont type={(selectRow&&selectRow.icon) || 'setting'} />}
+                          prefix={<Iconfont type={(selectRow&&selectRow.icon) || 'xitongguanli'} />}
                           onChange={this.handlerIconInput}
                         />
                       )}

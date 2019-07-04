@@ -75,7 +75,7 @@ export default class MenuInfoStore {
       params,
     });
     if (success) {
-      MBox.success(Intler.getIntl('DelSuc'));
+      MBox.success(Intler.getIntl('common.delete.success'));
       this.fetchTreeJson();
     }else{
       MBox.error(returnMessage)
@@ -152,7 +152,7 @@ export default class MenuInfoStore {
       id:'', // 页面有隐藏字段  避免是父亲id
       parentId: 0,
       mpid: -1,
-      icon: 'setting',
+      icon: 'xitongguanli',
       remark: null,
       taxisNo: 0,
       url: '#',

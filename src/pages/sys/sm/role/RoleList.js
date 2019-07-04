@@ -84,6 +84,11 @@ class RoleList extends React.Component {
       case 'save':
         this.roleStore.saveRoleInfo();
         break;
+      case 'delete':
+          this.roleStore.delRoleInfo([data.id]).then(_=>{
+            this.handleSearch();
+          });
+          break;
       default:
         break;
     }
