@@ -23,15 +23,14 @@ const methods = {
     "saveorupdate":comSaveOrUpdate,
   }
    
-let proxyMockIntercept = {} 
+const proxyMockIntercept = {} 
 
 if(api){
     Object.keys(api).forEach(key=>{
-        let {mocktable,mockhandler} = api[`${key}`]
+        const {mocktable,mockhandler} = api[`${key}`]
         if(mocktable&&mockhandler&&methods[`${mockhandler}`]){
             proxyMockIntercept[`${getMockPre(key)}`] = methods[`${mockhandler}`]
         }
     })
 }
-
 export default proxyMockIntercept

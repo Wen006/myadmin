@@ -11,18 +11,6 @@ export default {
     desc: '用户登陆',
     auth: 'wennn',
   },
-  // SYSTEM_LOCALE_TIME: {
-  //   url: '/security/getTimeZoneDateTime',
-  //   method: 'get',
-  //   desc: '获取当前用的时间',
-  //   auth: 'wennn',
-  // },
-  SYSTEM_CHECK: {
-    url: '/security/check',
-    method: 'get',
-    desc: '这个是用于iframe的校验是否过期登陆的',
-    auth: 'wennn',
-  },
   SYS_USER_INFO_GETCURUSER: {
     url: '/security/success',
     method: 'get',
@@ -125,8 +113,8 @@ export default {
   SYS_ROLE_QUERY_FOR_USER: {
     url: '/sm/role/querySmRoleForUser',
     method: 'get',
-    mocktable: 'SM_ROLE',
-    mockhandler: 'list2',
+    // mocktable: 'SM_ROLE',
+    // mockhandler: 'list2',
     auth:'wennn',
     desc:'# 角色管理获取角色列表'
   },
@@ -161,7 +149,7 @@ export default {
     desc: '#角色管理 通过角色获取该角色下用户信息',
     auth: 'wennn', 
   },
-  AD_LOVLIST_BY_DTO: {
+  SYS_AD_LOVLIST_BY_DTO: {
     url: '/ad/lovlist/listByDto',
     method: 'get',
     mockhandler: 'list',
@@ -169,11 +157,13 @@ export default {
     desc: '字典表',
     auth: 'wennn',
   },
+
+
   AD_LOV_LIST_FIND_BY_CODE: {
     url: '/ad/lovlist/getAdLovListByCode',
     method: 'get',
-    mockhandler: 'list',
-    mocktable: 'AD_LOV_LIST',
+    // mockhandler: 'list',
+    // mocktable: 'AD_LOV_LIST',
     desc: '查询代码表通过listCode',
     auth: 'wennn',
   },

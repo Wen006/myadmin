@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-expressions */
 import React from 'react';
 import { Card } from 'antd';
-import UserInfoStore from '@/stores/sys/user/UserInfoStore';
+import UserInfoStore from '@/stores/sys/sm/user/UserInfoStore';
 import Navigator from '@/stores/common/Navigator';
 import PageHeaderWrapper from '@/components/PageHeaderWrapper';
 import UserInfo from './common/UserInfo';

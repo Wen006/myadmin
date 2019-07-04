@@ -4610,7 +4610,7 @@ function findCodeByCode(req, resp) {
 
 
 export default {
-    [`${getMockPre('SYS_AD_LOV_LIST_FIND_BY_CODE')}`]: findCodeByCode,
+    [`${getMockPre('AD_LOV_LIST_FIND_BY_CODE')}`]: findCodeByCode,
     // [`${getMockPre('SYS_AD_LOV_LIST_FIND_BY_CODE')}`]: findCodeByCode,
 };
   

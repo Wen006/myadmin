@@ -96,6 +96,14 @@ function userLogin(req, resp) {
   writeOk(resp, data);
 }
 
+ function getRoleForUser(req, resp) {
+  const data = {
+    allData:[],targetData:[]
+  };
+  console.log(data)
+  writeOk(resp, data);
+}
+
 
 
 export default {
@@ -104,4 +112,5 @@ export default {
   [`${getMockPre('SYS_USER_INFO_LOGINOUT')}`]: loginOut,
   [`${getMockPre('SYS_USER_INFO_CHANGE_ROLE')}`]: changeRole,
   [`${getMockPre('SYS_PARAMS')}`]: getSysParams,
+  [`${getMockPre('SYS_ROLE_QUERY_FOR_USER')}`]: getRoleForUser,
 };

@@ -35,7 +35,7 @@
         },
         {
           path: `/system/ad/lovlist/lovlistIndex`,
-          name: '角色管理',
+          name: '系统字典',
           author: 'wennn',
           component: `./sys/ad/lovlist/adLovList`,
         },

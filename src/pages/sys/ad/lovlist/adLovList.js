@@ -1,19 +1,22 @@
 /* eslint-disable react/jsx-no-bind */
 /* eslint-disable no-case-declarations */
 /* eslint-disable prefer-destructuring */
-import React, { Fragment } from 'react';
+import React from 'react';
 import AgGridPro from '@/components/AgGrid/AgGridPro';
 import { AdRender, Act, VPro, Intler, Btns,MPCConfirm } from '@/components';
-import UserInfoStore from '@/stores/sys/user/UserInfoStore';
+import AdLovlistStore from '@/stores/sys/ad/lovlist/AdLovlistStore';
 import Navigator from '@/stores/common/Navigator';
 import PageHeaderWrapper from '@/components/PageHeaderWrapper';
 import Toolbar from '@/components/Toolbar'
 import SearchBar from '@/components/SearchBar'
 import styles from '@/pages/common.less';
-import FilterItems from './FilterItems'
+import { Switch, Icon } from 'antd';
+import FilterItems from './common/FilterItems'
+import EditFrom from './common/EditForm'
 
 class AdLovList extends React.Component {
 
+  // 在这里写比在render里定义性能要高
   columnDefs = [
     {
       headerName: Intler.getIntl('ad.lovlist.listCode'),
@@ -29,12 +32,19 @@ class AdLovList extends React.Component {
     {
       headerName: Intler.getIntl('ad.lovlist.status'),
       field: 'status',
-      align: 'left',
+      align: 'center',
+      cellRenderer:'adRender',
+      cellRendererParams:{
+        config:{
+          code:'USING_FLAG',
+        }
+      }
     },
     {
       headerName: Intler.getIntl('ad.lovlist.usingFlag'),
       field: 'usingFlag',
-      align: 'left',
+      align: 'center',
+      cellRenderer:'usingRenderer',
     },
     {
       headerName: Intler.getIntl('ad.lovlist.listDesc'),
@@ -44,15 +54,15 @@ class AdLovList extends React.Component {
     {
       headerName: Intler.getIntl('action'),
       field: 'action',
+      algin: 'center',
       width: 180,
       cellRenderer: 'actionCellRenderer',
     },
   ];
 
   constructor(props) {
-    super(props);
-    const { userInfoStore } = props;
-    this.userInfoStore = userInfoStore || new UserInfoStore();
+    super(props); 
+    this.adLovlistStore = new AdLovlistStore();
     this.state = {
       selectCount: 0,
       queryParams:{}, // 存放lookup选择的条件
@@ -63,26 +73,16 @@ class AdLovList extends React.Component {
   handleOpe = (key, record) => {
     // 按钮的触发事件 key 和下面的按钮的key对应 record 代表 弹出删除的框 ok与no 的值
     if (key === 'delete') {
-      this.userInfoStore.deleteRecord([record.id]).then(success => {
+      this.adLovlistStore.deleteRecord([record.id]).then(success => {
         if (success) this.handleSubmit();
       });
-    } else if (key === 'edit') {
-      Navigator.forward({
-        url: '/system/user/info/userInfoEdit',
-        params: record,
-        title: '用户编辑',
-      });
-    } else if (key === 'editPassword') {
-      this.modalApi.showModal(true, record);
-    } else if (key === 'resetpwd') {
-      this.userInfoStore.resetPwd(record);
-    }
+    }  
   };
 
   handleBarOpe = ope => {
     switch (ope) {
       case 'add':
-        Navigator.forward({ url: '/system/user/info/userInfoEdit', params: {}, title: '新增用户' });
+       this.vProApi.showViewer(true);
         break;
       case 'edit':
         const record = this.agStore.getSelectOneRecord();
@@ -90,7 +90,7 @@ class AdLovList extends React.Component {
         break;
       case 'delete':
         const { selectedRowKeys } = this.agStore.getSelect();
-        this.userInfoStore.deleteRecord(selectedRowKeys).then(success => {
+        this.adLovlistStore.deleteRecord(selectedRowKeys).then(success => {
           if (success) this.handleSubmit();
           this.setState({selectCount:0})
         });
@@ -133,29 +133,23 @@ class AdLovList extends React.Component {
           infoCellRenderer: (
             params // 自定义详情链接组件
           ) => (
-            <VPro
-              tiggerTitle={params.value}
-              cache={false}
-              title="查看页面"
-              onReady={r => {
-                this.vProApi = r;
-              }}
-            >
-             Hello
-            </VPro>
+            <Act.Item onClick={this.handleBarOpe.bind(this,'view')} >
+             {params.value}
+            </Act.Item>
           ),
+          usingRenderer:params=><Switch 
+            checkedChildren={Intler.getIntl("switch.open")} 
+            unCheckedChildren={Intler.getIntl("switch.close")} 
+            defaultChecked={params.data.status=="1"}
+          />,
           actionCellRenderer: params => {
             // 自定义操作列
             const record = params.data;
             return (
               <Act>
-                <Act.Item
-                  text={Intler.getIntl("common.title.edit")}
-                  key="edit"
-                  onClick={() => {
-                    this.handleOpe('edit', record);
-                  }}
-                />
+                <Act.Item onClick={this.handleBarOpe.bind(this,'edit')} >
+                  <Icon type='edit' />
+                </Act.Item> 
                 <MPCConfirm
                   key="del"
                   type="del"
@@ -163,27 +157,11 @@ class AdLovList extends React.Component {
                     this.handleOpe('delete', record);
                   }}
                 >
-                  <Act.Item text={Intler.getIntl("common.title.delete")} key="delete" />
+                  <Act.Item>
+                    <Icon type='delete' />
+                  </Act.Item>
+                  {/* <Act.Item text={Intler.getIntl("common.title.delete")} key="delete" /> */}
                 </MPCConfirm> 
-                <VPro
-                  tiggerTitle={Intler.getIntl("sm.user.pwd.update")}
-                  cache={false}
-                  title={Intler.getIntl("sm.user.pwd.update")}
-                  onReady={r => {
-                    this.vProApi = r;
-                  }}
-                >
-                 hello
-                </VPro> 
-                <MPCConfirm
-                  key="reset"
-                  type="reset"
-                  onConfirm={() => {
-                    this.handleOpe('resetpwd', record);
-                  }}
-                >
-                  <Act.Item text={Intler.getIntl("sm.user.pwd.reset")} key="reset_pwd" />
-                </MPCConfirm>
               </Act>
             );
           },
@@ -226,6 +204,17 @@ class AdLovList extends React.Component {
         <div className={styles.agListBox}>
           <AgGridPro key="dataGrid" columnDefs={this.columnDefs} {...agPropPros} />
         </div>
+        <VPro
+          cache={false}
+          title={Intler.getIntl("common.title.edit")}
+          onReady={r => {
+           this.vProApi = r;
+         }}
+        >
+          <EditFrom 
+            adLovlistStore={this.adLovlistStore}
+          />
+        </VPro>
       </PageHeaderWrapper>
     );
   }

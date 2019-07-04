@@ -4,7 +4,7 @@ import lodash from 'lodash'
 
 const defaultHiddenFields = {
     id: {},
-    deleteFlag: {
+    deletedFlag: {
         defaultValue: '0',
     },
     modificationNum: {
