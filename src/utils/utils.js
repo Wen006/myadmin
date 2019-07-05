@@ -218,9 +218,6 @@ export function toPromise(obj) {
         resolve(fObj);
       })
     }
-    return new Promise((resolve, reject) => {
-      resolve(obj);
-    })
   }
   return new Promise((resolve, reject) => {
     resolve(obj);

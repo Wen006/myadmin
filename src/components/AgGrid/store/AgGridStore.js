@@ -94,7 +94,7 @@ class AgGridStore {
   rowSelection = SelectType.SINGLE
 
   // 通过构造函数 来初始化 信息
-  constructor({ queryKey, dataKey, queryMethod, pagination,rowKey = 'id', rowData,rowSelection = SelectType.SINGLE }) {
+  constructor({ queryKey, dataKey, queryMethod, pagination,rowKey = 'id', rowData=[],rowSelection = SelectType.SINGLE }) {
     this.dataKey = dataKey || 'data';
     this.queryMethod = queryMethod;
     this.queryKey = queryKey;

@@ -65,34 +65,31 @@ class AdLovList extends React.Component {
     this.adLovlistStore = new AdLovlistStore();
     this.state = {
       selectCount: 0,
-      queryParams:{}, // 存放lookup选择的条件
     };
   }
-
-  // 每一行的操作列函数
-  handleOpe = (key, record) => {
-    // 按钮的触发事件 key 和下面的按钮的key对应 record 代表 弹出删除的框 ok与no 的值
-    if (key === 'delete') {
-      this.adLovlistStore.deleteRecord([record.id]).then(success => {
-        if (success) this.handleSubmit();
-      });
-    }  
-  };
-
-  handleBarOpe = ope => {
+ 
+  handleBarOpe = (ope,record) => {
     switch (ope) {
       case 'add':
-       this.vProApi.showViewer(true);
+        Navigator.forward({url:'/system/ad/lovlist/lovlistEdit',title:'新增',params:{}})
+        break;
+      case 'view': 
+        // 把选择的记录  放在store中record变量中 然后调用侧边滑
+        this.adLovlistStore.record = !record ? this.agStore.getSelectOneRecord():record;
+        this.vProApi.showViewer(true);
         break;
       case 'edit':
-        const record = this.agStore.getSelectOneRecord();
-        this.handleOpe('edit', record);
+        const editRow = !record ? this.agStore.getSelectOneRecord():record;
+        Navigator.forward({url:'/system/ad/lovlist/lovlistEdit',title:'编辑',params:{...editRow}})
         break;
-      case 'delete':
-        const { selectedRowKeys } = this.agStore.getSelect();
+      case 'delete': 
+        const selectedRowKeys = record?[record.id]:this.agStore.getSelect().selectedRowKeys;
         this.adLovlistStore.deleteRecord(selectedRowKeys).then(success => {
-          if (success) this.handleSubmit();
-          this.setState({selectCount:0})
+          if (success) {
+            this.handleSubmit();
+            this.gridProApi.clearSelectRows();
+            this.setState({selectCount:0})
+          }
         });
         break;
       default:
@@ -132,30 +129,48 @@ class AdLovList extends React.Component {
           adRender: AdRender,
           infoCellRenderer: (
             params // 自定义详情链接组件
-          ) => (
-            <Act.Item onClick={this.handleBarOpe.bind(this,'view')} >
-             {params.value}
-            </Act.Item>
-          ),
+          ) => {
+            const re = params.data
+            // 1.方式1 查看 这个要预先放一个VPro标签和 要画出的内容
+            // return (
+            //   <Act.Item onClick={()=>this.handleBarOpe('view',params.data)}>
+            //     {params.value}
+            //   </Act.Item>
+            // )
+            // 2.方式2 查看
+            return  (
+              <VPro
+                tiggerTitle={params.value}
+                cache={false}
+                title={`方式2 ${Intler.getIntl("common.title.view")}`}
+                onReady={r => {
+                  this.vProApi = r;
+                }}
+              >
+                <EditFrom view record={re} />
+              </VPro>
+            )
+          },
           usingRenderer:params=><Switch 
             checkedChildren={Intler.getIntl("switch.open")} 
             unCheckedChildren={Intler.getIntl("switch.close")} 
             defaultChecked={params.data.status=="1"}
+            onChange={(checked)=>{
+              params.node.setDataValue("activeFlag",checked?"1":"0");
+            }}
           />,
           actionCellRenderer: params => {
             // 自定义操作列
             const record = params.data;
             return (
               <Act>
-                <Act.Item onClick={this.handleBarOpe.bind(this,'edit')} >
+                <Act.Item onClick={()=>this.handleBarOpe('edit',record)}>
                   <Icon type='edit' />
                 </Act.Item> 
                 <MPCConfirm
                   key="del"
                   type="del"
-                  onConfirm={() => {
-                    this.handleOpe('delete', record);
-                  }}
+                  onConfirm={()=>this.handleBarOpe('delete',record)}
                 >
                   <Act.Item>
                     <Icon type='delete' />
@@ -173,7 +188,7 @@ class AdLovList extends React.Component {
     const searchBarProps = {
       columns:FilterItems(this),
       onSearch: values => {
-        this.handleSubmit({...values,...this.state.queryParams});
+        this.handleSubmit({...values});
       }
     };
     
@@ -182,16 +197,16 @@ class AdLovList extends React.Component {
         <Toolbar
           appendLeft={
             <Btns.Group>
-              <Btns.add onClick={this.handleBarOpe.bind(this,'add')} /> 
+              <Btns.add onClick={()=>this.handleBarOpe('add')} /> 
               <Btns.update 
-                onClick={this.handleBarOpe.bind(this,'edit')} 
+                onClick={()=>this.handleBarOpe('edit')} 
                 disabled={selectCount != 1}
               />
               <MPCConfirm
                 key="del"
                 disabled={selectCount < 1}
                 type="del"
-                onConfirm={this.handleBarOpe.bind(this,'delete')}
+                onConfirm={()=>this.handleBarOpe('delete')}
               >
                 <Btns.del algin="left" disabled={selectCount < 1} key="delete" />
               </MPCConfirm>
@@ -204,15 +219,17 @@ class AdLovList extends React.Component {
         <div className={styles.agListBox}>
           <AgGridPro key="dataGrid" columnDefs={this.columnDefs} {...agPropPros} />
         </div>
+        {/* 侧边滑动 */}
         <VPro
           cache={false}
-          title={Intler.getIntl("common.title.edit")}
+          title={`方式1${Intler.getIntl("common.title.view")}`}
           onReady={r => {
            this.vProApi = r;
          }}
         >
           <EditFrom 
-            adLovlistStore={this.adLovlistStore}
+            view
+            record={()=> this.adLovlistStore.record}
           />
         </VPro>
       </PageHeaderWrapper>

@@ -34,10 +34,12 @@ export default class SwitchCell extends React.Component {
   };
 
   onChange = checked => {
+    const { onChange } = this.state
     this.setState({ checked });
+    if(onChange){onChange(checked)}
   };
 
   render() {
-    return <Switch onChange={this.onChange} {...this.state} />;
+    return <Switch {...this.state} onChange={this.onChange} />;
   }
 }

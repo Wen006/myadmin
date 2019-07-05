@@ -154,7 +154,32 @@ export default {
     method: 'get',
     mockhandler: 'list',
     mocktable: 'AD_LOV_LIST',
-    desc: '字典表',
+    desc: '# 字典管理 列表查询',
+    auth: 'wennn',
+  },
+
+  SYS_AD_LOVLIST_GET_INFO: {
+    url: '/ad/lovlist/getInfo',
+    method: 'get',
+    mockhandler: 'getone',
+    mocktable: 'AD_LOV_LIST',
+    desc: '# 字典管理 通过id查询 用于编辑和查看',
+    auth: 'wennn',
+  },
+  SYS_AD_LOVLIST_SAVE_INFO: {
+    url: '/ad/lovlist/saveAdInfo',
+    method: 'post',
+    mockhandler: 'saveorupdate',
+    mocktable: 'AD_LOV_LIST',
+    desc: '# 字典管理 保存',
+    auth: 'wennn',
+  },
+  SYS_AD_LOVLIST_DEL_INFO: {
+    url: '/ad/lovlist/delAdInfo',
+    method: 'delete',
+    mockhandler: 'delete',
+    mocktable: 'AD_LOV_LIST',
+    desc: '# 字典管理 删除',
     auth: 'wennn',
   },
 

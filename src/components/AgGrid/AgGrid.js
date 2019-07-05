@@ -18,14 +18,32 @@ import { getLocalText } from './store/AgGridStore';
 import GeneralAgGridColumns from './GeneralAgGridColumns';
 
 export default class AgGrid extends Component {
+
+  exports = [   
+    'getItemId',
+    'getDataSource',
+    'setDataSource',
+    'getSelectRows',
+    'getEditingCells',
+    'autoSizeAll',
+    'clearSelectRows',
+    'stopEditing',
+    'addItem',
+    'updateItem',
+    'removeItem',
+    'removeAll',
+    'getDelItems',
+    'getAddItems',
+    'reloadToolBar']
+    
   // 新增的时候保存最后一个记录的id
   cacheMaxItemId = undefined;
 
   // 删除的记录
-  delItems = [];
+  delItems = {};
 
   // 新增的记录
-  addItems = [];
+  addItems = {};
 
   // 默认属性
   defaultColDef = {
@@ -48,21 +66,8 @@ export default class AgGrid extends Component {
     this.gridColumnApi = params.columnApi;
     if ('onGridReady' in this.props) {
       // eslint-disable-next-line react/destructuring-assignment
-      params.agApi = {
-        getItemId: this.getItemId,
-        getDataSource: this.getDataSource,
-        getSelectRows: this.getSelectRows,
-        getEditingCells: this.getEditingCells,
-        autoSizeAll: this.autoSizeAll,
-        clearSelectRows: this.clearSelectRows,
-        stopEditing: this.stopEditing,
-        addItem: this.addItem,
-        updateItem: this.updateItem,
-        removeItem: this.removeItem,
-        removeAll: this.removeAll,
-        reloadToolBar: this.reloadToolBar,
-      }
-      this.props.onGridReady(params);
+      const gridProApi = lodash.pick(this,this.exports);
+      this.props.onGridReady(params,{gridProApi});
     }
     // this.gridApi.sizeColumnsToFit();
   };
@@ -86,6 +91,10 @@ export default class AgGrid extends Component {
     });
     return list;
   };
+
+  setDataSource = (rowData = []) =>{
+    this.gridApi.setRowData(rowData);
+  }
 
   // 获取选择的记录
   getSelectRows = () => {
@@ -121,7 +130,7 @@ export default class AgGrid extends Component {
     const item = lodash.assign({ itemid: this.getItemId() }, initItem);
     const transaction = { add: [item], addIndex: addInde };
     this.gridApi.updateRowData(transaction);
-    this.addItems.push(item);
+    this.addItems[item.itemid] = item;
   };
 
   updateItem = item => {
@@ -137,7 +146,8 @@ export default class AgGrid extends Component {
       transaction.remove = [item];
     }
     transaction.remove.forEach(dItem => {
-      if (dItem.id != null) this.delItems.push(dItem);
+      if (dItem.id != null) this.delItems[dItem.id]={...dItem,deletedFlag:'1'};
+      if (this.addItems[dItem.itemid]) delete this.addItems[dItem.itemid];
     });
     this.gridApi.updateRowData(transaction);
   };
@@ -147,6 +157,14 @@ export default class AgGrid extends Component {
     const ds = this.getDataSource();
     this.removeItem(ds);
   };
+
+  getDelItems = () => {
+    return lodash.values(this.delItems);
+  }
+
+  getAddItems = () => {
+    return lodash.values(this.addItems)    
+  }
 
   reloadToolBar = () => {
     const { toolBars } = this.props;

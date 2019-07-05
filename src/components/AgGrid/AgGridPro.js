@@ -164,7 +164,8 @@ export default class AgGridPro extends Component {
   };
 
   // 新增一行数据
-  addItem = ({initItem = {}, addInde = this.agGridStore.rowData.length,selected=false}) => {
+  addItem = ({initItem = {}, addInde,selected=false}) => {
+    addInde = addInde || this.agGridStore.rowData.length;
     const item = lodash.assign({ itemid: this.getItemId() }, initItem);
     const transaction = { add: [item], addIndex: addInde };
     this.gridApi.updateRowData(transaction);

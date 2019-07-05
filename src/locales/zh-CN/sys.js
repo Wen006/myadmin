@@ -33,6 +33,7 @@ export default {
     'common.title.save':'保存',
     'common.title.new':'新增',
     'common.title.edit':'编辑',
+    'common.title.view':'查看',
     'common.search.keyword':'关键字',
     'common.input.please.enter':'请输入',
     'common.search':'查询',

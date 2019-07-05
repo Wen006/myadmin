@@ -35,9 +35,15 @@
         },
         {
           path: `/system/ad/lovlist/lovlistIndex`,
-          name: '系统字典',
+          name: '系统字典 列表页面',
           author: 'wennn',
           component: `./sys/ad/lovlist/adLovList`,
+        },
+        {
+          path: `/system/ad/lovlist/lovlistEdit`,
+          name: '系统字典 编辑页面',
+          author: 'wennn',
+          component: `./sys/ad/lovlist/adLovEdit`,
         },
         // {
         //     path: `/system/menu/info/menuInfoIndex`,

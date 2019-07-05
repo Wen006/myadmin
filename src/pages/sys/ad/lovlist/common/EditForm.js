@@ -1,136 +1,181 @@
 /* eslint-disable no-unused-expressions */
 import React from 'react';
-import { Form, Card, Col } from 'antd';
-import { AdRender,Act,InputH,MPCConfirm } from '@/components/FormMark';
-import { Btns, Intler, MBox, AutoRow } from '@/components'; 
-import AgGrid from '@/components/AgGrid/AgGrid'
-import styles from '@/pages/common.less';   
-import Global from '@/stores/common/Global';  
+import { Form, Card, Icon, Switch } from 'antd';
+import { InputH } from '@/components/FormMark';
+import { Btns, Intler, AdRender, AutoRow ,Act,MPCConfirm} from '@/components'; 
+import AgGrid,{ NumberCell } from '@/components/AgGrid/AgGrid'
+import styles from '@/pages/common.less';    
 import { DefaultField } from '@/pages/plugins';
+import { getNowTime } from '@/utils/util.date'
+import { toPromise } from '@/utils/utils'
+import lodash from 'lodash' 
+import Navigator from '@/stores/common/Navigator';
+import AdLovlistStore from '@/stores/sys/ad/lovlist/AdLovlistStore';
+import { observer } from 'mobx-react';
+
 
 const getIntl = _ => Intler.getIntl(`ad.${_}`)
 
+@observer
 class EditForm extends React.Component {
-  formField = ["id","deletedFlag","modificationNum","createdBy","createdDate","lastUpdBy","lastUpdDate","originApp","originFlag","lovcode","listName"];
+
+  formField = ["id","deletedFlag","modificationNum","createdBy","createdDate","lastUpdBy","lastUpdDate","originApp","originFlag","listCode","listName"];
  
-  columnDefs = [
-    {
-      headerName: getIntl('lovcode.lovCode'),
-      field: 'lovCode',
-      align: 'left',
-      cellRenderer: 'infoCellRenderer',
-    },
-    {
-      headerName: getIntl('lovcode.lovName'),
-      field: 'lovName',
-      align: 'left',
-    },
-    {
-      headerName: getIntl('lovcode.seqNum'),
-      field: 'seqNum',
-      align: 'left',
-    },
-    {
-      headerName: getIntl('lovcode.activeFlag'),
-      field: 'activeFlag',
-      align: 'left',
-      cellRendererParams: {
-        config: {
-          code: 'USER_INFO_STATUS',
-        },
+  constructor(props) {
+    super(props);  
+    const { view,form } = props
+    this.form = form; 
+    this.view = view;
+    this.adLovlistStore = new AdLovlistStore();
+
+    const editable = !this.view;
+
+    this.columnDefs = [
+      {
+        headerName: getIntl('lovcode.lovCode'),
+        field: 'lovCode',
+        align: 'left',
+        editable,
+        cellRenderer: 'infoCellRenderer',
       },
-      cellRenderer: 'adRender',
-    },
-    {
-      headerName: Intler.getIntl('remark'),
-      field: 'remark',
-      align: 'left',
-    },
-    {
+      {
+        headerName: getIntl('lovcode.lovName'),
+        field: 'lovName',
+        editable,
+        align: 'left',
+      },
+      {
+        headerName: getIntl('lovcode.seqNum'),
+        field: 'seqNum',
+        editable,
+        cellEditorFramework: NumberCell,
+        cellEditorParams:{
+          config:{min:0}
+        },
+        align: 'left',
+      },
+      {
+        headerName: getIntl('lovcode.activeFlag'),
+        field: 'activeFlag',
+        align: 'left',
+        editable,
+        cellRenderer: 'usingRenderer',
+      },
+      {
+        headerName: Intler.getIntl('remark'),
+        field: 'remark',
+        align: 'left',
+        editable,
+      },
+    ];
+  
+    if(!this.view) this.columnDefs.push({
       headerName: Intler.getIntl('action'),
       field: 'action',
       width: 180,
       cellRenderer: 'actionCellRenderer',
-    },
-  ];
-  
-  constructor(props) {
-    super(props);  
-    this.state = {
-        USING_FLAG: [], 
-    };
-    Global.findAdLovByCode('USING_FLAG').then(data => {
-      this.setState({ USING_FLAG: data });
-    });
+    })
   }
 
   componentDidMount() { 
+    const { record } = this.props
+    toPromise(record).then(data=>{
+      // this.setFormValues(data);
+        this.adLovlistStore.getAdLovInfo(data.id).then(ds=>{
+          this.setFormValues(ds);
+        })
+    })
   } 
 
-  render() {
-    const { form,view } = this.props;
-     
+  setFormValues = ({detail=[],...values}) =>{
+    this.form.setFieldsValue(lodash.pick(values,this.formField));
+    setTimeout(()=>this.gridProApi.setDataSource(detail))
+  }
+
+  handleAdd = () =>{
+    const time = getNowTime();
+    this.gridProApi.addItem({
+      lovCode:time,
+      lovName:time,
+      seqNum:0,
+      activeFlag:'1',
+    }); 
+  }
+
+  handleDel = (params) =>{
+    this.gridProApi.removeItem(params.data);
+  }
+
+  handleSave = () =>{
+    this.form.validateFieldsAndScroll((errors,value)=>{
+      if (!errors) {
+          const ds = this.gridProApi.getDataSource();
+          const del = this.gridProApi.getDelItems();
+
+          const params = {
+            ...value,
+            detail:[...ds,...del],
+          }
+          this.adLovlistStore.saveAdInfo(params).then(ds=>{
+            if(!ds) return;
+            this.setFormValues(ds);
+          })
+      }
+    })
+       
+  }
+
+  render() { 
+    const { form } = this.props
     const comFormItemProps = {
-      view,
+      view:this.view,
       form,
     }; 
  
     const agPropPros = {
-        onGridReady: (params, agStore) => {
+        onGridReady: (params, {gridProApi}) => {
           this.gridApi = params.api;
-          this.gridColumnApi = params.columnApi;
-          this.gridProApi = params.gridProApi;
-          this.agStore = agStore;
+          this.gridProApi = gridProApi;
         },
         rowData:[],
         gridOptions: {
-          // rowSelection:'single',    // 是否多选
-        //   rowSelection:'multiple',    // 是否多选
-        //   onRowSelected:params=>{
-        //     const {selectedRowKeys} = this.agStore.getSelect();
-        //     this.setState({selectCount:selectedRowKeys.length},()=>{
-        //       this.agStore.gridProApi.reloadToolBar();
-        //     })
-        //   },
           frameworkComponents: {
             adRender: AdRender, 
-            actionCellRenderer: params => {
-              // 自定义操作列
-              const record = params.data;
-              return (
-                <Act> 
-                  <MPCConfirm
-                    key="del"
-                    type="del"
-                    onConfirm={() => {
-                      this.handleOpe('delete', record);
-                    }}
-                  >
-                    <Act.Item text={Intler.getIntl("common.title.delete")} key="delete" />
-                  </MPCConfirm>
-                </Act>
-              );
-            },
+            usingRenderer:params=><Switch 
+              disabled={this.view}
+              checkedChildren={Intler.getIntl("switch.open")} 
+              unCheckedChildren={Intler.getIntl("switch.close")} 
+              defaultChecked={params.data.activeFlag=="1"}
+              onChange={(checked)=>{
+                params.node.setDataValue("activeFlag",checked?"1":"0");
+              }}
+            />,
+            actionCellRenderer: params =>(<Act><MPCConfirm type="del" onConfirm={this.handleDel.bind(this,params)}><Icon type="delete" /></MPCConfirm></Act>),
           },
         },
       };
-
     return ( 
       <Form layout="inline" labelAlign="left">
-        <div className={styles.mainBox}>
-          <DefaultField form={form} />
-          <AutoRow>
-            <InputH label={getIntl("lovlist.listCode")} id="lovcode" {...comFormItemProps} />
-            <InputH label={getIntl("lovlist.listName")} id="listName" {...comFormItemProps} />
-          </AutoRow>
-          <Card title={getIntl('lovcode.title')} bordered={false} extra={<Btns.add/>} size="small">
-            <AgGrid key="dataGrid" columnDefs={this.columnDefs} {...agPropPros} />
-          </Card>
-            
-          <div className={styles.btnBar}> 
-            <Btns.save type="primary" />
+        <Card loading={this.adLovlistStore.loading} bordered={false} hoverable={false}>
+          <div className={styles.mainBox}>
+            <DefaultField form={form} />
+            <AutoRow>
+              <InputH label={getIntl("lovlist.listCode")} id="listCode" {...comFormItemProps} />
+              <InputH label={getIntl("lovlist.listName")} id="listName" {...comFormItemProps} />
+            </AutoRow>
+            <Card title={getIntl('lovcode.title')} bordered={false} extra={this.view?null:<Btns.add onClick={this.handleAdd.bind(this) }/>} size="small">
+              <AgGrid key="dataGrid" columnDefs={this.columnDefs} {...agPropPros} />
+            </Card>
+            {
+              this.view?null:( 
+                <div className={styles.btnBar}> 
+                  <Btns.back onClick={()=>{Navigator.goBack();}} />
+                  <Btns.save type="primary" onClick={this.handleSave.bind(this)}/>
+                </div>
+              )
+            } 
           </div>
-        </div>
+        </Card>
       </Form>
       
     );
