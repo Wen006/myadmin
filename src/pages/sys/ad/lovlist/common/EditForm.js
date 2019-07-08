@@ -36,12 +36,14 @@ class EditForm extends React.Component {
         field: 'lovCode',
         align: 'left',
         editable,
+        required: true,
         cellRenderer: 'infoCellRenderer',
       },
       {
         headerName: getIntl('lovcode.lovName'),
         field: 'lovName',
         editable,
+        required: true,
         align: 'left',
       },
       {

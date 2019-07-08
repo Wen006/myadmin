@@ -39,6 +39,7 @@ export default {
     'common.search':'查询',
     'common.reset':'重置',
     'common.action':'操作',
+    'common.required':'必填',
     'sm.menu.title.basicinfo':'菜单信息',
     'sm.menu.menuName':'菜单名称',
     'sm.menu.menuCode':'菜单代码',

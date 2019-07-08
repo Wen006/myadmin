@@ -16,6 +16,7 @@ import MonthCell from './Editer/MonthCell';
 import agStyles from './index.less';
 import './table.scss';
 import AgGridStore from './store/AgGridStore';
+import AgHeader from './AgHeader';
 
 // 选择提示
 const AlertMask = ({ agGridStore, activePanel, clearSelectRows }) => {
@@ -64,8 +65,8 @@ export default class AgGridPro extends Component {
   addItems = [];
 
   defaultColDef = {
-    // sortable: true,
-    // resizable: true,
+    sortable: true,
+    resizable: true,
   };
 
   defaultGridOptions = {}
@@ -273,16 +274,19 @@ export default class AgGridPro extends Component {
 
     // 处理自定义属性
     if (agProps.columnDefs) {
-      agProps.columnDefs.forEach(({ align, ...element }) => {
+      agProps.columnDefs.forEach(({ align,required=false,cellStyle,...element }) => {
         if (element.suppressMenu === undefined) element['suppressMenu'] = true;
         const eleProps = {};
-        if (!element.cellStyle) {
-          eleProps.cellStyle = align ? { textAlign: align } : { textAlign: 'center' };
-        } else {
-          eleProps.cellStyle = align ? { textAlign: align } : { textAlign: 'center' };
-          lodash.assign(eleProps.cellStyle, element.cellStyle);
+        const cellStyleFunc = params =>!cellStyle?(align?{textAlign:align}:{textAlign:'center'}):(typeof cellStyle == 'function'?{textAlign: 'center',...cellStyle(params)}:{textAlign: 'center',...cellStyle});
+        lodash.assign(element, eleProps,{
+          cellStyle:cellStyleFunc,
+        });
+        if(required){// 基本上用于必填提示，可以扩展
+          lodash.assign(element,{
+            headerComponentFramework:AgHeader, // 基本上用于必填，可以扩展
+            headerComponentParams:{required:true},
+          })
         }
-        lodash.assign(element, eleProps);
         newColumnDefs.push(element);
       });
     }

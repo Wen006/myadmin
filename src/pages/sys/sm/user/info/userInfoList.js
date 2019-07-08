@@ -21,17 +21,24 @@ class UserInfoList extends React.Component {
       headerName: Intler.getIntl('sm.user.userCode'),
       field: 'userCode',
       align: 'left',
+      required:true,
       cellRenderer: 'infoCellRenderer',
     },
     {
       headerName: Intler.getIntl('sm.user.userName'),
       field: 'userName',
-      align: 'left',
+      required:true,
+      editable:true,
+      align: 'center',
+      // cellStyle:{color:'red'},
+      cellStyle:(params)=>{
+        return {color:'green'}
+      }
     },
     {
       headerName: Intler.getIntl('sm.user.unitName'),
       field: 'unitName',
-      align: 'left',
+      align: 'right',
     },
     {
       headerName: Intler.getIntl('sm.user.entityName'),

@@ -1,3 +1,5 @@
+/* eslint-disable no-param-reassign */
+/* eslint-disable no-nested-ternary */
 // 编辑
 import React, { Component, Fragment } from 'react';
 import { AgGridReact } from 'ag-grid-react';
@@ -16,6 +18,7 @@ import AreaselectCell from './Editer/AreaselectCell';
 
 import { getLocalText } from './store/AgGridStore';
 import GeneralAgGridColumns from './GeneralAgGridColumns';
+import AgHeader from './AgHeader';
 
 export default class AgGrid extends Component {
 
@@ -97,9 +100,7 @@ export default class AgGrid extends Component {
   }
 
   // 获取选择的记录
-  getSelectRows = () => {
-    return this.gridApi.getSelectedRows();
-  };
+  getSelectRows = () => this.gridApi.getSelectedRows();
 
   // 获取编辑的单元格
   getEditingCells = () => {
@@ -116,9 +117,7 @@ export default class AgGrid extends Component {
   };
 
   // 清空选择
-  clearSelectRows = () => {
-    return this.gridApi.deselectAll();
-  };
+  clearSelectRows = () => this.gridApi.deselectAll();
 
   // 停止编辑
   stopEditing = () => {
@@ -158,13 +157,9 @@ export default class AgGrid extends Component {
     this.removeItem(ds);
   };
 
-  getDelItems = () => {
-    return lodash.values(this.delItems);
-  }
+  getDelItems = () => lodash.values(this.delItems)
 
-  getAddItems = () => {
-    return lodash.values(this.addItems)    
-  }
+  getAddItems = () => lodash.values(this.addItems)
 
   reloadToolBar = () => {
     const { toolBars } = this.props;
@@ -198,18 +193,23 @@ export default class AgGrid extends Component {
   render() {
     const { toolPanel, columnDefs = [], isView, ...agProps } = this.props;
     const newColumnDefs = [];
-    columnDefs.forEach(col => {
-      const { align, cellStyle, suppressMenu } = col;
-      if (suppressMenu === undefined) col['suppressMenu'] = true;
-      if (!cellStyle) {
-        col.cellStyle = align ? { textAlign: align } : { textAlign: 'left' };
-      } else {
-        col.cellStyle = align ? { textAlign: align } : { textAlign: 'left' };
-        lodash.assign(col.cellStyle, cellStyle);
-      };
-      newColumnDefs.push(col);
-    })
-
+    if(columnDefs){
+      columnDefs.forEach(({ align,required=false,cellStyle,...element }) => {
+        if (element.suppressMenu === undefined) element['suppressMenu'] = true;
+        const eleProps = {};
+        const cellStyleFunc = params =>!cellStyle?(align?{textAlign:align}:{textAlign:'center'}):(typeof cellStyle == 'function'?{textAlign: 'center',...cellStyle(params)}:{textAlign: 'center',...cellStyle});
+        lodash.assign(element, eleProps,{
+          cellStyle:cellStyleFunc,
+        });
+        if(required){// 基本上用于必填提示，可以扩展
+          lodash.assign(element,{
+            headerComponentFramework:AgHeader, // 基本上用于必填，可以扩展
+            headerComponentParams:{required:true},
+          })
+        }
+        newColumnDefs.push(element);
+      });
+    }
     const { toolBar } = this.state;
 
     return (
