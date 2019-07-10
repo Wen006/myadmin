@@ -36,7 +36,7 @@ class EditForm extends React.Component {
         field: 'lovCode',
         align: 'left',
         editable,
-        required: true,
+        // required: true,
         cellRenderer: 'infoCellRenderer',
       },
       {
@@ -44,6 +44,11 @@ class EditForm extends React.Component {
         field: 'lovName',
         editable,
         required: true,
+        valid:(value,data,field)=>{ // 自定义属性
+          console.log(value,data,field)
+          return (value+"").includes("2222");
+          // return false;
+        },
         align: 'left',
       },
       {
@@ -109,9 +114,12 @@ class EditForm extends React.Component {
   }
 
   handleSave = () =>{
+    // console.log(this.gridProApi.validValues())
+   
     this.form.validateFieldsAndScroll((errors,value)=>{
       if (!errors) {
-          const ds = this.gridProApi.getDataSource();
+          const ds =  this.gridProApi.validValues();
+          if(!ds) return;
           const del = this.gridProApi.getDelItems();
 
           const params = {

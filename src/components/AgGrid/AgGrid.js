@@ -1,3 +1,6 @@
+/* eslint-disable react/sort-comp */
+/* eslint-disable no-restricted-syntax */
+/* eslint-disable guard-for-in */
 /* eslint-disable no-param-reassign */
 /* eslint-disable no-nested-ternary */
 // 编辑
@@ -19,6 +22,10 @@ import AreaselectCell from './Editer/AreaselectCell';
 import { getLocalText } from './store/AgGridStore';
 import GeneralAgGridColumns from './GeneralAgGridColumns';
 import AgHeader from './AgHeader';
+import MBox from '../MBox';
+import Intler from '../Intler';
+
+const isEmpty = _ => _ == undefined || _ == null || _ == "";
 
 export default class AgGrid extends Component {
 
@@ -37,6 +44,7 @@ export default class AgGrid extends Component {
     'removeAll',
     'getDelItems',
     'getAddItems',
+    'validValues',
     'reloadToolBar']
     
   // 新增的时候保存最后一个记录的id
@@ -137,6 +145,52 @@ export default class AgGrid extends Component {
     this.gridApi.updateRowData(transaction);
   };
 
+
+  // 必填字段 {field:colDef}
+  requiredField = {}
+
+  // 获取要校验的字段
+  _getValidField = (fields) =>{
+    if(lodash.keys(this.requiredField).length > 0) return this.requiredField;
+    this.gridColumnApi.getAllColumns().forEach(({colDef})=>{
+      const { headerComponentParams } = colDef
+      if(headerComponentParams){
+        const { required = false,valid } = headerComponentParams
+        this.requiredField[colDef.field] = {...colDef,valid,required}
+      }
+    });
+    return this.requiredField;
+  }
+
+  // 校验必填项目  若有错误返回null 否则返回数据
+  validValues = (fields) =>{
+    this.stopEditing();
+    const _validObj = this._getValidField(fields);
+    let hasError = false;
+    const ds = []
+    this.gridApi.forEachNode((rowNode,index)=>{
+      const {data,rowIndex} = rowNode;
+      for(const key in _validObj){
+        const { valid,field,required } = _validObj[key]
+        if(!hasError){
+          if(required==true && isEmpty(data[key])){
+            hasError = true;
+            MBox.error(_validObj[key].headerName+ Intler.getIntl("common.required"));
+          } else if(!valid(data[field],data,field)){
+            hasError = true;
+          }
+          if(hasError)this.gridApi.startEditingCell({
+            rowIndex,
+            colKey: key,
+          });
+          ds.push(data);
+        }
+      }
+    })
+    if(hasError) return null;
+    return hasError?null:ds;
+  }
+
   // 删除数据
   removeItem = item => {
     this.gridApi.stopEditing();
@@ -194,18 +248,24 @@ export default class AgGrid extends Component {
     const { toolPanel, columnDefs = [], isView, ...agProps } = this.props;
     const newColumnDefs = [];
     if(columnDefs){
-      columnDefs.forEach(({ align,required=false,cellStyle,...element }) => {
+      columnDefs.forEach(({ align,required=false,valid=(data,field)=>true, cellStyle,...element }) => {
         if (element.suppressMenu === undefined) element['suppressMenu'] = true;
         const eleProps = {};
-        const cellStyleFunc = params =>!cellStyle?(align?{textAlign:align}:{textAlign:'center'}):(typeof cellStyle == 'function'?{textAlign: 'center',...cellStyle(params)}:{textAlign: 'center',...cellStyle});
+        const cellStyleFunc = params =>{
+          const style = !cellStyle?(align?{textAlign:align}:{textAlign:'center'}):(typeof cellStyle == 'function'?{textAlign: 'center',...cellStyle(params)}:{textAlign: 'center',...cellStyle});
+          // return element.editable?{background:'#e4d9d97d',...style}:style;
+          return style;
+        };
         lodash.assign(element, eleProps,{
           cellStyle:cellStyleFunc,
         });
-        if(required){// 基本上用于必填提示，可以扩展
+        if(element.editable){ // 可编辑的时候
+          // if(required){// 基本上用于必填提示，可以扩展
           lodash.assign(element,{
             headerComponentFramework:AgHeader, // 基本上用于必填，可以扩展
-            headerComponentParams:{required:true},
+            headerComponentParams:{required,valid},
           })
+          // }
         }
         newColumnDefs.push(element);
       });

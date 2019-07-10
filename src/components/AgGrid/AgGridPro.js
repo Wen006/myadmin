@@ -279,12 +279,12 @@ export default class AgGridPro extends Component {
         const eleProps = {};
         const cellStyleFunc = params =>!cellStyle?(align?{textAlign:align}:{textAlign:'center'}):(typeof cellStyle == 'function'?{textAlign: 'center',...cellStyle(params)}:{textAlign: 'center',...cellStyle});
         lodash.assign(element, eleProps,{
-          cellStyle:cellStyleFunc,
+          cellStyle:{...cellStyleFunc(),background:'#e4d9d97d'},
         });
-        if(required){// 基本上用于必填提示，可以扩展
+        if(element.editable){ // 基本上用于必填提示，可以扩展
           lodash.assign(element,{
             headerComponentFramework:AgHeader, // 基本上用于必填，可以扩展
-            headerComponentParams:{required:true},
+            headerComponentParams:{required},
           })
         }
         newColumnDefs.push(element);

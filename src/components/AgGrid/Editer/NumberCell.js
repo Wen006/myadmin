@@ -37,7 +37,7 @@ export default class NumberCell extends React.Component {
 
   getNumValue = () => {
     const { value = 0 } = this.state;
-    return this.isNumeric(value) ? value : value.replace(/[^0-9]/gi, '');
+    return this.isNumeric(value) ? value : `${value}`.replace(/[^0-9]/gi, '');
   };
 
   isNumeric = function isNumeric(value) {
