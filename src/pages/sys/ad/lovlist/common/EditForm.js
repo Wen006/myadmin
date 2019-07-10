@@ -44,11 +44,6 @@ class EditForm extends React.Component {
         field: 'lovName',
         editable,
         required: true,
-        valid:(value,data,field)=>{ // 自定义属性
-          console.log(value,data,field)
-          return (value+"").includes("2222");
-          // return false;
-        },
         align: 'left',
       },
       {

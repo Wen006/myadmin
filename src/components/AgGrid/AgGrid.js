@@ -176,15 +176,15 @@ export default class AgGrid extends Component {
           if(required==true && isEmpty(data[key])){
             hasError = true;
             MBox.error(_validObj[key].headerName+ Intler.getIntl("common.required"));
-          } else if(!valid(data[field],data,field)){
+          } else if(!valid({value:data[field],data,field})){
             hasError = true;
           }
           if(hasError)this.gridApi.startEditingCell({
             rowIndex,
             colKey: key,
           });
-          ds.push(data);
         }
+        ds.push(data);
       }
     })
     if(hasError) return null;
