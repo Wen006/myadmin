@@ -7,6 +7,7 @@
 import React, { Component, Fragment } from 'react';
 import { AgGridReact } from 'ag-grid-react';
 import lodash from 'lodash';
+import classnames from 'classnames'
 import Btns from '../Button'
 import styles from '@/pages/common.less';
 import AgGridTop from './AgGridTop';
@@ -17,7 +18,9 @@ import SelectCell from './Editer/SelectCell';
 import SwitchCell from './Editer/SwitchCell';
 import MonthCell from './Editer/MonthCell';
 import AreaselectCell from './Editer/AreaselectCell';
-// import './table.scss';
+import BlurCom from './BlurCom'
+
+import './table.scss';
 
 import { getLocalText } from './store/AgGridStore';
 import GeneralAgGridColumns from './GeneralAgGridColumns';
@@ -187,7 +190,7 @@ export default class AgGrid extends Component {
         ds.push(data);
       }
     })
-    if(hasError) return null;
+    // if(hasError) return null;
     return hasError?null:ds;
   }
 
@@ -248,16 +251,17 @@ export default class AgGrid extends Component {
     const { toolPanel, columnDefs = [], isView, ...agProps } = this.props;
     const newColumnDefs = [];
     if(columnDefs){
-      columnDefs.forEach(({ align,required=false,valid=(data,field)=>true, cellStyle,...element }) => {
-        if (element.suppressMenu === undefined) element['suppressMenu'] = true;
+      columnDefs.forEach(({ align,required=false,valid=({data,field})=>true, cellStyle,...element }) => {
+        if (element.suppressMenu === undefined) element.suppressMenu = true;
         const eleProps = {};
         const cellStyleFunc = params =>{
-          const style = !cellStyle?(align?{textAlign:align}:{textAlign:'center'}):(typeof cellStyle == 'function'?{textAlign: 'center',...cellStyle(params)}:{textAlign: 'center',...cellStyle});
+          const style = !cellStyle?(align?{textAlign:align}:{textAlign:'center'}):(typeof cellStyle === 'function'?{textAlign: 'center',...cellStyle(params)}:{textAlign: 'center',...cellStyle});
           // return element.editable?{background:'#e4d9d97d',...style}:style;
           return style;
         };
         lodash.assign(element, eleProps,{
           cellStyle:cellStyleFunc,
+          cellClass:classnames({'edit-cell-frame':element.editable}),
         });
         if(element.editable){ // 可编辑的时候
           // if(required){// 基本上用于必填提示，可以扩展
@@ -294,5 +298,7 @@ export default class AgGrid extends Component {
 }
 
 const AgGridAutoColumns = GeneralAgGridColumns(AgGrid);
+
+AgGrid.Blur = BlurCom(AgGrid);
 
 export { NumberCell, DateCell, MonthCell, LookUpCell, SelectCell, SwitchCell, AreaselectCell, AgGridAutoColumns };

@@ -1,6 +1,6 @@
+/* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable react/sort-comp */
 /* eslint-disable prefer-destructuring */
-
 import React from "react";
 import DragM from "dragm";
 

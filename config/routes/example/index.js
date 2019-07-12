@@ -6,6 +6,7 @@
 export default [
     // dashboard
     { path: '/', redirect: '/dashboard/home' },
+    { path: '/example', component: './example', },
     {
       path: '/dashboard',
       name: 'dashboard',
