@@ -208,6 +208,7 @@ export default class LookUpCell extends React.Component {
           ref={ref => {
             this.inputRef = ref;
           }}
+          readOnly
           onChange={this.updateInput}
           value={value}
           onClick={this.clickInput}

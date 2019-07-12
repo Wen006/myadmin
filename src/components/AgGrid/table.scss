@@ -7,7 +7,8 @@
     $font-size: 14px;
     $primary-color: #5B8CFF;
     $odd-row-background-color: #ffffff;
-    $hover-color: rgb(211, 235, 231);
+    // $hover-color: rgb(211, 235, 231);
+    $hover-color:#ecf5f47a;
     $foreground-color: rgba(0, 0, 0, 0.65);
     $cell-horizontal-border: 1px solid #e8e8e8;
     $accent-color: #FFFFF1;
@@ -41,7 +42,7 @@
     }
     .ag-theme-balham {
         .ag-row-selected{
-            background:gray;
+            background:#f3ecf57a;
         }
     }
     // .ag-row-hover>{
@@ -70,8 +71,26 @@
             background: transparent;
             border-radius: 10px;
             border: 1px solid #5B8CFF;
+            &::before{
+                background: gold;
+                display: block;
+                width: 20px;
+                height:20px;
+            }
+            &::after{
+                background: gold;
+                display: block;
+                padding: 10px !important;
+                width: 20px;
+                height:20px;
+            }
             
         }  
+
+        &>.edit-cell-frame.ag-column-hover{
+            // background: red;
+        }
+
         &>.edit-cell-frame.ag-cell-inline-editing{
             // background: #abc !important;
             border-radius: 0px;

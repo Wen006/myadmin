@@ -35,9 +35,6 @@ class EditForm extends React.Component {
         cellEditorParams:{
           config:{
             observable:this.subject,
-            onChange:(val)=>{
-              this.subject.next({lovName:val})
-            }
           }
         }
       },
@@ -48,6 +45,9 @@ class EditForm extends React.Component {
         cellEditorFramework: NumberCell,
         cellEditorParams:{
           config:{
+            onChange:(val)=>{
+              this.subject.next({Input:val})
+            },
             observable:this.subject,
           }
         },
@@ -71,7 +71,9 @@ class EditForm extends React.Component {
         cellEditorParams:{
           config:{
             // observable:this.subject,
-            lookUpKey:'SM_USER'
+            lookUpKey:'SM_USER',
+            modalKey:'userName',
+            nameKey:'lookup',
           }
         },
       },
@@ -101,6 +103,39 @@ class EditForm extends React.Component {
         headerName:"SwitchCell",
         field: 'switch',
         ...comProps,        
+        cellEditorFramework: SwitchCell,
+        cellEditorParams:{
+          config:{
+            observable:this.subject,
+          }
+        },
+      },
+      {
+        headerName:"SwitchCell1",
+        field: 'switch1',
+        // ...comProps,        
+        cellEditorFramework: SwitchCell,
+        cellEditorParams:{
+          config:{
+            observable:this.subject,
+          }
+        },
+      },
+      {
+        headerName:"SwitchCell2",
+        field: 'switch2',
+        ...comProps,        
+        cellEditorFramework: SwitchCell,
+        cellEditorParams:{
+          config:{
+            observable:this.subject,
+          }
+        },
+      },
+      {
+        headerName:"SwitchCell3",
+        field: 'switch2',
+        // ...comProps,        
         cellEditorFramework: SwitchCell,
         cellEditorParams:{
           config:{

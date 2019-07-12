@@ -54,7 +54,8 @@ export default (CellName,CellCofig)=>{
         
           // 创建后 聚焦
           afterGuiAttached = () => {
-            // this.inputRef.focus();
+            if(this._afterGuiAttached) this._afterGuiAttached();
+            this.inputRef.focus();
           };
         
           getValue = () => { 
