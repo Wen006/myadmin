@@ -12,12 +12,16 @@ export default {
   namespace: 'user',
 
   state: {
-    list: [],
+    status: false,
     currentUser: {},
   },
 
   effects: {
-    *fetchCurrent(_, { call, put }) {
+    *fetchCurrent(_, { call, put,select }) {
+      const userState = select(_=>_user)
+      if(userState.status == true){
+        return userState.currentUser;
+      }
       const {success,datas} = yield call(callMethod, {key:"SYS_USER_INFO_GETCURUSER",params:{}});
       if(success){
         yield put({
@@ -28,13 +32,35 @@ export default {
       }
       return success;
     },
+    *getUser(_, { call, put,select }) {
+      const userState = select(_=>_user)
+      if(userState.status == true){
+        return userState.currentUser;
+      }
+      const {success,datas} = yield call(callMethod, {key:"SYS_USER_INFO_GETCURUSER",params:{}});
+      if(success){
+        yield put({
+          type: 'saveCurrentUser',
+          payload: datas,
+          accessToken: datas.accessToken,
+        });
+        return datas;
+      }else{
+        yield put({
+          type:"login/logout",
+        })
+        return {};
+      } 
+    },
   },
 
   reducers: {
     saveCurrentUser(state, action) { 
       return {
         ...state,
+        status:!!action.payload,
         currentUser: action.payload || {},
+
       };
     },
     changeNotifyCount(state, action) {

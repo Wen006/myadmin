@@ -3,6 +3,7 @@ import { callMethod } from '@/services/ServiceHandler';
 import db from '@/utils/util.db'
 import { GSpinStore } from '@/components/Loader/GSpin';
 import CacheStore from './sys/CacheStore';
+const doDispatch = window.g_app._store.dispatch
 
 class Global {
   languageInfo = undefined;
@@ -38,10 +39,11 @@ class Global {
     // const { isCaptcha, district_version } = datas;
   };
 
-  // 兼容老的 这里直接缓存是有的代码表
-  setCodeMap = codeMap => this.cacheStore.setCodeMap(codeMap);
-
-  getCodeMap = () => this.cacheStore.codeMap
+  // 获取当前用户
+  getUser = async () =>{
+    return doDispatch({type:'user/getUser'});
+  }
+ 
 }
 
 export default new Global();
