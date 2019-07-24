@@ -6,7 +6,8 @@
 export default [
     // dashboard
     { path: '/', redirect: '/dashboard/home' },
-    { path: '/example', component: './example', },
+    { path: '/example/aggrid/main', component: './example/AgGrid/AgGridMain' },
+    { path: '/example/store/main', component: './example/Store/StoreMain' },
     {
       path: '/dashboard',
       name: 'dashboard',

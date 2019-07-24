@@ -3,7 +3,33 @@
 // eslint-disable-next-line no-extend-native
 // eslint-disable-next-line func-names
 import moment from 'moment';
+
 const dataFormat = 'yyyy-MM-dd HH:mm:ss';
+
+
+// 时间戳转 Date
+export function longToDate(longtime) {
+  if (!longtime) return null;
+  let date = null;
+  try {
+    date = new Date(typeof longtime === 'string' ? parseInt(longtime) : longtime);
+  } catch (error) {
+    return null;
+  }
+  return date;
+}
+
+export function formatDate(ds, matStr = 'yyyy-MM-dd') {
+  if (ds instanceof Date) {
+    return ds.format(matStr);
+  }
+  try {
+    return ds && new Date(ds).format(matStr);
+  } catch (e) {
+    console.warn(ds, 'is not date or long');
+  }
+  return ds;
+}
 
 // 获取当前时间
 export function getNow() {
@@ -42,29 +68,6 @@ export function momentToLong(dStr) {
   return finlTime;
 }
 
-// 时间戳转 Date
-export function longToDate(longtime) {
-  if (!longtime) return null;
-  let date = null;
-  try {
-    date = new Date(typeof longtime === 'string' ? parseInt(longtime) : longtime);
-  } catch (error) {
-    return null;
-  }
-  return date;
-}
-
-export function formatDate(ds, matStr = 'yyyy-MM-dd') {
-  if (ds instanceof Date) {
-    return ds.format(matStr);
-  }
-  try {
-    return ds && new Date(ds).format(matStr);
-  } catch (e) {
-    console.warn(ds, 'is not date or long');
-  }
-  return ds;
-}
 
 export function fixedZero(val) {
   return val * 1 < 10 ? `0${val}` : val;

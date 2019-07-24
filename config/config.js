@@ -32,11 +32,11 @@ const plugins = [
       },
       ...(!process.env.TEST && os.platform() === 'darwin'
         ? {
-            dll: {
-              include: ['dva', 'dva/router', 'dva/saga', 'dva/fetch'],
-              exclude: ['@babel/runtime'],
-            },
-            hardSource: false,
+            // dll: {
+            //   include: ['dva', 'dva/router', 'dva/saga', 'dva/fetch'],
+            //   exclude: ['@babel/runtime'],
+            // },
+            // hardSource: false,
           }
         : {}),
     },
@@ -64,7 +64,7 @@ export default {
   },
   treeShaking: true,
   targets: {
-    ie: 11,
+    ie: 9,
   },
   // 路由配置
   routes: pageRoutes,
@@ -83,7 +83,7 @@ export default {
   //   '/api/': {
   //     target: 'http://localhost:8888/api/',
   //     changeOrigin: true,
-  //     pathRewrite: { '^/server': '' },
+  //     pathRewrite: { '^/api': '' },
   //   },
   // },
   ignoreMomentLocale: true,

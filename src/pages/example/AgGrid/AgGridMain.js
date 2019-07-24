@@ -4,13 +4,13 @@
 import React from 'react';
 import { Form, Card, Icon, Switch } from 'antd'; 
 import { Btns, AdRender ,Act,MPCConfirm} from '@/components'; 
-import AbC  from '@/components/AgGrid/Editer/config' 
+// import AbC  from '@/components/AgGrid/Editer/config' 
 import { getNowTime } from '@/utils/util.date' 
 import * as Rxjs from 'rxjs'
 import lodash from 'lodash'
-import AgGrid, {LookUpCell} from '@/components/AgGrid/AgGrid'
+import AgGrid, {LookUpCell,InputCell,NumberCell,SelectCell,MonthCell,DateCell,SwitchCell} from '@/components/AgGrid/AgGrid'
 
-const {InputCell,NumberCell,SelectCell,MonthCell,DateCell,SwitchCell} = AbC 
+// const {InputCell,NumberCell,SelectCell,MonthCell,DateCell,SwitchCell} = AbC 
 
 class EditForm extends React.Component {
   
@@ -31,12 +31,12 @@ class EditForm extends React.Component {
         headerName: "InputCell",
         field: 'Input', 
         ...comProps,
-        cellEditorFramework:InputCell,
-        cellEditorParams:{
-          config:{
-            observable:this.subject,
-          }
-        }
+        // cellEditorFramework:InputCell,
+        // cellEditorParams:{
+        //   config:{
+        //     observable:this.subject,
+        //   }
+        // }
       },
       {
         headerName:"NumberCell",
@@ -196,7 +196,7 @@ class EditForm extends React.Component {
             actionCellRenderer: params =>(<Act><MPCConfirm type="del" onConfirm={this.handleDel.bind(this,params)}><Icon type="delete" /></MPCConfirm></Act>),
           },
           singleClickEdit:true,        // 单击编辑
-          editType:'fullRow' ,    // 是否开启整行编辑
+          // editType:'fullRow' ,    // 是否开启整行编辑
           onCellValueChanged:(params)=>{  // 单元格停止编辑出发。
             // 可以通过params.newValue和oldValue对比值变化
             // console.log("onCellValueChanged",params)

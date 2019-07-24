@@ -8,6 +8,7 @@
 /* eslint-disable func-names */
 /* eslint-disable no-global-assign */
 import React, { Component, Fragment } from 'react'
+import lodash from 'lodash'
 import styles from './style.less'
 
 const defaultConfig = {
@@ -91,10 +92,16 @@ export default class BgCL extends Component {
     setCanvasHeight = () => {
         this.wWidth = window.innerWidth; // 
         this.wHeight = window.innerHeight;
-        this.canvas.forEach(ele => {
-            ele.width = this.wWidth;
-            ele.height = this.wHeight;
-        })
+        if(this.canvas && this.canvas.length > 0){
+            lodash.forEach(this.canvas,ele=>{
+                ele.width = this.wWidth;
+                ele.height = this.wHeight;
+            })
+            // this.canvas.forEach(ele => {
+            //     ele.width = this.wWidth;
+            //     ele.height = this.wHeight;
+            // })
+        }
     };
 
     drawCircle = (x, y, radius, color, alpha) => {

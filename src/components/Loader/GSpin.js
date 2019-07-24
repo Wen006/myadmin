@@ -27,7 +27,7 @@ const GSpinStore = observable(
   }
 );
 
-@observer
+// @observer
 class GSpin extends React.Component {
   render() {
     const { children } = this.props;

@@ -1,3 +1,4 @@
+
 :global {
     $ag-icons-path: "~ag-grid-community/src/styles/ag-theme-balham/icons/";
     $font-family: "Chinese Quote", -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Helvetica Neue", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
@@ -7,8 +8,7 @@
     $font-size: 14px;
     $primary-color: #5B8CFF;
     $odd-row-background-color: #ffffff;
-    // $hover-color: rgb(211, 235, 231);
-    $hover-color:#ecf5f47a;
+    $hover-color: rgb(211, 235, 231);
     $foreground-color: rgba(0, 0, 0, 0.65);
     $cell-horizontal-border: 1px solid #e8e8e8;
     $accent-color: #FFFFF1;
@@ -39,72 +39,6 @@
     }
     .ag-theme-balham .ag-icon-checkbox-checked{
         opacity:0.5;
-    }
-    .ag-theme-balham {
-        .ag-row-selected{
-            background:#f3ecf57a;
-        }
-    }
-    // .ag-row-hover>{
-    //     &>.edit-cell-frame{
-    //         background: #abc !important;
-    //         border-radius: 20px;
-    //         &::before{
-    //             size: 3px;
-    //             background: #5B8CFF;
-    //         }
-    //         &::after{
-    //             size: 3px;
-    //             background: #5B8CFF;
-    //         }
-    //     } 
-    //     &>.ag-cell-inline-editing{
-    //         border-radius: 0px;
-    //     }
-    // }
 
-
-    .ag-row.ag-row-hover{
-        &>.edit-cell-frame
-        // .ag-column-hover
-        {
-            background: transparent;
-            border-radius: 10px;
-            border: 1px solid #5B8CFF;
-            &::before{
-                background: gold;
-                display: block;
-                width: 20px;
-                height:20px;
-            }
-            &::after{
-                background: gold;
-                display: block;
-                padding: 10px !important;
-                width: 20px;
-                height:20px;
-            }
-            
-        }  
-
-        &>.edit-cell-frame.ag-column-hover{
-            // background: red;
-        }
-
-        &>.edit-cell-frame.ag-cell-inline-editing{
-            // background: #abc !important;
-            border-radius: 0px;
-            border:none;
-            border-color: transparent;
-        } 
-    }
-
-    .ag-row.ag-row-inline-editing{
-        &>.edit-cell-frame.ag-cell-inline-editing{
-            // background: #abc !important;
-            border-radius: 0px;
-            border:none;
-            border-color: transparent;
-        } 
     }
 }
