@@ -9,6 +9,7 @@ import { getNowTime } from '@/utils/util.date'
 import * as Rxjs from 'rxjs'
 import lodash from 'lodash'
 import AgGrid, {LookUpCell,InputCell,NumberCell,SelectCell,MonthCell,DateCell,SwitchCell} from '@/components/AgGrid/AgGrid'
+import Global from '@/stores/common/Global';
 
 // const {InputCell,NumberCell,SelectCell,MonthCell,DateCell,SwitchCell} = AbC 
 
@@ -209,6 +210,7 @@ class EditForm extends React.Component {
       };
     return ( 
       <Form layout="inline" labelAlign="left">
+        {/* {JSON.stringify(Global.getUser())} */}
         <Card 
           title="编辑表格测试代码" 
           bordered={false} 

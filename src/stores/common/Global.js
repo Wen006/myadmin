@@ -3,12 +3,13 @@ import { callMethod } from '@/services/ServiceHandler';
 import db from '@/utils/util.db'
 import { GSpinStore } from '@/components/Loader/GSpin';
 import CacheStore from './sys/CacheStore';
-const doDispatch = window.g_app._store.dispatch
 
 class Global {
   languageInfo = undefined;
 
   version = 'MPC_00V1';
+
+  user = {}
 
   constructor() {
     this.languageInfo = db.get("sys.language");
@@ -40,8 +41,8 @@ class Global {
   };
 
   // 获取当前用户
-  getUser = async () =>{
-    return doDispatch({type:'user/getUser'});
+  getUser = () =>{
+    return this.user;
   }
  
 }
