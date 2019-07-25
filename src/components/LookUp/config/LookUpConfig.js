@@ -61,7 +61,6 @@ const lookUpConfigs = {
       ],
     },
   },
-
   LOOKUP_SM_ROLE_LIST:{
     desc: '用户选择---菜单管理，角色管理', // 解释干啥的，哪模块用到了，用逗号隔开
     auth: 'wennn', // 作者信息

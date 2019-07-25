@@ -20,20 +20,13 @@ class UserInfoList extends React.Component {
     {
       headerName: Intler.getIntl('sm.user.userCode'),
       field: 'userCode',
-      align: 'left',
-      required:true,
+      align: 'left', 
       cellRenderer: 'infoCellRenderer',
     },
     {
       headerName: Intler.getIntl('sm.user.userName'),
-      field: 'userName',
-      required:true,
-      editable:true,
+      field: 'userName', 
       align: 'center',
-      // cellStyle:{color:'red'},
-      cellStyle:(params)=>{
-        return {color:'green'}
-      }
     },
     {
       headerName: Intler.getIntl('sm.user.unitName'),
@@ -137,7 +130,7 @@ class UserInfoList extends React.Component {
       onGridReady: (params, agStore) => {
         this.gridApi = params.api;
         this.gridColumnApi = params.columnApi;
-        this.gridProApi = params.gridProApi;
+        this.agApi = params.agApi;
         this.agStore = agStore;
         this.agStore.submit({}); // 调用store查询数据 页面一加载就查询
       },
@@ -147,7 +140,7 @@ class UserInfoList extends React.Component {
         onRowSelected:params=>{
           const {selectedRowKeys} = this.agStore.getSelect();
           this.setState({selectCount:selectedRowKeys.length},()=>{
-            this.agStore.gridProApi.reloadToolBar();
+            this.agApi.reloadToolBar();
           })
         },
         frameworkComponents: {

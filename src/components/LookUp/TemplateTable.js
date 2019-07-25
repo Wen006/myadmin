@@ -81,7 +81,7 @@ class LookUpTable extends React.Component {
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;
     this.agApi = params.agApi; // 用这个代替之前的ref方式引用（推荐的）
-    this.agStore.gridProApi.sizeToFit();
+    this.agApi.sizeToFit();
     const { onGridReady } = this.props
     if(onGridReady){
       onGridReady(params,agStore,lodash.pick(this,this.exports))

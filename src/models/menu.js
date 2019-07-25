@@ -92,6 +92,7 @@ export default {
   namespace: 'menu',
 
   state: {
+    isTab: false,
     menuData: [],
     breadcrumbNameMap: {},
   },

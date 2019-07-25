@@ -40,7 +40,7 @@ export default class AuthUser extends React.Component{
     }
 
     onGridReady = (params,agStore) =>{
-        this.roleStore.initAuthUser({agStore}) 
+        this.roleStore.initAuthUser({agStore,agApi:params.agApi}) 
     }
 
     render(){

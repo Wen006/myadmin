@@ -1,8 +1,8 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import React, { Fragment } from 'react'
 import { Modal } from 'antd';
-import { Btns } from '@/components'
 import loadsh from 'lodash'
+import { Btns } from '@/components'
 import LookUpTable from './LookUpTable'
 import BuildTitle from './LookUpDragM'
 import LookUpStore from './store/LookUpStore'

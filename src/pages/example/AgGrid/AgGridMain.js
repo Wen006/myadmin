@@ -157,7 +157,7 @@ class EditForm extends React.Component {
 
   handleAdd = () =>{
     const time = getNowTime();
-    this.gridProApi.addItem({
+    this.agApi.addItem({
       lovCode:time,
       lovName:time,
       seqNum:0,
@@ -166,20 +166,20 @@ class EditForm extends React.Component {
   }
 
   handleDel = (params) =>{
-    this.gridProApi.removeItem(params.data);
+    this.agApi.removeItem(params.data);
   }
 
   handleSave = () =>{
-    const ds =  this.gridProApi.validValues();
+    const ds =  this.agApi.validValues();
     if(!ds) return;
-    const del = this.gridProApi.getDelItems();
+    const del = this.agApi.getDelItems();
   }
 
   render() {  
     const agPropPros = {
-        onGridReady: (params, {gridProApi}) => {
+        onGridReady: (params) => {
           this.gridApi = params.api;
-          this.gridProApi = gridProApi;
+          this.agApi = params.agApi;
         },
         rowData:[],
         gridOptions: {

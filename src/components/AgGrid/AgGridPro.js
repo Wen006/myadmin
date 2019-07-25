@@ -101,8 +101,8 @@ export default class AgGridPro extends Component {
   onGridReady = params => {
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;
-    if ('onGridReady' in this.props) {
-      this.agGridStore.gridProApi = lodash.pick(this, AgGridPro.exports);
+    if ('onGridReady' in this.props) { 
+      params.agApi = lodash.pick(this, AgGridPro.exports);
       // eslint-disable-next-line react/destructuring-assignment
       this.props.onGridReady(params, this.agGridStore);
     }

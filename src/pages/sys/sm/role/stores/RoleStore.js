@@ -71,8 +71,9 @@ export default class RoleStore {
     }
 
     // 初始化用户
-    initAuthUser = async ({agStore}) =>{
+    initAuthUser = async ({agStore,agApi}) =>{
         this.userAgStore = agStore;
+        this.userAgApi = agApi
         if(this.editRow){
             this.fetchAuthUser(this.editRow);
         }
@@ -87,7 +88,7 @@ export default class RoleStore {
         if(this.form)this.form.resetFields();
         if(this.userAgStore) {
             this.userAgStore.clearRowData();
-            this.userAgStore.gridProApi.clearSelectRows();
+            this.userAgApi.clearSelectRows();
         };
         this.menuCheckKeys = [];
         this.editRow = undefined

@@ -64,7 +64,7 @@ export default {
   },
   treeShaking: true,
   targets: {
-    ie: 9,
+    ie: 11,
   },
   // 路由配置
   routes: pageRoutes,

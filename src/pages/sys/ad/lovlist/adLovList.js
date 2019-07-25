@@ -87,7 +87,7 @@ class AdLovList extends React.Component {
         this.adLovlistStore.deleteRecord(selectedRowKeys).then(success => {
           if (success) {
             this.handleSubmit();
-            this.gridProApi.clearSelectRows();
+            this.agApi.clearSelectRows();
             this.setState({selectCount:0})
           }
         });
@@ -112,7 +112,7 @@ class AdLovList extends React.Component {
       onGridReady: (params, agStore) => {
         this.gridApi = params.api;
         this.gridColumnApi = params.columnApi;
-        this.gridProApi = params.gridProApi;
+        this.agApi = params.agApi;
         this.agStore = agStore;
         this.agStore.submit({}); // 调用store查询数据 页面一加载就查询
       },
@@ -122,7 +122,7 @@ class AdLovList extends React.Component {
         onRowSelected:params=>{
           const {selectedRowKeys} = this.agStore.getSelect();
           this.setState({selectCount:selectedRowKeys.length},()=>{
-            this.agStore.gridProApi.reloadToolBar();
+            this.agApi.reloadToolBar();
           })
         },
         frameworkComponents: {

@@ -54,7 +54,7 @@ class RoleList extends React.Component {
   handleSearch = (v) =>{  
     this.agStore.submit({keyWord:v}).then(d=>{
       this.roleStore.clearInfo();
-      this.agStore.gridProApi.clearSelectRows();
+      this.agApi.clearSelectRows();
     });
   }
 
@@ -68,7 +68,7 @@ class RoleList extends React.Component {
     this.gridColumnApi = params.columnApi;
     this.agApi = params.agApi; // 用这个代替之前的ref方式引用（推荐的）
     this.agStore.submit({}); // 调用store查询数据 页面一加载就查询
-    this.agStore.gridProApi.autoSizeAll();
+    this.agApi.autoSizeAll();
   }
 
   handleOpe = (flag,data) =>{
@@ -76,7 +76,7 @@ class RoleList extends React.Component {
     switch (flag) {
       case 'add':
         const nData = this.roleStore.editRecord(data);
-        this.agStore.gridProApi.addItem({initItem:nData,selected:true})
+        this.agApi.addItem({initItem:nData,selected:true})
         break;
       case 'edit':
         this.roleStore.editRecord(data);

@@ -79,9 +79,9 @@ export default class AgGrid extends Component {
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;
     if ('onGridReady' in this.props) {
-      // eslint-disable-next-line react/destructuring-assignment
-      const gridProApi = lodash.pick(this,this.exports);
-      this.props.onGridReady(params,{gridProApi});
+      // eslint-disable-next-line react/destructuring-assignment 
+      params.agApi = lodash.pick(this,this.exports);
+      this.props.onGridReady(params);
     }
     // this.gridApi.sizeColumnsToFit();
   };

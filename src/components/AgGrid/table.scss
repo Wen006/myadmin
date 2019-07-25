@@ -1,17 +1,21 @@
-
 :global {
     $ag-icons-path: "~ag-grid-community/src/styles/ag-theme-balham/icons/";
-    $font-family: "Chinese Quote", -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Helvetica Neue", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    $font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Helvetica Neue", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
     $border-color: #e8e8e8;
     $header-background-color: rgb(250, 250, 250);
     $secondary-font-size: 14px;
     $font-size: 14px;
     $primary-color: #5B8CFF;
     $odd-row-background-color: #ffffff;
-    $hover-color: rgb(211, 235, 231);
+    $hover-color: #f0f7ff;
     $foreground-color: rgba(0, 0, 0, 0.65);
     $cell-horizontal-border: 1px solid #e8e8e8;
     $accent-color: #FFFFF1;
+
+    $header-height: 34px;
+    $row-height: 34px;
+    $row-border-width: 1px;
+    // $hover-color: cornsilk;
     $selected-color: none;
     $row-border-width: 1px;
     $secondary-font-weight: normal;
@@ -20,25 +24,186 @@
     $ag-range-selected-color-2: darken($ag-range-selected-color-1, 10%);
     $ag-range-selected-color-3: darken($ag-range-selected-color-1, 20%);
     $ag-range-selected-color-4: darken($ag-range-selected-color-1, 30%);
+    // $header-height: 50px;
+    // $row-height: 40px;
 
     @import "~ag-grid-community/src/styles/ag-grid.scss";
     @import "~ag-grid-community/src/styles/ag-theme-balham/sass/ag-theme-balham.scss";
-    
+    html,
+    body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+        *:focus {
+            outline: none;
+        }
+    }
+    .ag-theme-balham .ag-header-cell-label span{
+        height: 10px;
+    }
     .ag-theme-balham {
         .ag-row {
             border-color: #e8e8e8
         }
     }
 
+    .agHeaderClass {
+        text-align: center
+    }
+
     .ag-theme-balham .ag-root {
         border-right: 0;
         border-bottom: 0
     }
-    .ag-theme-balham .ag-icon-checkbox-unchecked{
-        opacity:0.4;
+    .ag-theme-balham .ag-icon-checkbox-unchecked {
+        opacity: 0.4;
     }
-    .ag-theme-balham .ag-icon-checkbox-checked{
-        opacity:0.5;
 
+    .ag-theme-balham .ag-icon-checkbox-checked {
+        opacity: 0.5;
+
+    }
+
+    .ag-theme-balham .ag-header-cell-label {
+        display: block;
+        text-align: center;
+        margin-left: 8px;
+        float: left;
+        height: 100%;
+        width: calc(100% - 16px);
+
+        span {
+            float: none;
+        }
+    }
+
+    .ag-theme-balham .ag-header-group-cell-label {
+        display: block;
+        text-align: center;
+        margin-left: 8px;
+        float: left;
+        height: 100%;
+        width: calc(100% - 16px);
+
+        span {
+            float: none;
+        }
+    }
+    .ag-theme-balham .ag-ltr .ag-cell-focus{
+        border: 1px solid transparent;
+        border-right: 1px solid #e8e8e8;
+    }
+    .ag-theme-balham .ag-header-cell::after, .ag-theme-balham .ag-header-group-cell::after{
+        height: 33px;
+        margin-top: 0;
+        border-right: 1px solid #e8e8e8;
+    }
+    // .ag-theme-balham .ag-cell-inline-editing{
+    //     padding: 0 6px;
+    // }
+    .ag-theme-balham .ag-cell{
+        padding: 1px 6px; 
+        line-height: 24px;
+    }
+    .ag-cell-edit-input{
+        font-family: "Chinese Quote", -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Helvetica Neue", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+        font-variant: tabular-nums;
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        position: relative;
+        display: inline-block;
+        padding: 4px 11px;
+        width: 100%;
+        height: 29px;
+        font-size: 14px;
+        line-height: 1.5;
+        color: rgba(0, 0, 0, 0.65);
+        background-color: #fff;
+        background-image: none;
+        border: 1px solid #d9d9d9;
+        border-radius: 4px;
+        -webkit-transition: all .3s;
+        transition: all .3s;
+    }
+    .ag-cell-edit-input:focus{
+        border-color: #5B8CFF;
+        outline: 0;
+        -webkit-box-shadow: 0 0 0 2px rgba(91, 140, 255, 0.2);
+        box-shadow: 0 0 0 2px rgba(91, 140, 255, 0.2);
+        border-right-width: 1px !important;
+    }
+    .ant-input-number{
+
+    }
+    .ant-input-number-input{
+
+    }
+    .ag-cell{
+        .ag-react-container{
+            position: relative;
+            z-index: 1;
+        }
+    }
+    .ag-row.ag-row-hover{
+        height: 32px !important;
+        &>.edit-cell-frame::after{
+            content: '';
+            border: 1px solid #5B8CFF;
+            width: 96%;
+            display: block;
+            height: 22px;
+            box-shadow: 0 0 0 2px rgba(91, 140, 255, 0.2);
+            border-radius: 4px;
+            position: absolute;
+            top: 4px;
+            padding-left: 4px;
+            line-height: 24px;
+            left:0px ;
+              right:0px;
+        } 
+        &>.ag-cell-inline-editing::after{
+            border-radius: 0px;
+            border:none;
+            height: 100%;
+            display: block;
+            border-color: transparent;
+            box-shadow: none;
+
+        }
+        &>.edit-cell-frame.ag-cell-inline-editing{
+            // background: #abc !important;
+            // border-radius: 0px;
+            // border:none;
+            border-color: transparent;
+        } 
+    }
+    .ag-theme-balham .ag-cell{}
+    .ag-row.ag-row-inline-editing{
+        &>.edit-cell-frame.ag-cell-inline-editing{
+            // background: #abc !important;
+            border-radius: 0px;
+            border:none;
+            border-color: transparent;
+        } 
+    }
+    .ag-react-container{
+        :global{
+            .ant-input-number{
+                height: 26px;
+                .ant-input-number-input{
+                    height: 26px;
+                }
+            };
+            .ant-select{
+                height: 26px;
+                .ant-select-selection{
+                    height: 26px;
+                }
+            }
+           
+        }
     }
 }
