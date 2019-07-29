@@ -1,6 +1,9 @@
-import { routerRedux } from 'dva/router';
+/* eslint-disable import/no-extraneous-dependencies */
+import router from 'umi/router';
 
-const doDispatch = window.g_app._store.dispatch
+// import { routerRedux } from 'dva/router';
+
+// const doDispatch = window.g_app._store.dispatch
 
 class Nav {
   title = undefined;
@@ -36,19 +39,19 @@ class Navigator {
   forward = ({ url, title, params }) => {
     this.curNav = new Nav(title, url, params);
     this.params[url] = this.curNav;
-    doDispatch(routerRedux.push(url));
+    router.push(url);
   };
 
   go = n => {
-    doDispatch(routerRedux.go(n));
+    router.go(n);
   };
 
   goBack = () => {
-    doDispatch(routerRedux.goBack());
+    router.goBack();
   };
 
   goForward = () => {
-    doDispatch(routerRedux.goForward());
+    router.goForward();
   };
 
   getForwardParam = () => {

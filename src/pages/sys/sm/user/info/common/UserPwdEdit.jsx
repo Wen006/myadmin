@@ -2,9 +2,9 @@
 /* eslint-disable react/destructuring-assignment */
 import React from 'react';
 import { Form } from 'antd';
+import lodash from 'lodash'
 import {Intler, Btns, MBox} from '@/components'
 import { InputH } from '@/components/FormMark' 
-import lodash from 'lodash'
 import { toPromise } from '@/utils/utils'
 import {enBase64} from '@/utils/util.crypto'
 import Global from '@/stores/common/Global'
@@ -101,24 +101,24 @@ class UserPwdEdit extends React.Component {
 
     return (
       <div style={{ width: '450px',margin:'0 auto' }}>
-        <InputH id="id" {...comFormItemProps} hidden />
+        <InputH name="id" {...comFormItemProps} hidden />
         <Form layout="inline">
           <InputH 
             label={Intler.getIntl("sm.user.userName")} 
-            id="userName" 
+            name="userName" 
             fieldOptions={{ rules: [] }} 
             options={this.viewOptions} 
             {...comFormItemProps}
           />
           <InputH 
             label={Intler.getIntl("sm.user.userCode")} 
-            id="userCode" 
+            name="userCode" 
             fieldOptions={{ rules: [] }} 
             options={this.viewOptions}
             {...comFormItemProps}
           />
           <InputH
-            id="password"
+            name="password"
             label={Intler.getIntl("sm.user.orgPassword")}
             options={{
               type: "password",
@@ -126,7 +126,7 @@ class UserPwdEdit extends React.Component {
             {...comFormItemProps}
           />
           <InputH
-            id="newPassword"
+            name="newPassword"
             label={Intler.getIntl("sm.user.newPassword")}
             options={{
               type: "password",
@@ -135,7 +135,7 @@ class UserPwdEdit extends React.Component {
             {...comFormItemProps}
           />
           <InputH
-            id="rePassword"
+            name="rePassword"
             label={Intler.getIntl("sm.user.rePassword")}
             options={{
               type: "password",

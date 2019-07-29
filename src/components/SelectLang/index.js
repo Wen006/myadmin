@@ -2,8 +2,25 @@ import React, { PureComponent } from 'react';
 import { formatMessage, setLocale, getLocale } from 'umi/locale';
 import { Menu, Icon } from 'antd';
 import classNames from 'classnames';
+import lodash from 'lodash'
 import HeaderDropdown from '../HeaderDropdown';
+
 import styles from './index.less';
+
+
+const languageIcons = {
+  'zh-CN': '🇨🇳',
+  // 'zh-TW': '🇭🇰',
+  'en-US': '🇬🇧',
+  // 'pt-BR': '🇧🇷',
+};
+
+const languageLabels = {
+  'zh-CN': '简体中文',
+  // 'zh-TW': '繁体中文',
+  'en-US': 'English',
+  // 'pt-BR': 'Português',
+};
 
 export default class SelectLang extends PureComponent {
   changeLang = ({ key }) => {
@@ -13,19 +30,8 @@ export default class SelectLang extends PureComponent {
   render() {
     const { className } = this.props;
     const selectedLang = getLocale();
-    const locales = ['zh-CN', 'zh-TW', 'en-US', 'pt-BR'];
-    const languageLabels = {
-      'zh-CN': '简体中文',
-      'zh-TW': '繁体中文',
-      'en-US': 'English',
-      'pt-BR': 'Português',
-    };
-    const languageIcons = {
-      'zh-CN': '🇨🇳',
-      'zh-TW': '🇭🇰',
-      'en-US': '🇬🇧',
-      'pt-BR': '🇧🇷',
-    };
+    const locales = lodash.keys(languageLabels);//['zh-CN', 'zh-TW', 'en-US', 'pt-BR'];
+ 
     const langMenu = (
       <Menu className={styles.menu} selectedKeys={[selectedLang]} onClick={this.changeLang}>
         {locales.map(locale => (

@@ -4,8 +4,7 @@ import { Form, Input, Upload, Select, Button } from 'antd';
 import { connect } from 'dva';
 import styles from './BaseView.less';
 import GeographicView from './GeographicView';
-import PhoneView from './PhoneView';
-// import { getTimeDistance } from '@/utils/utils';
+import PhoneView from './PhoneView'; 
 
 const FormItem = Form.Item;
 const { Option } = Select;

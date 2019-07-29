@@ -3,7 +3,7 @@ import { connect } from 'dva';
 import { Row, Col, Icon, Menu, Dropdown } from 'antd';
 
 import GridContent from '@/components/PageHeaderWrapper/GridContent';
-import { getTimeDistance } from '@/utils/utils';
+import { getTimeDistance } from '@/utils/util.date';
 
 import styles from './Analysis.less';
 import PageLoading from '@/components/PageLoading';

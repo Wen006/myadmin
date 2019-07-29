@@ -1,4 +1,4 @@
-import moment from 'moment';
+import { moment } from '@/utils/util.date';
 
 // mock data
 const visitData = [];

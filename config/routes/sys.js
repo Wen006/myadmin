@@ -5,53 +5,53 @@
 
  export default [
     {
-      path: '/system',
-      name: 'system',
+      path: '/sys',
+      name: '系统管理',
       icon: 'dashboard',
       routes: [
         {
-          path: `/system/user/info/userInfoIndex`,
+          path: `/sys/sm/user/info/userIndex`,
           name: '用户信息',
           author: 'wennn',
           component: `./sys/sm/user/info/userInfoList`,
         },
         {
-          path: `/system/user/info/userInfoEdit`,
+          path: `/sys/sm/user/info/userIndex/edit`,
           name: '修改信息',
           author: 'wennn',
           component: `./sys/sm/user/info/userInfoEdit`,
         },
         {
-          path: `/system/menu/info/menuInfoIndex`,
+          path: `/sys/menu/info/menuInfoIndex`,
           name: '菜单管理',
           author: 'wennn',
           component: `./sys/sm/menu`,
         },
         {
-          path: `/system/role/info/roleInfoIndex`,
+          path: `/sys/role/info/roleInfoIndex`,
           name: '角色管理',
           author: 'wennn',
           component: `./sys/sm/role/`,
         },
         {
-          path: `/system/ad/lovlist/lovlistIndex`,
+          path: `/sys/ad/lovlist/lovlistIndex`,
           name: '系统字典 列表页面',
           author: 'wennn',
           component: `./sys/ad/lovlist/adLovList`,
         },
         {
-          path: `/system/ad/lovlist/lovlistEdit`,
+          path: `/sys/ad/lovlist/lovlistIndex/lovlistEdit`,
           name: '系统字典 编辑页面',
           author: 'wennn',
           component: `./sys/ad/lovlist/adLovEdit`,
         },
         // {
-        //     path: `/system/menu/info/menuInfoIndex`,
+        //     path: `/sys/menu/info/menuInfoIndex`,
         //     name: 'MenuManage',
         //     component: `./sys/menu/info/menuInfoEdit`,
         // },
         // {
-        //     path: `/system/role/info/roleInfoIndex`,
+        //     path: `/sys/role/info/roleInfoIndex`,
         //     name: 'RoleManage',
         //     component: `./sys/role/info`,
         // },

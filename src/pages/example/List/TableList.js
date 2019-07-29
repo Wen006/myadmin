@@ -1,6 +1,6 @@
 import React, { PureComponent, Fragment } from 'react';
 import { connect } from 'dva';
-import moment from 'moment';
+import { moment } from '@/utils/util.date';
 import {
   Row,
   Col,

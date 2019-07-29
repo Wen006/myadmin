@@ -31,18 +31,22 @@ export default class LookUpStore {
     } 
 
     initStore = (config) =>{
-        const { api,title,columns,condition:{inputItems=[]}, intlDone=false } = config
-        this.title = this.title || intlDone?title:Intler.getIntl(title);
-        this.api = api;
-        if(!intlDone){
-            this.columns = columns.map(col=>{
+        const { api,title,columns,condition:{inputItems=[]}, intlDone = false } = config
+        if(!intlDone){ // 进行国际化
+            columns.forEach(col=>{
                 col.headerName = Intler.getIntl(col.headerName);
-                return col;
             }); 
+            inputItems.forEach(element => {
+                element.label = Intler.getIntl(element.label);
+            });
+            config.title = Intler.getIntl(title);
             config.intlDone = true;
         }
-        // this.columns.unshift({field:'',headerName:'',checkboxSelection:true,width:40,pinned:'left'})
+        this.title = this.title || config.title;
+        this.columns = columns;
         this.inputItems = inputItems;
+        this.api = api;
+        // this.columns.unshift({field:'',headerName:'',checkboxSelection:true,width:40,pinned:'left'})
     }
 
 }

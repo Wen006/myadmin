@@ -24,16 +24,16 @@ import {
   Popover,
 } from 'antd';
 import lodash from 'lodash';
+import { observer } from 'mobx-react';
 import MenuInfoStore from '@/stores/sys/sm/menu/MenuInfoStore';
 import { InputH, InputNumberH } from '@/components/FormMark';
 import { Btns, Iconfont, AutoRow, Intler,MPCConfirm } from '@/components';
 import { IconItems } from '@/utils/app.const';
 import PageHeaderWrapper from '@/components/PageHeaderWrapper';
-import {DefaultField} from '@/pages/plugins'
-
+import {DefaultField} from '@/pages/common'
 import styles from '@/pages/common.less';
-import { observer } from 'mobx-react';
 import MenuInfoTree from './MenuInfoTree';
+import ComLang from '@/pages/common/ComLang';
 
 const FormItem = Form.Item; 
 
@@ -96,12 +96,14 @@ class MenuInfoEdit extends React.Component {
     form.validateFields((errors, values) => {
       if (!errors) {
         const param = {
-          ...values,
-          langDto:[],
+          ...values, 
         };
-        this.menuInfoStore.saveOrUpdateMenuInfo(param).then(data => {
-          const { langDto = [], ...menuInfo } = data; 
+        const langs = this.langApi.validValues()
+        if(!langs) return ;
+        this.menuInfoStore.saveOrUpdateMenuInfo({...param,langs}).then(data => {
+          const { langs:ls,...menuInfo } = data; 
           this.fillForm(menuInfo);
+          this.langApi.editLang(langs);
         });
       }
     });
@@ -111,9 +113,15 @@ class MenuInfoEdit extends React.Component {
     const selectRow = this.menuInfoStore.onSelect(__selectedKeys, info);
     if (!selectRow) {
       this.props.form.resetFields();
+      this.langApi.editLang([])
       return;
     }
     this.fillForm(selectRow);
+    if(selectRow.langs&&selectRow.langs.length > 0){
+      this.langApi.editLang(selectRow.langs||[]);
+    }else{
+      this.langApi.addLang();
+    }
   };
 
   // form 向表单筛值
@@ -134,6 +142,7 @@ class MenuInfoEdit extends React.Component {
   handleAddTreeNode = () => {
     // 向数据集增加一条
     const data = this.menuInfoStore.addTreeNode();
+    this.langApi.addLang();
     // 新增的一条记录筛入编辑表单
     this.fillForm(data);
   };
@@ -157,6 +166,10 @@ class MenuInfoEdit extends React.Component {
   handlerIconInput = e => {
     this.menuInfoStore.selectRow.icon = e.target.value;
   };
+
+  langReady = (langApi) =>{
+    this.langApi = langApi;
+  }
 
   render() {
     const { form } = this.props;
@@ -286,6 +299,9 @@ class MenuInfoEdit extends React.Component {
                       {...comFormProps}
                     />
                   </AutoRow>
+                  <Row>
+                    <ComLang disabled={!selectRow} onReady={this.langReady} />
+                  </Row>
                   <div className={styles.btnBar}>
                     <Btns.save onClick={this.handleSave} disabled={!selectRow} />
                   </div>

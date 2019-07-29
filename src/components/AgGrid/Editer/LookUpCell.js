@@ -1,3 +1,4 @@
+/* eslint-disable react/destructuring-assignment */
 /* eslint-disable react/jsx-no-bind */
 import React, { Fragment } from 'react';
 import { Input, Icon } from 'antd';
@@ -43,21 +44,6 @@ export default class LookUpCell extends React.Component {
     if (value && showClear) this.setState({ showClear: false });
   };
 
-  onLookOk = (selectKeys, selectRows = []) => {
-    const {
-      config: { onOk },
-    } = this.props;
-    const api = {
-      data: this.rowNode.data,
-      colId: this.column.colId,
-      value: this.state.value,
-      setDataValue: this.setDataValue,
-      updateRowData: this.updateRowData,
-      clearRowData: this.clearRowData,
-    };
-    this.setValue(selectRows.map(it => it[this.modalKey]).join(','));
-    if (onOk) onOk(selectKeys, selectRows, api);
-  };
 
   getValue = () => 
     // if(this.required && this.isEmpty(this.state.value)) {
@@ -152,16 +138,28 @@ export default class LookUpCell extends React.Component {
     this.lookUpApi.showModal(true);
   };
 
+  getExportApi = () =>({
+    data: this.rowNode.data,
+    colId: this.column.colId,
+    value: this.state.value,
+    setDataValue: this.setDataValue,
+    updateRowData: this.updateRowData,
+    clearRowData: this.clearRowData,
+  })
+
   handleModalOk = ({selectedRowKeys, selectedRows}) => {
-    const { onOk } = this.props;
-    const values = selectedRows.map(it => it[`${this.modalKey}`]).join(',')
-    this.setValue(values);
-    if (onOk) onOk({selectedRowKeys, selectedRows});
-  }
+    const {
+      config: { onOk },
+    } = this.props;
+    const api = this.getExportApi();
+    this.setValue(selectedRows.map(it => it[this.modalKey]).join(','));
+    if (onOk) onOk({selectedRowKeys, selectedRows},api);
+  };
+
 
   handleModalCancel = () => {
-    const { onCancel } = this.props;
-    if (onCancel) onCancel();
+    const { onCancel } = this.props; 
+    if (onCancel) onCancel(this.getExportApi());
   }
 
   // 点击 图标的时候
@@ -170,7 +168,7 @@ export default class LookUpCell extends React.Component {
     const { onClear } = this.props
     if (showClear) {
       this.setValue('');
-      if(onClear)onClear();
+      if(onClear)onClear(this.getExportApi());
     }else{
       this.lookUpApi.showModal(true)
     }

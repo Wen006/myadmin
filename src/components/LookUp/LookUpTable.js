@@ -6,8 +6,8 @@
  */
 import React, { Fragment } from 'react'
 import { Row, Col, Table, message, Form } from 'antd'
-import Btns from '@/components/Button'
 import lodash from 'lodash'
+import Btns from '@/components/Button'
 import Intler from '@/components/Intler'
 import AgGridPro from '@/components/AgGrid/AgGridPro'
 import LookUpStore from './store/LookUpStore'
@@ -51,7 +51,7 @@ class LookUpTable extends React.Component {
     const { onSearchBefore } = this.props
     const params = this.props.form.getFieldsValue();
 
-    if(typeof onSearchBefore == 'function'){
+    if(typeof onSearchBefore === 'function'){
       const beforeData = onSearchBefore();
       if(beforeData instanceof Promise){
         beforeData.then(data=>{
@@ -64,7 +64,7 @@ class LookUpTable extends React.Component {
         return;
       }
       lodash.assign(params,beforeData);
-    }else if(typeof onSearchBefore == 'object'){
+    }else if(typeof onSearchBefore === 'object'){
       lodash.assign(params,onSearchBefore);
     }
     this.agStore.submit(params)
@@ -94,7 +94,7 @@ class LookUpTable extends React.Component {
     let Ele = InputTypes[`${type}`]
     if (!Ele) { console.error(`LookUpTable 输入条件生成失败，不存在类型：【${type}】`) && (Ele = InputH) }
     if (!this.valueResolver[`${key}`]) this.valueResolver[`${key}`] = resolvers[`${type}`]
-    return <Ele key={key} fieldOptions={{rules:[]}} label={Intler.getIntl(label) || label} id={key} form={form} />
+    return <Ele key={key} fieldOptions={{rules:[]}} label={label} id={key} form={form} />
   }
 
   render() {
@@ -118,7 +118,7 @@ class LookUpTable extends React.Component {
     return (
       <Fragment>
         <div className={styles.lookupSearch}>
-          <Form key={`Form_${this.rowKey}`} layout="inline" >
+          <Form key={`Form_${this.rowKey}`} layout="inline">
             <Row gutter={8}>
               {this.lookUpStore.inputItems.map((it) => {
                 return (

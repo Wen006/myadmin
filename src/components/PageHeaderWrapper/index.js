@@ -51,6 +51,7 @@ const PageHeaderWrapper = ({ children, contentWidth, wrapperClassName, top, ...r
   </div>
 );
 
-export default connect(({ setting }) => ({
+export default connect(({ setting,menu }) => ({
   contentWidth: setting.contentWidth,
+  hiddenBreadcrumb:menu.isTab,
 }))(PageHeaderWrapper);

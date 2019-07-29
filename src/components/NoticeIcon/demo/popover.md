@@ -7,7 +7,7 @@ title: 带浮层卡片
 
 ````jsx
 import NoticeIcon from 'ant-design-pro/lib/NoticeIcon';
-import moment from 'moment';
+import { moment } from '@/utils/util.date';
 import groupBy from 'lodash/groupBy';
 import { Tag } from 'antd';
 

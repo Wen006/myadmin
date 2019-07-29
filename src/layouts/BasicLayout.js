@@ -24,6 +24,10 @@ import GSpin from '@/components/Loader/GSpin';
 // lazy load SettingDrawer
 const SettingDrawer = React.lazy(() => import('@/components/SettingDrawer'));
 
+const TabLayout = React.lazy(() => import('./TabLayout'));
+const RouterTabs = React.lazy(() => import('./RouterTabs'));
+
+
 const { Content } = Layout;
 
 const query = {
@@ -174,6 +178,7 @@ class BasicLayout extends React.PureComponent {
       breadcrumbNameMap,
       route: { routes },
       fixedHeader,
+      isTab,
     } = this.props;
 
     const isTop = PropsLayout === 'topmenu';
@@ -205,9 +210,18 @@ class BasicLayout extends React.PureComponent {
             {...this.props}
           />
           <Content className={styles.content} style={contentStyle}>
-            <Authorized authority={routerConfig} noMatch={<Exception403 />}>
-              {children}
-            </Authorized>
+            { isTab ?
+              <Suspense fallback={<PageLoading />}>
+                {/* <TabLayout
+                  {...this.props}
+                />  */}
+                <RouterTabs />
+              </Suspense>
+              :
+              <Authorized authority={routerConfig} noMatch={<Exception403 />}>
+                {children}
+              </Authorized>
+            }
           </Content>
           <Footer />
         </Layout>
@@ -215,17 +229,17 @@ class BasicLayout extends React.PureComponent {
     );
     return (
       <React.Fragment>
-        <GSpin>
-          <DocumentTitle title={this.getPageTitle(pathname, breadcrumbNameMap)}>
-            <ContainerQuery query={query}>
-              {params => (
-                <Context.Provider value={this.getContext()}>
+        <DocumentTitle title={this.getPageTitle(pathname, breadcrumbNameMap)}>
+          <ContainerQuery query={query}>
+            {params => (
+              <Context.Provider value={this.getContext()}>
+                <GSpin>
                   <div className={classNames(params)}>{layout}</div>
-                </Context.Provider>
-              )}
-            </ContainerQuery>
-          </DocumentTitle>
-        </GSpin>
+                </GSpin>
+              </Context.Provider>
+            )}
+          </ContainerQuery>
+        </DocumentTitle> 
         <Suspense fallback={<PageLoading />}>{this.renderSettingDrawer()}</Suspense>
       </React.Fragment>
     );
@@ -237,6 +251,9 @@ export default connect(({ global, setting, menu }) => ({
   layout: setting.layout,
   menuData: menu.menuData,
   breadcrumbNameMap: menu.breadcrumbNameMap,
+  isTab:menu.isTab,
+  menuTabs:menu.menuTabs,
+  activeTabKey:menu.activeTabKey,
   ...setting,
 }))(props => (
   <Media query="(max-width: 599px)">

@@ -20,22 +20,16 @@
 
 import lodash from 'lodash';
 import sys from './sys';
-import example from './example'
-// import fm from './fm';
-// import fsc from './fsc';
-// import lp from './lookup';
-// import dsbd from './dashboard';
-// import ve from './ve';
-// import wp from './wp';
-// import demo from './demo';
-// import logger from '@/utils/utils.log'
+import fsc from './fsc'
+import lookup from './lookup'
+import example from './example' 
 
-const api = { ...sys, ...example,
-  // ...fsc, ...lp, ...dsbd, ...wp, ...demo, ...fm, ...ve
- };
+// 合并服务配置 ， ⚠️这里后面会覆盖前面的配置
+const api = { ...sys, ...example,...fsc,...lookup}; 
 
 const env = process.env.NODE_ENV === 'development'
 
+// 检查是否有重复的url
 function checkSameUrl(configs) {
   const tApi = {};
   Object.keys(configs).forEach(k => {

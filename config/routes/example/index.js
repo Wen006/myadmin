@@ -8,6 +8,7 @@ export default [
     { path: '/', redirect: '/dashboard/home' },
     { path: '/example/aggrid/main', component: './example/AgGrid/AgGridMain' },
     { path: '/example/store/main', component: './example/Store/StoreMain' },
+    { path: '/example/formmark/baseform', component: './example/FormMark/BaseForm' },
     {
       path: '/dashboard',
       name: 'dashboard',
@@ -31,51 +32,51 @@ export default [
       ],
     },
     // forms
-    // {
-    //   path: '/form',
-    //   icon: 'form',
-    //   name: 'form',
-    //   routes: [
-    //     {
-    //       path: '/form/basic-form',
-    //       name: 'basicform',
-    //       component: './Forms/BasicForm',
-    //     },
-    //     {
-    //       path: '/form/step-form',
-    //       name: 'stepform',
-    //       component: './Forms/StepForm',
-    //       hideChildrenInMenu: true,
-    //       routes: [
-    //         {
-    //           path: '/form/step-form',
-    //           redirect: '/form/step-form/info',
-    //         },
-    //         {
-    //           path: '/form/step-form/info',
-    //           name: 'info',
-    //           component: './Forms/StepForm/Step1',
-    //         },
-    //         {
-    //           path: '/form/step-form/confirm',
-    //           name: 'confirm',
-    //           component: './Forms/StepForm/Step2',
-    //         },
-    //         {
-    //           path: '/form/step-form/result',
-    //           name: 'result',
-    //           component: './Forms/StepForm/Step3',
-    //         },
-    //       ],
-    //     },
-    //     {
-    //       path: '/form/advanced-form',
-    //       name: 'advancedform',
-    //       authority: ['admin'],
-    //       component: './Forms/AdvancedForm',
-    //     },
-    //   ],
-    // },
+    {
+      path: '/example/ant/form',
+      icon: 'form',
+      name: 'form',
+      routes: [
+        {
+          path: '/example/ant/form/basic-form',
+          name: 'basicform',
+          component: './example/Forms/BasicForm',
+        },
+        {
+          path: '/example/ant/form/step-form',
+          name: 'stepform',
+          component: './example/Forms/StepForm',
+          hideChildrenInMenu: true,
+          routes: [
+            {
+              path: '/example/ant/form/step-form',
+              redirect: '/example/ant/form/step-form/info',
+            },
+            {
+              path: '/example/ant/form/step-form/info',
+              name: 'info',
+              component: './example/Forms/StepForm/Step1',
+            },
+            {
+              path: '/example/ant/form/step-form/confirm',
+              name: 'confirm',
+              component: './example/Forms/StepForm/Step2',
+            },
+            {
+              path: '/example/ant/form/step-form/result',
+              name: 'result',
+              component: './example/Forms/StepForm/Step3',
+            },
+          ],
+        },
+        {
+          path: '/example/ant/form/advanced-form',
+          name: 'advancedform',
+          authority: ['admin'],
+          component: './example/Forms/AdvancedForm',
+        },
+      ],
+    },
     // // list
     // {
     //   path: '/list',

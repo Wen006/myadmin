@@ -95,18 +95,19 @@ const WrapCheck = (Ele, type) => {
     render() {
       const { dataSource } = this.state;
       const { view, initialValue } = this.props;
-      const eleProps = lodash.omit(this.props, ['dataSource', 'code', 'type', 'initialValue']);
+      const eleProps = lodash.omit(this.props, ['dataSource', 'code','view','type', 'initialValue']);
       if (this.type == CheckBoxEnums.CheckboxGroup) {
         lodash.assign(eleProps, { options: dataSource });
       } else {
         lodash.assign(eleProps, { checked: eleProps.value });
       }
 
-      return view ? (
-        <ViewRender>{this.valueFormatter(initialValue)}</ViewRender>
-      ) : (
-        <Ele {...eleProps} />
-      );
+      // return view ? (
+      //   <ViewRender>{this.valueFormatter(initialValue)}</ViewRender>
+      // ) : (
+      //   <Ele {...eleProps} />
+      // );
+      return <Ele {...eleProps} disabled={!!view} /> 
     }
   };
 };

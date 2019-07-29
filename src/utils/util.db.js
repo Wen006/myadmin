@@ -1,3 +1,8 @@
+/**
+ * @description 简单的浏览器store操作
+ * @author neusoft
+ * @time 20190624
+ */
 import low from 'lowdb'
 import LocalStorage from 'lowdb/adapters/LocalStorage'
 import cookie from 'cookiejs';

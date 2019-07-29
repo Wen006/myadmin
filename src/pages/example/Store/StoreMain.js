@@ -3,15 +3,16 @@
 /* eslint-disable no-unused-expressions */
 import React, { Fragment, Children } from 'react';
 import { Form, Card, Icon, Switch } from 'antd'; 
-import { Btns, AdRender ,Act,MPCConfirm} from '@/components'; 
-import { getNowTime } from '@/utils/util.date' 
-import * as Rxjs from 'rxjs'
 import lodash from 'lodash'
+import * as Rxjs from 'rxjs'
+import { Btns, AdRender ,Act,MPCConfirm} from '@/components'; 
+import { getNow } from '@/utils/util.date' 
 import ReactMain from './react'
 import ReactMobxMain from './reactmobx'
 import ReactReduxMain from './reactredux'
 import ReactJsMain from './reactrxjs'
+import PageHeaderWrapper from '@/components/PageHeaderWrapper';
 
 const FFieldSet = ({children}) => Children.map(children,(c)=><Card style={{marginBottom:'5px'}} title={c.type&&c.type.desc} size="small">{c}</Card>)
 
-export default () => <FFieldSet><ReactMain /><ReactMobxMain /><ReactReduxMain /> <ReactJsMain /> </FFieldSet>
+export default () => <PageHeaderWrapper title="数据store处理方式"><FFieldSet><ReactMain /><ReactMobxMain /><ReactReduxMain /> <ReactJsMain /> </FFieldSet></PageHeaderWrapper>

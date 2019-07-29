@@ -30,7 +30,7 @@ class Step1 extends React.PureComponent {
             type: 'form/saveStepFormData',
             payload: values,
           });
-          router.push('/form/step-form/confirm');
+          router.push('/example/ant/form/step-form/confirm');
         }
       });
     };

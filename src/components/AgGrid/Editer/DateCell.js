@@ -2,15 +2,8 @@
 /* eslint-disable no-redeclare */
 import React from 'react';
 import { DatePicker } from 'antd';
-import moment from 'moment';
-
-function praseMoment(sr) {
-  if (!sr) return undefined;
-  if (sr instanceof moment) {
-    return moment(new Date(+sr.toDate().showZoneTime()));
-  }
-  return moment(new Date(sr).showZoneTime());
-}
+import { toMoment,toLong } from '@/utils/util.date';
+ 
 
 // React Cell Renderer Component
 export default class DateCell extends React.Component {
@@ -27,13 +20,13 @@ export default class DateCell extends React.Component {
     this.modalKey = modalKey || this.column.colId;
 
     this.state = {
-      value: praseMoment(value),
+      value: toMoment(value),
     };
   }
 
   getValue = () => {
     if (this.state.value) {
-      return this.state.value.toDate().saveZoneTime();
+      return toLong(this.state.value);
     }
     return this.state.value;
   };

@@ -1,5 +1,5 @@
 import React from 'react';
-import moment from 'moment';
+import { moment } from '@/utils/util.date';
 import { Avatar } from 'antd';
 import styles from './index.less';
 

@@ -6,7 +6,6 @@ import ReactDOM from 'react-dom'
 
 export default Ele => class BlurCom extends React.Component {
  
- 
   componentDidMount() { 
     // document.addEventListener('click', this.handleClickOutside, true);
     document.getElementById('root').addEventListener('click', this.handleClickOutside, false);
@@ -22,7 +21,8 @@ export default Ele => class BlurCom extends React.Component {
     // // eslint-disable-next-line react/no-find-dom-node
     const tRef = ReactDOM.findDOMNode(this.tableRef);
     const clickEle = e.target;
-    if (tRef && tRef != clickEle && !tRef.contains(clickEle)) {
+    const classNames = clickEle.parentNode&&clickEle.parentNode.className||clickEle.className||"";
+    if (tRef && tRef != clickEle && !tRef.contains(clickEle) && !classNames.includes('ag-react-container')) {
         if(this.agApi)this.agApi.stopEditing();
     }
   };

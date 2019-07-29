@@ -69,7 +69,7 @@ class UserInfo extends React.Component {
                   id="countryName"
                   onClear={() => {
                     const param = { countryId: '', countryCode: '', countryName: '' };
-                    this.form.setFieldsValue(param);
+                    this.props.form.setFieldsValue(param);
                   }}
                   onSearchBefore={() => {}}
                   onOk={({selectedRows}) => {
@@ -79,7 +79,7 @@ class UserInfo extends React.Component {
                       countryCode: row.districtCode,
                       countryName: row.districtName,
                     };
-                    this.form.setFieldsValue(param);
+                    this.props.form.setFieldsValue(param);
                   }}
                 />
                 <InputH
@@ -157,7 +157,7 @@ class UserInfo extends React.Component {
             <div className={styles.btnBar}>
               <Btns.back
                 onClick={() => {
-                  Navigator.forward({ url: '/system/user/info/userInfoIndex' });
+                  Navigator.forward({ url: '/sys/sm/user/info/userIndex' });
                 }}
               />
               <Btns.save type="primary" onClick={this.userInfoStore.handleSave} />

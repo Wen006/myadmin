@@ -6,7 +6,7 @@ title: 迷你区域图
 
 ````jsx
 import { MiniArea } from 'ant-design-pro/lib/Charts';
-import moment from 'moment';
+import { moment } from '@/utils/util.date';
 
 const visitData = [];
 const beginDay = new Date().getTime();

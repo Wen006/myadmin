@@ -1,4 +1,11 @@
-export default {
+
+/**
+ * @description 弹框选择 lookup
+ * @author neusoft
+ * @time 20190624
+ */
+
+ export default {
     SM_ROLE_SELECT_FOR_USER: {
         url: '/sm/role/listForUser',
         method: 'get',

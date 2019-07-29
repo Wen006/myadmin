@@ -8,7 +8,7 @@ title: 迷你柱状图
 
 ````jsx
 import { MiniBar } from 'ant-design-pro/lib/Charts';
-import moment from 'moment';
+import { moment } from '@/utils/util.date';
 
 const visitData = [];
 const beginDay = new Date().getTime();

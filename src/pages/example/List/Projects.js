@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import moment from 'moment';
+import { moment } from '@/utils/util.date';
 import { connect } from 'dva';
 import { Row, Col, Form, Card, Select, List } from 'antd';
 

@@ -71,7 +71,7 @@ class AdLovList extends React.Component {
   handleBarOpe = (ope,record) => {
     switch (ope) {
       case 'add':
-        Navigator.forward({url:'/system/ad/lovlist/lovlistEdit',title:'新增',params:{}})
+        Navigator.forward({url:'/sys/ad/lovlist/lovlistIndex/lovlistEdit',title:'新增',params:{}})
         break;
       case 'view': 
         // 把选择的记录  放在store中record变量中 然后调用侧边滑
@@ -80,7 +80,7 @@ class AdLovList extends React.Component {
         break;
       case 'edit':
         const editRow = !record ? this.agStore.getSelectOneRecord():record;
-        Navigator.forward({url:'/system/ad/lovlist/lovlistEdit',title:'编辑',params:{...editRow}})
+        Navigator.forward({url:'/sys/ad/lovlist/lovlistIndex/lovlistEdit',title:'编辑',params:{...editRow}})
         break;
       case 'delete': 
         const selectedRowKeys = record?[record.id]:this.agStore.getSelect().selectedRowKeys;

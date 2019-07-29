@@ -1,33 +1,25 @@
 import React from 'react';
 import { DatePicker } from 'antd';
-import moment from 'moment';
+import { moment } from '@/utils/util.date';
 import WrapInput from './WrapInput';
 import ViewRender from './ViewRender';
-
-// 没有值定义其他的  要把 不属于Input的属性 给过滤出去
-// function praseMoment(sr) {
-//   if (!sr) return undefined;
-//   if (sr instanceof moment) {
-//     return moment(new Date(+sr.toDate().showZoneTime()));
-//   }
-//   return moment(new Date(sr).showZoneTime());
-// }
 
 const WrapProps = Ele => {
   return class InputFunc extends React.Component {
     format = {
-      date: 'yyyy-MM-dd',
-      month: 'yyyy-MM',
+      date: 'YYYY-MM-DD',
+      month: 'YYYY-MM',
     };
 
     valueFormatter = initialValue => {
-      if (Number.isInteger(initialValue)) {
-        return new Date(initialValue);
+      const formatValue = initialValue || this.props.value
+      if (Number.isInteger(formatValue)) {
+        return new Date(formatValue);
       }
-      if (initialValue instanceof moment) {
-        return initialValue.toDate().format(this.format.date); // formatNotDiff("yyyy-MM-dd HH:mm:ss");
+      if (formatValue instanceof moment) {
+        return formatValue.format(this.format.date); // formatNotDiff("yyyy-MM-dd HH:mm:ss");
       }
-      return initialValue;
+      return formatValue;
     };
 
     render() {

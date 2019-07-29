@@ -6,11 +6,11 @@
  * @time 2018.1.9
  */
 import React, { Fragment } from 'react';
+import { Card,Icon, Input,Button, Divider } from 'antd';
+import { observer } from 'mobx-react';
 import { Btns,Intler,MPCConfirm } from '@/components';
 import styles from '@/pages/common.less';
 import AgGridPro from '@/components/AgGrid/AgGridPro';
-import { Card,Icon, Input,Button, Divider } from 'antd';
-import { observer } from 'mobx-react';
 import rStyles from './index.less'
   
 @observer
@@ -125,7 +125,7 @@ class RoleList extends React.Component {
       <Button.Group className={styles.treeBtn}>
         {/* <Button type="primary" onClick={this.handleSearch} icon="search" /> */}
         <Button type="primary" title={Intler.getIntl("common.title.new")} onClick={this.handleOpe.bind(this,'add',{})} icon="plus" />
-        <Button type="primary" title={'common.title.save'} onClick={this.handleOpe.bind(this,'save',{})} disabled={!this.roleStore.edittable} icon="save" />
+        <Button type="primary" title="common.title.save" onClick={this.handleOpe.bind(this,'save',{})} disabled={!this.roleStore.edittable} icon="save" />
       </Button.Group>
     )
    

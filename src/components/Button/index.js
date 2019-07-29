@@ -13,7 +13,7 @@ import { Button, Icon, Popconfirm } from 'antd'
 
 
 // 按钮组件包括
-// 新增 add，返回 back，取消 cancel，删除 del，编辑 edit， 重置 reset
+// 新增 add，返回 back，取消 cancel，删除 del，编辑 edit， 重置 reset， 查看 view
 // 创建 create
 // 保存 save，查询 search，确定 sure，更新 update，
 // 提交 submit  通过adopt 不通过disAdopt
@@ -420,6 +420,10 @@ const btnNames = [
     btnName: 'add',
     btnLocaleName: 'app.btn.add',
     iconType: 'plus',
+  },{
+    btnName: 'view',
+    btnLocaleName: 'app.btn.view',
+    iconType: 'eye',
   }, {
     btnName: 'back',
     btnLocaleName: 'app.btn.back',
@@ -441,7 +445,7 @@ const btnNames = [
     iconType: 'plus',
   }, {
     btnName: 'edit',
-    btnLocaleName: 'Edit',
+    btnLocaleName: 'app.btn.edit',
     iconType: 'edit',
   }, {
     btnName: 'reset',

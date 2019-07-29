@@ -2,13 +2,19 @@
 
 :global {
     .ant-form-inline .ant-form-item-with-help{margin-bottom:0;}
-    .ant-input-number { width:100%;}
+    .ant-input-number {
+        width:100%;
+        &>.ant-input-number-handler-wrap{
+            display:none;
+        }
+    }
     .searchMore{
         -ms-filter:"progid:DXImageTransform.Microsoft.gradient(startColorstr='#f0f2f5', endColorstr='#ffffff')";	
 	    background:#f0f2f5; /* 一些不支持背景渐变的浏览器 */  
         background:-moz-linear-gradient(top, #f0f2f5, rgba(255, 255, 255, 0.5));  
         background:-webkit-gradient(linear,0 0,0 bottom,from( #f0f2f5),to(rgba(255,255,255,0.5)))
     }
+    
     
     .ant-table .ant-table-content .ant-table-thead tr th {
         text-align: center !important;

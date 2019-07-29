@@ -11,7 +11,7 @@ import Trend from 'ant-design-pro/lib/Trend';
 import NumberInfo from 'ant-design-pro/lib/NumberInfo';
 import { Row, Col, Icon, Tooltip } from 'antd';
 import numeral from 'numeral';
-import moment from 'moment';
+import { moment } from '@/utils/util.date';
 
 const visitData = [];
 const beginDay = new Date().getTime();

@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import { findDOMNode } from 'react-dom';
-import moment from 'moment';
+import { moment } from '@/utils/util.date';
 import { connect } from 'dva';
 import {
   List,

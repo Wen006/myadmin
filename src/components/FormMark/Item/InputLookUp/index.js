@@ -82,12 +82,11 @@ class InputLookUp extends React.Component {
   }
 
   render() {
-    const { form,disabled=false,options={},lookUpKey,rowSelection,title,openBefore,closeBefore,onSearchBefore,...otherProps} = this.props
+    const { form,disabled=false,options={},lookUpKey,rowSelection,title,openBefore,closeBefore,onSearchBefore,onClear,onOk,...otherProps} = this.props
     const { showClear } = this.state
      
     let suffixProps = {}
-    let nOptions = {}
-
+    let nOptions = {} 
     if(!otherProps.view){
       if(disabled){
         nOptions = lodash.assign({},options,{
@@ -105,7 +104,7 @@ class InputLookUp extends React.Component {
           onMouseEnter:()=>{this.valRef.showValue(true)},
           onMouseLeave:()=>{this.valRef.showValue(false)},
           onClick:this.handleClickInput,
-          suffix:<Icon {...suffixProps}/>,
+          suffix:<Icon {...suffixProps} />,
           readOnly:true,
         })
       }

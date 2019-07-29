@@ -4,7 +4,7 @@ subtitle: 弹出选择框
 desc: autoId 是否自动生成表格需要的唯一标识 默认取的是id 如果id不能保证唯一 则设置该值为true 默认为false
 ---
 
-## Tag使用
+## InputLookUp使用
 import { InputLookUp } from '@/components'
 
 <InputLookUp 
@@ -14,7 +14,7 @@ import { InputLookUp } from '@/components'
     title="用户管理多多岛" 
     lookUpKey="SM_USER" 
     rules={[]} 
-    // 弹框弹出前调用 boolean
+    // 弹框弹出前调用 boolean 返回若是true弹框打开
     openBefore={ 
     // true
     // ()=>true
@@ -23,7 +23,7 @@ import { InputLookUp } from '@/components'
     //   reject(); // 弹框不打开
     // })
     }
-    // 双击选择或者点击ok按钮时会调用触发
+    // 双击选择或者点击ok按钮时会调用触发 返回若是true弹框关闭 
     // closeBefore={
     //   // true
     //   // ()=>true

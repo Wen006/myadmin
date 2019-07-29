@@ -1,8 +1,9 @@
 /* eslint-disable no-restricted-globals */
 import { Input,InputNumber,DatePicker } from "antd";
-import moment from 'moment';
+import { moment,Data_Format } from '@/utils/util.date';
 
-const dateFormat = 'YYYY-MM-DD';
+
+const dateFormat = Data_Format.YEAR_MONTH_DAY;
 
 function isNumeric(value) {
     return !isNaN(parseFloat(value)) && isFinite(value);
@@ -11,16 +12,6 @@ function isNumeric(value) {
 function getNumValue (value) { 
     return isNumeric(value) ? value : `${value}`.replace(/[^0-9]/gi, '');
 };
-
-
-function praseMoment(sr) {
-  if (!sr) return undefined;
-  if (sr instanceof moment) {
-    return moment(new Date(+sr.toDate().showZoneTime()));
-  }
-  return moment(new Date(sr).showZoneTime());
-}
-
 
 
 export default {

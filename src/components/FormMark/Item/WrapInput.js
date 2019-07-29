@@ -51,9 +51,12 @@ export default (Ele, type) => {
         hidden, // 隐藏但是不消失
         view, // 只读查看页面
         fieldOptions = {}, // getFieldDecorator.options
+        formItemProps = {},
         options = {}, // 输入标签属性
-        ...formItemProps // FItem 属性 labelOptions
+        ...otherProps // FItem 属性 labelOptions
       } = this.props;
+
+      const { getFieldDecorator } = this.form;
 
       let reStyle;
       if (view) {
@@ -64,8 +67,6 @@ export default (Ele, type) => {
       
       // RadioH 比较特殊
       if (this.type == TypeEnums.RadioGroup)return <RadioH {...this.props} />;
-      
-      const { getFieldDecorator } = this.form;
 
       // 隐藏字段
       if (hidden) {
@@ -73,14 +74,13 @@ export default (Ele, type) => {
           <Input hidden {...options} />
         );
       }
-
       return (
         <FItem {...formItemProps} label={this.label}>
           {getFieldDecorator(this.id, {
             rules: view ? [] : rules,
             initialValue,
             ...fieldOptions,
-          })(<Ele {...options} view={view} className={styles[reStyle]} />)}
+          })(<Ele view={view} {...otherProps} {...options} className={styles[reStyle]} />)}
         </FItem>
       );
     }

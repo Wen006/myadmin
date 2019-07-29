@@ -1,13 +1,14 @@
 /* eslint-disable react/destructuring-assignment */
 import React from 'react';
-import Global from '@/stores/common/Global';
-import lodash from 'lodash';
-import { formatMessage } from 'umi/locale';
 import { Tooltip, Radio, Input } from 'antd';
+import lodash from 'lodash';
+import Global from '@/stores/common/Global';
+// import { formatMessage } from 'umi/locale';
+import {Intler} from '@/components'
 import ViewRender from './ViewRender';
 import FItem from '../FItem';
 
-const defaultRules = [{ required: true, message: formatMessage({id:'app.form.input.require'})}];
+const defaultRules = [{ required: true, message: Intler.getIntl('app.form.input.require')}];
 
 const showTip = label => {
   if (!label) return null;
@@ -30,7 +31,8 @@ export default class RadioH extends React.PureComponent {
     this.id = id;
     this.label = showTip(label); // 如果包含国际化就在这里处理一下
     const {
-      options: { dataSource = [], code, type = RadioH.defaultType.Radio },
+      // options: { dataSource = [], code, type = RadioH.defaultType.Radio },
+      dataSource = [], code, type = RadioH.defaultType.Radio
     } = props;
     this.code = code;
     this.type = type;
@@ -99,12 +101,12 @@ export default class RadioH extends React.PureComponent {
     }
     const { dataSource } = this.state;
 
-    if (view)
-      return (
-        <FItem {...formItemProps} label={this.label}>
-          <ViewRender>{this.valueFormatter(initialValue||formItemProps.value)}</ViewRender>
-        </FItem>
-      );
+    // if (view)
+    //   return (
+    //     <FItem {...formItemProps} label={this.label}>
+    //       <ViewRender>{this.valueFormatter(initialValue||formItemProps.value)}</ViewRender>
+    //     </FItem>
+    //   );
     return (
       <FItem {...formItemProps} label={this.label}>
         {getFieldDecorator(this.id, {
@@ -112,7 +114,7 @@ export default class RadioH extends React.PureComponent {
           initialValue,
           ...fieldOptions,
         })(
-          <RadioGroup {...otherOptions} style={reStyle}>
+          <RadioGroup {...otherOptions} style={reStyle} disabled={view}>
             {dataSource.map(ele => {
               const { codeName, codeValue, LANGUAGE_CODE, ...other } = ele;
               return this.type == RadioH.defaultType.Radio ? (

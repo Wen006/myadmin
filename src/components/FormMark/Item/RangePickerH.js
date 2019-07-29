@@ -7,8 +7,12 @@
 
 import React, { PureComponent } from 'react';
 import { DatePicker } from 'antd';
+import { moment } from '@/utils/util.date'
+import WrapInput from './WrapInput';
+import ViewRender from './ViewRender';
 
-export default class RangePickerH extends PureComponent {
+
+class RangePickerH extends PureComponent {
   formatStr = 'YYYY-MM-DD';
 
   state = {
@@ -35,7 +39,30 @@ export default class RangePickerH extends PureComponent {
     }
   }
 
+  valueFormatter = initialValue => { 
+    const v = this.state.value
+    const str = []
+    if(v){
+      str[0] = v[0]&&this.formatData(v[0])||"";
+      str[1] = v[1]&&this.formatData(v[1])||"";
+    } 
+    return str.join("~");
+  };
+
+  formatData = (v) =>{ 
+    if (v instanceof moment) {
+      return v.format(this.formatStr); // formatNotDiff("yyyy-MM-dd HH:mm:ss");
+    }
+    return v;
+  }
+
   render() {
-    return <DatePicker.RangePicker {...this.props} value={this.state.value} />;
+    const { readOnly, view, ...otherProps } = this.props;
+    if (view) return <ViewRender>{this.valueFormatter()}</ViewRender>;
+    return <DatePicker.RangePicker {...otherProps} value={this.state.value} />;
   }
 }
+
+export default WrapInput(RangePickerH, 'RangePicker');
+// const TextAreaH =  WrapInput(WrapProps(TextArea),'TextArea');
+// InputH.TextArea = TextAreaH;

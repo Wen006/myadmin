@@ -3,7 +3,7 @@ import lodash from 'lodash'
 import { observable } from 'mobx';
 import Global from '@/stores/common/Global';
 import { arrayToTree } from '@/utils/utils'
-import {getNowTime} from '@/utils/util.date'
+import {getNow} from '@/utils/util.date'
 import { MBox, Intler } from '@/components';
 
 export default class RoleStore {
@@ -43,7 +43,7 @@ export default class RoleStore {
             this.fetchAuthUser(data);
             this.fetchAuthMenuKey(data);
         }else{
-            const time = `${getNowTime()}`;
+            const time = `${+getNow()}`;
             lodash.assign(data,{
                 roleCode:time,
                 roleName:time,

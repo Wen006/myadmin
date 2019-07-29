@@ -4,7 +4,7 @@
 
 ### 固定输入参数：form: this.props.form;
 
-### 必填参数 id
+### 必填参数 name
 
 ### 参数说明：
 ###         label: 标签之前的提示文字；initialValue: 初始值（无特殊情况一律使用该参数设置默认值）
@@ -26,24 +26,24 @@
     const _radioDataMap = { name: 'code_name', value: 'code_value' };
 
 
-    <InputH form={this.props.form} label={'输入框'} id={'input1'} initialValue={'kevin'} options={inputOptions}></InputH>
+    <InputH form={this.props.form} label={'输入框'} name={'input1'} initialValue={'kevin'} options={inputOptions}></InputH>
 
     <SelectH 
         showTip 
         tipTxt="选择了"
-        form={this.props.form} label={'下拉选择'} id={'sel1'} initialValue={'jack'} dataSource={_selectData} options={selectOptions}></SelectH>
+        form={this.props.form} label={'下拉选择'} name={'sel1'} initialValue={'jack'} dataSource={_selectData} options={selectOptions}></SelectH>
     // showTip=true 是否显示请选择  // tipText 显示的选择提示
 
 
 
-    <CheckBoxH form={this.props.form} label={'复选框'} id={'check1'} options={checkboxOptions}></CheckBoxH>
+    <CheckBoxH form={this.props.form} label={'复选框'} name={'check1'} options={checkboxOptions}></CheckBoxH>
 
-    <InputNumberH form={this.props.form} label={'数字输入框'} id={'inputNum1'} />
+    <InputNumberH form={this.props.form} label={'数字输入框'} name={'inputNum1'} />
 
-    <DatePickerH form={this.props.form} label={'日期选择'} id={'datepicker1'} initialValue={'1534817352'} options={datePickerOptions} />
+    <DatePickerH form={this.props.form} label={'日期选择'} name={'datepicker1'} initialValue={'1534817352'} options={datePickerOptions} />
 
-    <RangePickerH form={this.props.form} label={'日期范围选择'} id={'datepicker2'} initialValue={['1534817352', 1534817359]} options={datePickerOptions} />
+    <RangePickerH form={this.props.form} label={'日期范围选择'} name={'datepicker2'} initialValue={['1534817352', 1534817359]} options={datePickerOptions} />
 
-    <RadioGroupH form={this.props.form} label={'单选'} id={'radioGroup1'} initialValue={'b'} dataSource={_radioDataSource} dataMap={_radioDataMap}></RadioGroupH>
+    <RadioGroupH form={this.props.form} label={'单选'} name={'radioGroup1'} initialValue={'b'} dataSource={_radioDataSource} dataMap={_radioDataMap}></RadioGroupH>
 
 ```

@@ -8,25 +8,26 @@ export default class SwitchCell extends React.Component {
   constructor(props) {
     super(props);
     const { value, column, config = {} } = props;
-    const { modalKey, checkedChildren, defaultChecked = true, ...otherProps } = config;
-
+    const { modalKey, checkedChildren, unCheckedChildren, defaultChecked = true, ...otherProps } = config;
+    this.column = column;    
+    this.modalKey = modalKey || this.column.colId;
     let checked = defaultChecked;
     if (value) {
-      checked = value == checkedChildren;
+      checked = value == checkedChildren.codeValue;
     }
 
-    this.column = column;
-    this.modalKey = modalKey || this.column.colId;
 
     this.state = {
       checked,
       checkedChildren,
+      unCheckedChildren,
       ...otherProps,
     };
   }
 
   getValue = () => {
-    return this.state.checked ? this.state.checkedChildren : this.state.unCheckedChildren;
+    // if(this.state.checkedChildren == undefined && this.state.unCheckedChildren == undefined) return this.state.checked;
+    return this.state.checked ? this.state.checkedChildren.codeValue : this.state.unCheckedChildren.codeValue;
   };
 
   setValue = value => {
@@ -40,6 +41,6 @@ export default class SwitchCell extends React.Component {
   };
 
   render() {
-    return <Switch {...this.state} onChange={this.onChange} />;
+    return <Switch className={"mpc-ag-edit-cell"} {...this.state} checkedChildren={this.state.checkedChildren.codeName} unCheckedChildren={this.state.unCheckedChildren.codeName} onChange={this.onChange} />;
   }
 }

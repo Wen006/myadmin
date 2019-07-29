@@ -26,5 +26,5 @@ const WrapProps = Ele => {
 
 const InputH = WrapInput(WrapProps(Input), 'Input');
 const TextAreaH = WrapInput(WrapProps(TextArea), 'TextArea');
-InputH.TextArea = TextAreaH;
+InputH.TextAreaH = TextAreaH;
 export default InputH;

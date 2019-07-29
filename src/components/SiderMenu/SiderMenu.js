@@ -1,3 +1,4 @@
+/* eslint-disable import/no-extraneous-dependencies */
 import React, { PureComponent, Suspense } from 'react';
 import { Layout } from 'antd';
 import classNames from 'classnames';
@@ -7,6 +8,8 @@ import PageLoading from '../PageLoading';
 import { getDefaultCollapsedSubMenus } from './SiderMenuUtils';
 
 const BaseMenu = React.lazy(() => import('./BaseMenu'));
+const TabMenu = React.lazy(() => import('./TabMenu'));
+
 const { Sider } = Layout;
 
 export default class SiderMenu extends PureComponent {
@@ -46,7 +49,7 @@ export default class SiderMenu extends PureComponent {
   };
 
   render() {
-    const { logo,logoIcon, collapsed, onCollapse, fixSiderbar,logoText,theme } = this.props;
+    const { logo,logoIcon, collapsed, onCollapse, fixSiderbar,logoText,theme, isTab } = this.props;
     const { openKeys } = this.state;
     const defaultProps = collapsed ? {} : { openKeys };
 
@@ -72,14 +75,24 @@ export default class SiderMenu extends PureComponent {
           </Link>
         </div>
         <Suspense fallback={<PageLoading />}>
-          <BaseMenu
-            {...this.props}
-            mode="inline"
-            handleOpenChange={this.handleOpenChange}
-            onOpenChange={this.handleOpenChange}
-            style={{ padding: '16px 0', width: '100%' }}
-            {...defaultProps}
-          />
+          {
+            isTab?<TabMenu 
+              {...this.props}
+              mode="inline"
+              handleOpenChange={this.handleOpenChange}
+              onOpenChange={this.handleOpenChange}
+              style={{ padding: '16px 0', width: '100%' }}
+              {...defaultProps}
+            />:
+            <BaseMenu
+              {...this.props}
+              mode="inline"
+              handleOpenChange={this.handleOpenChange}
+              onOpenChange={this.handleOpenChange}
+              style={{ padding: '16px 0', width: '100%' }}
+              {...defaultProps}
+            />
+          }
         </Suspense>
       </Sider>
     );

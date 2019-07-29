@@ -3,11 +3,10 @@
 /* eslint-disable no-unused-expressions */
 import React from 'react';
 import { Form, Card, Icon, Switch } from 'antd'; 
-import { Btns, AdRender ,Act,MPCConfirm} from '@/components'; 
-// import AbC  from '@/components/AgGrid/Editer/config' 
-import { getNowTime } from '@/utils/util.date' 
-import * as Rxjs from 'rxjs'
 import lodash from 'lodash'
+import { Btns, AdRender, DateRender,Act,MPCConfirm} from '@/components'; 
+// import AbC  from '@/components/AgGrid/Editer/config' 
+import { getNow } from '@/utils/util.date' 
 import AgGrid, {LookUpCell,InputCell,NumberCell,SelectCell,MonthCell,DateCell,SwitchCell} from '@/components/AgGrid/AgGrid'
 import Global from '@/stores/common/Global';
 
@@ -16,9 +15,7 @@ import Global from '@/stores/common/Global';
 class EditForm extends React.Component {
   
   cell = ["NumberCell","InputCell","SelectCell","LookupCell","MonthCell","DateCell","SwitchCell"]
-
-  subject = new Rxjs.Subject(); // 这个用于监听数据变化的
-
+ 
   constructor(props) {
     super(props);  
        
@@ -33,25 +30,19 @@ class EditForm extends React.Component {
         field: 'Input', 
         ...comProps,
         // cellEditorFramework:InputCell,
-        // cellEditorParams:{
-        //   config:{
-        //     observable:this.subject,
-        //   }
-        // }
       },
       {
         headerName:"NumberCell",
         field: 'Number',
         ...comProps,        
         cellEditorFramework: NumberCell,
-        cellEditorParams:{
-          config:{
-            onChange:(val)=>{
-              this.subject.next({Input:val})
-            },
-            observable:this.subject,
-          }
-        },
+      },
+      {
+        headerName:"计数联动",
+        field: 'Number2',   
+        valueFormatter:(a,b,c)=>{ 
+          return a.value?`$ ${a.value}`:"";
+        }   
       },
       {
         headerName:"SelectCell",
@@ -60,9 +51,15 @@ class EditForm extends React.Component {
         cellEditorFramework: SelectCell,
         cellEditorParams:{
           config:{
-            observable:this.subject,
+            code:'COMMON_Y_N',
           }
         },
+        cellRenderer:'adRender',
+        cellRendererParams:{
+          config:{
+            code:'COMMON_Y_N'
+          }
+        }
       },
       {
         headerName:"LookUpCell",
@@ -71,12 +68,25 @@ class EditForm extends React.Component {
         cellEditorFramework: LookUpCell,
         cellEditorParams:{
           config:{
-            // observable:this.subject,
             lookUpKey:'SM_USER',
             modalKey:'userName',
             nameKey:'lookup',
+            onOk:(select,api)=>{
+              const row = select.selectedRows&&select.selectedRows[0]||{}
+              api.setDataValue("userCode",row.userCode);
+            },
+            onClear:(api)=>{
+              api.setDataValue("userCode","");
+            },
+            onCancel:(api)=>{
+
+            }
           }
         },
+      },
+      {
+        headerName:'根据用户选择带出来的UserCode',
+        field:'userCode',
       },
       {
         headerName:"MonthCell",
@@ -84,10 +94,13 @@ class EditForm extends React.Component {
         ...comProps,        
         cellEditorFramework: MonthCell,
         cellEditorParams:{
-          config:{
-            observable:this.subject,
-          }
         },
+        cellRenderer:'dateRender',
+        cellRendererParams:{
+          config:{
+            format:'YYYY-MM',
+          }
+        }
       },
       {
         headerName:"DateCell",
@@ -96,9 +109,14 @@ class EditForm extends React.Component {
         cellEditorFramework: DateCell,
         cellEditorParams:{
           config:{
-            observable:this.subject,
           }
         },
+        cellRenderer:'dateRender',
+        cellRendererParams:{
+          config:{
+            format:'YYYY-MM-DD',
+          }
+        }
       },
       {
         headerName:"SwitchCell",
@@ -106,10 +124,20 @@ class EditForm extends React.Component {
         ...comProps,        
         cellEditorFramework: SwitchCell,
         cellEditorParams:{
-          config:{
-            observable:this.subject,
+          config:{ 
+            checkedChildren:{codeName:'开',codeValue:'1'},
+            unCheckedChildren:{codeName:'关',codeValue:'0'},
           }
         },
+        cellRenderer:'adRender',
+        cellRendererParams:{
+          config:{
+            dataSource:[
+              {codeName:'开',codeValue:'1'},
+              {codeName:'关',codeValue:'0'}
+            ]
+          }
+        }
       },
       {
         headerName:"SwitchCell1",
@@ -118,33 +146,9 @@ class EditForm extends React.Component {
         cellEditorFramework: SwitchCell,
         cellEditorParams:{
           config:{
-            observable:this.subject,
           }
         },
       },
-      {
-        headerName:"SwitchCell2",
-        field: 'switch2',
-        ...comProps,        
-        cellEditorFramework: SwitchCell,
-        cellEditorParams:{
-          config:{
-            observable:this.subject,
-          }
-        },
-      },
-      {
-        headerName:"SwitchCell3",
-        field: 'switch2',
-        // ...comProps,        
-        cellEditorFramework: SwitchCell,
-        cellEditorParams:{
-          config:{
-            observable:this.subject,
-          }
-        },
-      },
-
     ];
    
     this.columnDefs.push({
@@ -156,7 +160,7 @@ class EditForm extends React.Component {
   } 
 
   handleAdd = () =>{
-    const time = getNowTime();
+    const time = +getNow();
     this.agApi.addItem({
       lovCode:time,
       lovName:time,
@@ -185,22 +189,18 @@ class EditForm extends React.Component {
         gridOptions: {
           frameworkComponents: {
             adRender: AdRender, 
-            usingRenderer:params=><Switch 
-              disabled={this.view}
-              checkedChildren={Intler.getIntl("switch.open")} 
-              unCheckedChildren={Intler.getIntl("switch.close")} 
-              defaultChecked={params.data.activeFlag=="1"}
-              onChange={(checked)=>{
-                params.node.setDataValue("activeFlag",checked?"1":"0");
-              }}
-            />,
+            dateRender:DateRender,
             actionCellRenderer: params =>(<Act><MPCConfirm type="del" onConfirm={this.handleDel.bind(this,params)}><Icon type="delete" /></MPCConfirm></Act>),
           },
           singleClickEdit:true,        // 单击编辑
           // editType:'fullRow' ,    // 是否开启整行编辑
           onCellValueChanged:(params)=>{  // 单元格停止编辑出发。
             // 可以通过params.newValue和oldValue对比值变化
-            // console.log("onCellValueChanged",params)
+            if(params.newValue != params.oldValue){
+              if(params.colDef.field == "Number"){
+                params.node.setDataValue("Number2",params.newValue*2);
+              } 
+            }
           },
           onRowValueChanged:(a,b,c)=>{// 行停止编辑触发
             // console.log("onRowValueChanged",a,b,c)

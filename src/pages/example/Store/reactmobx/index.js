@@ -8,7 +8,7 @@ import { observer } from 'mobx-react';
 @observer
 export default class Demo extends Component{
 
-    static desc = "React和Mobx版本";
+    static desc = "React和Mobx版本 (推荐)";
 
     mobxStore = new MobxStore(); 
     

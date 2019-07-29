@@ -1,8 +1,8 @@
 /* eslint-disable no-eval */
 import React from 'react';
-import Global from '@/stores/common/Global';
 import { Select } from 'antd';
 import lodash from 'lodash';
+import Global from '@/stores/common/Global';
 import WrapInput from './WrapInput';
 import ViewRender from './ViewRender';
 

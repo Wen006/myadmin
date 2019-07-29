@@ -1,4 +1,10 @@
-module.exports = {
+ /**
+ * @description 系统默认布局和颜色的配置
+ * @author neusoft
+ * @time 20190624
+ */
+
+ module.exports = {
   navTheme: 'dark', // theme for nav menu
   primaryColor: '#1890FF', // primary color of ant design
   layout: 'sidemenu', // nav menu position: sidemenu or topmenu
@@ -11,8 +17,4 @@ module.exports = {
   logoIcon: '/icons/logo/logo_f.png',
   footerTitle: '2019 MPC 产品研发组',
   defaultLanguage:'zh-CN',
-  language:{
-    zh_CN:'zh-CN',
-    en_US:'en-US',
-  },
 };

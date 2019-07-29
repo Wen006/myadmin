@@ -5,8 +5,8 @@ import { InputH } from '@/components/FormMark';
 import { Btns, Intler, AdRender, AutoRow ,Act,MPCConfirm} from '@/components'; 
 import AgGrid,{ NumberCell } from '@/components/AgGrid/AgGrid'
 import styles from '@/pages/common.less';    
-import { DefaultField } from '@/pages/plugins';
-import { getNowTime } from '@/utils/util.date'
+import { DefaultField } from '@/pages/common';
+import { getNow } from '@/utils/util.date'
 import { toPromise } from '@/utils/utils'
 import lodash from 'lodash' 
 import Navigator from '@/stores/common/Navigator';
@@ -95,7 +95,7 @@ class EditForm extends React.Component {
   }
 
   handleAdd = () =>{
-    const time = getNowTime();
+    const time = +getNow();
     this.agApi.addItem({
       lovCode:time,
       lovName:time,
