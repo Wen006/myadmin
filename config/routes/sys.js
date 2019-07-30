@@ -45,16 +45,6 @@
           author: 'wennn',
           component: `./sys/ad/lovlist/adLovEdit`,
         },
-        // {
-        //     path: `/sys/menu/info/menuInfoIndex`,
-        //     name: 'MenuManage',
-        //     component: `./sys/menu/info/menuInfoEdit`,
-        // },
-        // {
-        //     path: `/sys/role/info/roleInfoIndex`,
-        //     name: 'RoleManage',
-        //     component: `./sys/role/info`,
-        // },
       ],
     },
 ]

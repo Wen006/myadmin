@@ -4,28 +4,24 @@ import { Popconfirm, Icon } from 'antd';
 import Intler from '../Intler'
 
 const confirmMap = {
-  del: {
-    title: 'app.btn.confirm.remove.title',
+  default: {
+    icon:'',
+    title:'',
+  },
+  delete: {
+    title: 'app.btn.confirm.delete.title',
     icon: 'question-circle-o',
     okText: 'app.btn.confirm',
     cancelText: 'app.btn.cancel',
   },
   submit: {
-    title: 'ConfirmTheSubmit',
-    icon: 'question-circle-o',
-  },
-  default: {
-    title: '',
-    icon: '',
-  },
-  callBack: {
-    title: 'CallBackConfirm',
+    title: 'app.btn.confirm.submit.title',
     icon: 'question-circle-o',
     okText: 'app.btn.confirm',
     cancelText: 'app.btn.cancel',
   },
   reset: {
-    title: '_CONFIRM_RESET',
+    title: 'app.btn.confirm.reset.title',
     icon: 'question-circle-o',
     okText: 'app.btn.confirm',
     cancelText: 'app.btn.cancel',

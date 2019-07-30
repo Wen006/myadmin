@@ -1,3 +1,4 @@
+/* eslint-disable import/no-extraneous-dependencies */
 /**
  *@description: 通用按钮
  * @author：zhang-tiantian
@@ -8,9 +9,6 @@ import React from 'react'
 import { formatMessage, FormattedMessage } from 'umi/locale';
 import debounce from 'lodash/debounce'
 import { Button, Icon, Popconfirm } from 'antd'
-
-/* import intl from 'react-intl-universal' */
-
 
 // 按钮组件包括
 // 新增 add，返回 back，取消 cancel，删除 del，编辑 edit， 重置 reset， 查看 view
@@ -151,721 +149,735 @@ import { Button, Icon, Popconfirm } from 'antd'
 /*
 */
 
+/**
+ * // 下面两个是目前定义的属性
+ * btnName  必填按钮的引用名称    <Btns.[btnName] />
+ * btnLocaleName 非必填对用的国际化key      这在locales下语言/app.js 下配置
+ * 
+ * // 其他都是antd.button 属性
+ * icon     非必填 按钮的图标
+ */
+
 const btnNames = [
   {
     btnName: 'expansionToBusi',
-    btnLocaleName: 'expansionToBusi',
-    iconType: 'plus',
+    // btnLocaleName: 'expansionToBusi',
+    icon: 'plus',
   },
   {
     btnName: 'expansionToEntity',
     btnLocaleName: 'expansionToEntity',
-    iconType: 'plus',
+    icon: 'plus',
   },
   {
     btnName: 'jxLevel',
     btnLocaleName: 'jxLevel',
-    iconType: 'profile',
+    icon: 'profile',
   },
   {
     btnName: 'vellamo',
     btnLocaleName: 'vellamo',
-    iconType: 'profile',
+    icon: 'profile',
   },
   {
     btnName: 'finishEvaluate',
     btnLocaleName: 'finishEvaluate',
-    iconType: 'file-done',
+    icon: 'file-done',
   },
   {
     btnName: 'pauseEvaluate',
     btnLocaleName: 'pauseEvaluate',
-    iconType: 'play-circle',
+    icon: 'play-circle',
   },
   {
     btnName: 'startupEvaluate',
     btnLocaleName: 'startupEvaluate',
-    iconType: 'enter',
+    icon: 'enter',
   },
   {
     btnName: 'CreditInit',
     btnLocaleName: 'CreditInit',
-    iconType: 'pushpin',
+    icon: 'pushpin',
   },
   {
     btnName: 'CreditAssess',
     btnLocaleName: 'CreditAssess',
-    iconType: 'like',
+    icon: 'like',
   },
   {
     btnName: 'fileAct',
     btnLocaleName: 'FileAct',
-    iconType: 'diff',
+    icon: 'diff',
   },
   {
     btnName: 'sync',
     btnLocaleName: 'Sync',
-    iconType: 'swap',
+    icon: 'swap',
   },
   {
     btnName: 'allDel',
     btnLocaleName: 'AllDel',
-    iconType: 'delete',
+    icon: 'delete',
   },
   {
     btnName: 'exportAgain',
     btnLocaleName: 'ExportAgain',
-    iconType: 'cloud-download-o',
+    icon: 'cloud-download-o',
   },
   {
     btnName: 'noMoreExport',
     btnLocaleName: 'NoMoreExport',
-    iconType: 'minus',
+    icon: 'minus',
   },
   {
     btnName: 'exportHis',
     btnLocaleName: 'ExportHis',
-    iconType: 'retweet',
+    icon: 'retweet',
   },
   {
     btnName: 'intervene',
     btnLocaleName: 'Intervene',
-    iconType: 'alert',
+    icon: 'alert',
   },
   {
     btnName: 'turn',
     btnLocaleName: 'Turn',
-    iconType: 'share-alt',
+    icon: 'share-alt',
   },
   {
     btnName: 'grant',
     btnLocaleName: 'Grant',
-    iconType: 'pushpin',
+    icon: 'pushpin',
   },
   {
     btnName: 'connect',
     btnLocaleName: 'Connect',
-    iconType: 'smile',
+    icon: 'smile',
   },
   {
     btnName: 'addCard',
     btnLocaleName: 'AddCard',
-    iconType: 'add',
+    icon: 'add',
   },
   {
     btnName: 'distribution',
     btnLocaleName: 'Distribution',
-    iconType: 'share-alt',
+    icon: 'share-alt',
   },
   {
     btnName: 'valueAdd',
     btnLocaleName: 'ValueAdd',
-    iconType: 'copy',
+    icon: 'copy',
   },
   {
     btnName: 'imgFile',
     btnLocaleName: 'ImgFile',
-    iconType: 'picture',
+    icon: 'picture',
   },
   {
     btnName: 'autoAdd',
     btnLocaleName: 'autoAdd',
-    iconType: 'plus-circle',
+    icon: 'plus-circle',
   },
   {
     btnName: 'ebankExport',
     btnLocaleName: 'EbankExport',
-    iconType: 'money-collect',
+    icon: 'money-collect',
   },
   {
     btnName: 'excelExport',
     btnLocaleName: 'ExcelExport',
-    iconType: 'money-collect',
+    icon: 'money-collect',
   },
   {
     btnName: 'reasSign',
     btnLocaleName: 'ReasSign',
-    iconType: 'file-add',
+    icon: 'file-add',
   },
   {
     btnName: 'printing',
     btnLocaleName: 'Printing',
-    iconType: 'printer',
+    icon: 'printer',
   },
   {
     btnName: 'ensurePay',
     btnLocaleName: 'EnsurePay',
-    iconType: 'money-collect',
+    icon: 'money-collect',
   },
   {
     btnName: 'approve',
     btnLocaleName: 'Approve',
-    iconType: 'check-circle',
+    icon: 'check-circle',
   },
   {
     btnName: 'approveNot',
     btnLocaleName: 'ApproveNot',
-    iconType: 'warning',
+    icon: 'warning',
   },
   {
     btnName: 'reApprove',
     btnLocaleName: 'ReApprove',
-    iconType: 'check-circle',
+    icon: 'check-circle',
   },
   {
     btnName: 'reApproveNot',
     btnLocaleName: 'ReApproveNot',
-    iconType: 'warning',
+    icon: 'warning',
   },
   {
     btnName: 'accOnline',
     btnLocaleName: 'AccOnline',
-    iconType: 'form',
+    icon: 'form',
   },
   {
     btnName: 'reAccOnline',
     btnLocaleName: 'ReAccOnline',
-    iconType: 'check-square',
+    icon: 'check-square',
   },
   {
     btnName: 'amtMoney',
     btnLocaleName: 'AmtMoney',
-    iconType: 'red-envelope',
+    icon: 'red-envelope',
   },
   {
     btnName: 'taxNoShare',
     btnLocaleName: 'TaxNoShare',
-    iconType: 'export',
+    icon: 'export',
   },
   {
     btnName: 'quota',
     btnLocaleName: 'Quota',
-    iconType: 'export',
+    icon: 'export',
   },
   {
     btnName: 'bcStop',
     btnLocaleName: 'BcStop',
-    iconType: 'pause-circle',
+    icon: 'pause-circle',
   },
   {
     btnName: 'continuePay',
     btnLocaleName: 'ContinuePay',
-    iconType: 'calculator',
+    icon: 'calculator',
   },
   {
     btnName: 'create',
     btnLocaleName: 'Create',
-    iconType: 'plus-circle',
+    icon: 'plus-circle',
   },
   {
     btnName: 'adjSure',
     btnLocaleName: 'adjSure',
-    iconType: 'check-circle-o',
+    icon: 'check-circle-o',
   },
   {
     btnName: 'retCom',
     btnLocaleName: 'RetCom',
-    iconType: 'select',
+    icon: 'select',
   },
   {
     btnName: 'allSum',
     btnLocaleName: 'AllSum',
-    iconType: 'form',
+    icon: 'form',
   },
   {
     btnName: 'bcAdd',
     btnLocaleName: 'BcAdd',
-    iconType: 'plus-circle',
+    icon: 'plus-circle',
   },
   {
     btnName: 'stop',
     btnLocaleName: 'Stop',
-    iconType: 'lock',
+    icon: 'lock',
   },
   {
     btnName: 'start',
     btnLocaleName: 'Start',
-    iconType: 'unlock',
+    icon: 'unlock',
   },
   {
     btnName: 'disAble',
     btnLocaleName: 'Disable',
-    iconType: 'exclamation-circle-o',
+    icon: 'exclamation-circle-o',
   },
   {
     btnName: 'preview',
     btnLocaleName: 'Preview',
-    iconType: 'eye-o',
+    icon: 'eye-o',
   },
   {
     btnName: 'effect',
     btnLocaleName: 'Effect',
-    iconType: 'tag',
+    icon: 'tag',
   },
   {
     btnName: 'checkImg',
     btnLocaleName: 'CheckImg',
-    iconType: 'picture',
+    icon: 'picture',
   },
   {
     btnName: 'checkOut',
     btnLocaleName: 'CheckOut',
-    iconType: 'export',
+    icon: 'export',
   },
   {
     btnName: 'search',
     btnLocaleName: 'app.btn.search',
-    iconType: 'search',
+    icon: 'search',
   }, {
     btnName: 'add',
     btnLocaleName: 'app.btn.add',
-    iconType: 'plus',
+    icon: 'plus',
   },{
     btnName: 'view',
     btnLocaleName: 'app.btn.view',
-    iconType: 'eye',
+    icon: 'eye',
   }, {
     btnName: 'back',
     btnLocaleName: 'app.btn.back',
-    iconType: 'left',
-    btnType: 'default',
+    icon: 'left',
+    type: 'default',
   }, {
     btnName: 'cancel',
     btnLocaleName: 'app.btn.cancel',
-    iconType: 'close',
-    btnType: 'default',
+    icon: 'close',
+    type: 'default',
   }, {
     btnName: 'del',
-    btnLocaleName: 'app.btn.remove',
-    iconType: 'delete',
+    btnLocaleName: 'app.btn.delete',
+    icon: 'delete',
   },
   {
     btnName: 'great',
     btnLocaleName: 'Great',
-    iconType: 'plus',
+    icon: 'plus',
   }, {
     btnName: 'edit',
     btnLocaleName: 'app.btn.edit',
-    iconType: 'edit',
+    icon: 'edit',
   }, {
     btnName: 'reset',
     btnLocaleName: 'app.btn.reset',
-    iconType: 'retweet',
-    btnType: 'default',
+    icon: 'retweet',
+    type: 'default',
   }, {
     btnName: 'save',
     btnLocaleName: 'app.btn.save',
-    iconType: 'save',
+    icon: 'save',
   }, {
     btnName: 'sure',
     btnLocaleName: 'app.btn.sure',
-    iconType: 'check',
+    icon: 'check',
   }, {
     btnName: 'update',
     btnLocaleName: 'app.btn.update',
-    iconType: 'retweet',
+    icon: 'retweet',
   }, {
     btnName: 'delAll',
     btnLocaleName: 'Remove_1',
-    iconType: 'delete',
+    icon: 'delete',
   }, {
     btnName: 'submit',
     btnLocaleName: 'Submit',
-    iconType: 'check',
+    icon: 'check',
   }, {
     btnName: 'adopt',
     btnLocaleName: 'Adopt',
-    iconType: 'check-square',
+    icon: 'check-square',
   }, {
     btnName: 'disAdopt',
     btnLocaleName: 'DisAdopt',
-    iconType: 'close-square',
+    icon: 'close-square',
   },
   {
     btnName: 'bcImport',
     btnLocaleName: 'BcImport',
-    iconType: 'arrow-down',
+    icon: 'arrow-down',
   },
   {
     btnName: 'mgImport',
     btnLocaleName: 'MgImport',
-    iconType: 'download',
+    icon: 'download',
   }, {
     btnName: 'ins',
     btnLocaleName: 'Import',
-    iconType: 'cloud-download-o',
+    icon: 'cloud-download-o',
   }, {
     btnName: 'outs',
     btnLocaleName: 'Export',
-    iconType: 'cloud-upload-o',
+    icon: 'cloud-upload-o',
   }, {
     btnName: 'next',
-    iconType: 'right',
+    icon: 'right',
     btnLocaleName: 'Next',
 
   },
   {
     btnName: 'prev',
-    iconType: 'left',
+    icon: 'left',
     btnLocaleName: 'Prev',
 
   },
   {
     btnName: 'downTemp',
     btnLocaleName: 'DownTemp',
-    iconType: 'download',
+    icon: 'download',
   }, {
     btnName: 'upFile',
     btnLocaleName: 'UpFile',
-    iconType: 'upload',
+    icon: 'upload',
   }, {
     btnName: 'csh',
     btnLocaleName: 'Csh',
-    iconType: 'inbox',
+    icon: 'inbox',
   }, {
     btnName: 'revise',
     btnLocaleName: 'Revise',
-    iconType: 'edit',
+    icon: 'edit',
   }, {
     btnName: 'revoke',
     btnLocaleName: 'Revoke',
-    iconType: 'reload',
+    icon: 'reload',
   },
   {
     btnName: 'return',
     btnLocaleName: 'Return',
-    iconType: 'rollback',
+    icon: 'rollback',
   },
   {
     btnName: 'goBack',
     btnLocaleName: 'GoBack',
-    iconType: 'logout',
+    icon: 'logout',
   }, {
     btnName: 'invalid',
     btnLocaleName: 'Invalid',
-    iconType: 'exclamation-circle-o',
+    icon: 'exclamation-circle-o',
   }, {
     btnName: 'execute',
     btnLocaleName: 'Execute',
-    iconType: 'check-circle-o',
+    icon: 'check-circle-o',
   }, {
     btnName: 'pay',
     btnLocaleName: 'Pay',
-    iconType: 'pay-circle-o',
+    icon: 'pay-circle-o',
   }, {
     btnName: 'split',
     btnLocaleName: 'Split',
-    iconType: 'disconnect',
+    icon: 'disconnect',
   }, {
     btnName: 'success',
     btnLocaleName: 'Success',
-    iconType: 'smile-o',
+    icon: 'smile-o',
   }, {
     btnName: 'copy',
     btnLocaleName: 'Copy',
-    iconType: 'copy',
+    icon: 'copy',
   }, {
     btnName: 'freeze',
     btnLocaleName: 'Freeze',
-    iconType: 'exception',
+    icon: 'exception',
   }, {
     btnName: 'newRow',
     btnLocaleName: 'NewRow',
-    iconType: 'file-add',
+    icon: 'file-add',
   }, {
     btnName: 'saveSub',
     btnLocaleName: 'SaveDraft',
-    iconType: 'save',
+    icon: 'save',
   }, {
     btnName: 'addPlan',
     btnLocaleName: 'AddPlan',
-    iconType: 'file-ppt',
+    icon: 'file-ppt',
   },
   // 保存草稿
   // {
   //   btnName: 'saveDraft',
   //   btnLocaleName: 'SaveDraft',
-  //   iconType: 'file-add',
+  //   icon: 'file-add',
   // }, 
   {
     btnName: 'insRecord',
     btnLocaleName: 'InsRecord',
-    iconType: 'rollback',
+    icon: 'rollback',
   }, {
     btnName: 'uploadFile',
     btnLocaleName: 'UploadFile',
-    iconType: 'upload',
+    icon: 'upload',
   }, {
     btnName: 'insList',
     btnLocaleName: 'InsList',
-    iconType: 'file-text',
+    icon: 'file-text',
   }, {
     btnName: 'insMdDown',
     btnLocaleName: 'InsMdDown',
-    iconType: 'swap-left',
+    icon: 'swap-left',
   }, {
     btnName: 'affirm',
     btnLocaleName: 'Affirm',
-    iconType: 'check-circle-o',
+    icon: 'check-circle-o',
   },
   {
     btnName: 'bcAffirm',
     btnLocaleName: 'BcAffirm',
-    iconType: 'check-circle',
+    icon: 'check-circle',
   }, {
     btnName: 'bcReturn',
     btnLocaleName: 'BcReturn',
-    iconType: 'close-square',
+    icon: 'close-square',
   }, {
     btnName: 'bcEffect',
     btnLocaleName: 'BcEffect',
-    iconType: 'check-circle',
+    icon: 'check-circle',
   }, {
     btnName: 'bcAdopt',
     btnLocaleName: 'BcAdopt',
-    iconType: 'check-square',
+    icon: 'check-square',
   }, {
     btnName: 'bcEnable',
     btnLocaleName: 'BcEnable',
-    iconType: 'pause-circle',
+    icon: 'pause-circle',
   }, {
     btnName: 'bcSub',
     btnLocaleName: 'BcSub',
-    iconType: 'check-circle',
+    icon: 'check-circle',
   },
   {
     btnName: 'agree',
     btnLocaleName: 'Agree',
-    iconType: 'check-circle-o',
+    icon: 'check-circle-o',
   },
   {
     btnName: 'disAgree',
     btnLocaleName: 'DisAgree',
-    iconType: 'minus-circle-o',
+    icon: 'minus-circle-o',
   },
   {
     btnName: 'bcAgree',
     btnLocaleName: 'BcAgree',
-    iconType: 'smile',
+    icon: 'smile',
   }, {
     btnName: 'bcDisAgree',
     btnLocaleName: 'BcDisAgree',
-    iconType: 'frown',
+    icon: 'frown',
   }, {
     btnName: 'bcOpen',
     btnLocaleName: 'BcOpen',
-    iconType: 'pause-circle',
+    icon: 'pause-circle',
   }, {
     btnName: 'bcDisable',
     btnLocaleName: 'BcDisable',
-    iconType: 'exclamation-circle',
+    icon: 'exclamation-circle',
   },
   {
     btnName: 'bcThaw',
     btnLocaleName: 'BcThaw',
-    iconType: 'key',
+    icon: 'key',
   }, {
     btnName: 'bcFrozen',
     btnLocaleName: 'BcFrozen',
-    iconType: 'minus-circle',
+    icon: 'minus-circle',
   }, {
     btnName: 'factor',
     btnLocaleName: 'Factor',
-    iconType: 'profile',
+    icon: 'profile',
   }, {
     btnName: 'insBudget',
     btnLocaleName: 'InsBudget',
-    iconType: 'cloud-upload',
+    icon: 'cloud-upload',
   }, {
     btnName: 'addSample',
     btnLocaleName: 'AddSample',
-    iconType: 'plus-square',
+    icon: 'plus-square',
   }, {
     btnName: 'revMerge',
     btnLocaleName: 'RevMerge',
-    iconType: 'export',
+    icon: 'export',
   }, {
     btnName: 'mergeBdg',
     btnLocaleName: 'MergeBdg',
-    iconType: 'calculator',
+    icon: 'calculator',
   }, {
     btnName: 'createBill',
     btnLocaleName: 'CreateBill',
-    iconType: 'plus-circle-o',
+    icon: 'plus-circle-o',
   }, {
     btnName: 'payPer',
     btnLocaleName: 'PayPer',
-    iconType: 'flag',
+    icon: 'flag',
   }, {
     btnName: 'rggy',
     btnLocaleName: 'Rggy',
-    iconType: 'usergroup-add',
+    icon: 'usergroup-add',
   }, {
     btnName: 'addArea',
     btnLocaleName: 'AddArea',
-    iconType: 'layout',
+    icon: 'layout',
   }, {
     btnName: 'selTarget',
     btnLocaleName: 'SelTarget',
-    iconType: 'bar-chart',
+    icon: 'bar-chart',
   }, {
     btnName: 'adaOrg',
     btnLocaleName: 'AdaOrg',
-    iconType: 'sync',
+    icon: 'sync',
   }, {
     btnName: 'planState',
     btnLocaleName: 'PlanState',
-    iconType: 'clock-circle-o',
+    icon: 'clock-circle-o',
   }, {
     btnName: 'startSys',
     btnLocaleName: 'StartSys',
-    iconType: 'tags',
+    icon: 'tags',
   }, {
     btnName: 'stopSys',
     btnLocaleName: 'StopSys',
-    iconType: 'close-square-o',
+    icon: 'close-square-o',
   }, {
     btnName: 'startAss',
     btnLocaleName: 'StartAss',
-    iconType: 'pause',
+    icon: 'pause',
   }, {
     btnName: 'finishAss',
     btnLocaleName: 'FinishAss',
-    iconType: 'check',
+    icon: 'check',
   }, {
     btnName: 'startSam',
     btnLocaleName: 'StartSam',
-    iconType: 'info',
+    icon: 'info',
   }, {
     btnName: 'finishSam',
     btnLocaleName: 'FinishSam',
-    iconType: 'check-circle-o',
+    icon: 'check-circle-o',
   }, {
     btnName: 'hand',
     btnLocaleName: 'Hand',
-    iconType: 'solution',
+    icon: 'solution',
   }, {
     btnName: 'addReim',
     btnLocaleName: 'AddReim',
-    iconType: 'plus-circle-o',
+    icon: 'plus-circle-o',
   }, {
     btnName: 'addPay',
     btnLocaleName: 'AddPay',
-    iconType: 'plus-circle',
+    icon: 'plus-circle',
   }, {
     btnName: 'gainCode',
     btnLocaleName: 'gainVerCode',
   }, {
     btnName: 'extBill',
     btnLocaleName: 'ExtBill',
-    iconType: 'filter',
+    icon: 'filter',
   }, {
     btnName: 'close',
     btnLocaleName: 'Close',
-    iconType: 'close',
+    icon: 'close',
   },
   {
     btnName: 'busCard',
     btnLocaleName: 'BusCard',
-    iconType: 'credit-card',
+    icon: 'credit-card',
   },
   {
     btnName: 'adjDiff',
     btnLocaleName: 'AdjDiff',
-    iconType: 'fork',
+    icon: 'fork',
   },
   {
     btnName: 'conPay',
     btnLocaleName: 'ConPay',
-    iconType: 'red-envelope',
+    icon: 'red-envelope',
   },
   {
     btnName: 'rggySuc',
     btnLocaleName: 'RggySuc',
-    iconType: 'smile-o',
+    icon: 'smile-o',
   },
   {
     btnName: 'rggyFail',
     btnLocaleName: 'RggyFail',
-    iconType: 'meh-o',
+    icon: 'meh-o',
   },
   {
     btnName: 'print',
     btnLocaleName: 'Print',
-    iconType: 'printer',
+    icon: 'printer',
   },
   {
     btnName: 'giveup',
     btnLocaleName: 'Giveup',
-    iconType: 'minus-circle',
+    icon: 'minus-circle',
   },
   {
     btnName: 'invalidAll',
     btnLocaleName: 'invalidAll',
-    iconType: 'rest',
+    icon: 'rest',
   },
   {
     btnName: 'sny',
     btnLocaleName: '手工同步',
-    iconType: 'printer',
+    icon: 'printer',
   },
   {
     btnName: 'confirmAsset',
     btnLocaleName: 'ConfirmAsset',
-    iconType: 'check',
+    icon: 'check',
   },
   {
     btnName: 'refresh',
     btnLocaleName: 'Refresh',
-    iconType: 'reset',
+    icon: 'reset',
   },
   {
     btnName: 'autoAlca',
     btnLocaleName: '自动分摊',
-    iconType: 'disconnect',
+    icon: 'disconnect',
   },
   {
     btnName: 'invOCRDS',
     btnLocaleName: '发票OCR数据同步',
-    iconType: 'disconnect',
+    icon: 'disconnect',
   },
   {
     btnName: 'batchAuthion',
     btnLocaleName: '批量认证',
-    iconType: 'disconnect',
+    icon: 'disconnect',
   },
   {
     btnName: 'redRush',
     btnLocaleName: '红冲',
-    iconType: 'check-square',
+    icon: 'check-square',
   },
   {
     btnName: 'ensureAdjust',
     btnLocaleName: '确认调整范围',
-    iconType: 'save',
+    icon: 'save',
   },
   {
     btnName: 'changeAdjust',
     btnLocaleName: '变更调整范围',
-    iconType: 'edit',
+    icon: 'edit',
   },
 ]
 
-const GenComp = (btnLocaleName, btnType, iconType, btnName) => {
-  return class GeneralComponent extends React.PureComponent {
+const getLocale = (key) =>{
+  return key?formatMessage({id:key}):key;
+}
+
+const GenComp = (btnLocaleName, btnName, cfg) => {
+  
+  return class BtnComponent extends React.PureComponent {
  
+    // 防事件抖动
     btnsClick = debounce((e) => {
       const { onClick } = this.props;
       if(onClick) onClick();
-    })
+    },30);
 
     render() {
-      const { text, textTit, ...otherProps } = this.props;
-      const label = text || textTit || formatMessage({id:btnLocaleName})
+      const { text,children, ...otherProps } = this.props;
+      const label = text || children || getLocale(btnLocaleName)
       return (
-        <Button size="default" type={btnType} {...otherProps} onClick={this.btnsClick}>
-          {iconType ? <Icon type={iconType} /> : ""}
-          {label || btnLocaleName}
+        <Button type='primary' size="default" {...cfg} {...otherProps} onClick={this.btnsClick}>
+          {label}
         </Button>
       )
     }
@@ -874,9 +886,9 @@ const GenComp = (btnLocaleName, btnType, iconType, btnName) => {
 }
 
 const Btns = {}
-btnNames.forEach((btnCfg, key) => {
-  const { btnName, btnLocaleName, btnType = 'primary', iconType } = btnCfg
-  Btns[`${btnName}`] = GenComp(btnLocaleName, btnType, iconType, btnName)
+btnNames.forEach((btnCfg) => {
+  const { btnName, btnLocaleName, ...other } = btnCfg
+  Btns[`${btnName}`] = GenComp(btnLocaleName, btnName, other);
 })
 
 Btns.Group = Button.Group

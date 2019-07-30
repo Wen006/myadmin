@@ -9,6 +9,7 @@ export default [
     { path: '/example/aggrid/main', component: './example/AgGrid/AgGridMain' },
     { path: '/example/store/main', component: './example/Store/StoreMain' },
     { path: '/example/formmark/baseform', component: './example/FormMark/BaseForm' },
+    { path: '/example/component/basecomp', component: './example/Component/BaseComp' },
     {
       path: '/dashboard',
       name: 'dashboard',

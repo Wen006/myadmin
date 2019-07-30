@@ -9,6 +9,7 @@ const { MonthPicker } = DatePicker;
 
 // React Cell Renderer Component
 export default class DateCell extends React.Component {
+  
   monthFormat = 'YYYY-MM';
 
   constructor(props) {

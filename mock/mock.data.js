@@ -249,6 +249,7 @@ const menuData =[
         {id:10101,name:'数据处理',icon:'morentongyong',path:'/example/store/main'},
         {id:10102,name:'编辑表格',icon:'morentongyong',path:'/example/aggrid/main'},
         {id:10103,name:'编辑表单',icon:'morentongyong',path:'/example/formmark/baseform'},
+        {id:10105,name:'其他组件',icon:'morentongyong',path:'/example/component/basecomp'},
         {
             "id": 10104,
             "name": "Ant用例代码",
