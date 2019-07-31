@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import './iconmenu.less'
 
-const Iconfont = ({ type, colorful,children }) => {
+const Iconfont = ({ type, colorful,children, className, ...other }) => {
   // if (colorful) {
   //   return (<span
   //     dangerouslySetInnerHTML={{
@@ -12,10 +12,10 @@ const Iconfont = ({ type, colorful,children }) => {
   // }
   if (colorful) {
     return (
-      <i className={`iconmenu fc-${type} ${colorful}`} />
+      <i className={`${className} iconmenu fc-${type} ${colorful}`} />
     )
   }
-  return <i className={`iconmenu fc-${type}`} >{children}</i>
+  return <i className={`${className} iconmenu fc-${type} `}>{children}</i>
 }
 
 // Iconfont.propTypes = {

@@ -1,10 +1,10 @@
 /* eslint-disable no-unused-expressions */
 import React, { Fragment } from 'react';
 import { Form, Card, Col } from 'antd';
+import { observer } from 'mobx-react';
 import { InputH,RadioH,InputLookUp } from '@/components/FormMark';
 import { Btns, Intler, MBox, AutoRow } from '@/components'; 
 import styles from '@/pages/common.less'; 
-import { observer } from 'mobx-react';
 import Navigator from '@/stores/common/Navigator';
 import Global from '@/stores/common/Global'; 
 import RoleTransfer from './RoleTransfer'
@@ -16,16 +16,16 @@ class UserInfo extends React.Component {
   constructor(props) {
     super(props); 
     this.userInfoStore = props.userInfoStore; 
-    this.state = {
-      USER_INFO_STATUS: [],
-      USER_INFO_TYPE: [],
-    };
-    Global.findAdLovByCode('USER_INFO_STATUS').then(data => {
-      this.setState({ USER_INFO_STATUS: data });
-    });
-    Global.findAdLovByCode('USER_INFO_TYPE').then(data => {
-      this.setState({ USER_INFO_TYPE: data });
-    });
+    // this.state = {
+    //   USER_INFO_STATUS: [],
+    //   USER_INFO_TYPE: [],
+    // };
+    // Global.findAdLovByCode('USER_INFO_STATUS').then(data => {
+    //   this.setState({ USER_INFO_STATUS: data });
+    // });
+    // Global.findAdLovByCode('USER_INFO_TYPE').then(data => {
+    //   this.setState({ USER_INFO_TYPE: data });
+    // });
   }
 
   componentDidMount() {
@@ -42,8 +42,7 @@ class UserInfo extends React.Component {
     };
 
     const { record = {} } = this.userInfoStore;
-
-    const { USER_INFO_STATUS, USER_INFO_TYPE } = this.state;
+ 
  
     return (
       <Fragment>
@@ -151,7 +150,7 @@ class UserInfo extends React.Component {
             </Card>
           </div>
           <Card bodyStyle={{padding:0,textAlign:'center'}} hoverable={false} size="small" title="角色信息">
-            <RoleTransfer view={this.view} userInfoStore={this.userInfoStore}/>
+            <RoleTransfer view={this.view} userInfoStore={this.userInfoStore} />
           </Card>
           {this.userInfoStore.view ? null : (
             <div className={styles.btnBar}>

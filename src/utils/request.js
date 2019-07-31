@@ -14,9 +14,11 @@ import axios from 'axios';
 import lodash from 'lodash'
 import qs from 'qs'
 import { notification } from 'antd';
+// eslint-disable-next-line import/no-extraneous-dependencies
 import router from 'umi/router';
 import hash from 'hash.js'; 
 import { formatMessage, setLocale, getLocale } from 'umi/locale';
+import { toJS } from 'mobx';
 
 const ERRORSTR = {
   NETWORK_ERROR:"Network Error",
@@ -39,6 +41,8 @@ const codeMessage = {
   503: '服务不可用，服务器暂时过载或维护。',
   504: '网关超时。',
 };
+
+const resolveMobxData = _ =>((!!_&&_.$mobx?toJS(_):_)||_);
 
 const failedReturn = {success:false}
 
@@ -119,7 +123,7 @@ const cachedSave = (response, hashcode) => {
 export function fetch (url,options) {
   const { method = 'GET', body, headers } = options;
   // body 请求体参数
-  const cloneData = lodash.cloneDeep(body);
+  const cloneData = resolveMobxData(body); // lodash.cloneDeep(body);
 
   // axios 配置
   const comCfg =lodash.assign({},defaultAxiosCfg);

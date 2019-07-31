@@ -2,7 +2,7 @@
 
 import Global from '@/stores/common/Global';
 import {Intler,MBox} from '@/components/';
-import { observable } from 'mobx';
+import { observable, toJS } from 'mobx';
 import lodash from 'lodash'
 
 const api = {
@@ -139,4 +139,8 @@ export default class UserInfoStore {
     MBox.success('修改密码成功');
     return true;
   };
+
+  getTargetRoleKeys = () => toJS(this.targetRoleKeys)
+  
+  getAllRoleData = () => toJS(this.allRoleData)
 }

@@ -30,6 +30,7 @@ class PasswordModal extends React.Component {
   }
 
   showModal = (visible, record) => {
+    console.log('record', record)
     this.userInfoStore.record = visible ? record : {};
     const { userName, userName, id } = this.userInfoStore.record;
     const value = { userName, userName, id };

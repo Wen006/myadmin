@@ -132,10 +132,13 @@ class BasicLayout extends React.PureComponent {
     if (!currRouterData) {
       return title;
     }
-    const pageName = formatMessage({
-      id: currRouterData.locale || currRouterData.name,
-      defaultMessage: currRouterData.name,
-    });
+    // const pageName = formatMessage({
+    //   id: currRouterData.locale || currRouterData.name,
+    //   defaultMessage: currRouterData.name,
+    // });
+    const pageName ={
+      id: currRouterData.locale || currRouterData.name, 
+    };
 
     return `${pageName} - ${title}`;
   };

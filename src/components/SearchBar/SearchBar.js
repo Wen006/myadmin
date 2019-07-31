@@ -222,7 +222,7 @@ class SearchBar extends React.Component {
               }
 
               if (getPopupContainer) {
-                formProps.getPopupContainer = getPopupContainer;
+                // formProps.getPopupContainer = getPopupContainer;
               }
 
               if (field.dict) {
@@ -233,7 +233,7 @@ class SearchBar extends React.Component {
               switch (fieldType) {
                 case 'input': // 输入框
                 case 'textarea': // 多行文本
-                  formProps.formFieldOptions = {
+                  formProps.fieldOptions = {
                     rules: [
                       {
                         pattern: /^[^'%&<>=?*!]*$/,

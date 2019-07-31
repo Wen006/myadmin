@@ -60,7 +60,7 @@ export default (self) => [
         }
         return true;
       },
-      searchBefore:()=>{
+      onSearchBefore:()=>{
         const { unitId,unitName} = self.state.queryParams
         return {unitId,unitName}
       },

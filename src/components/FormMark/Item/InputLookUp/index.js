@@ -82,7 +82,7 @@ class InputLookUp extends React.Component {
   }
 
   render() {
-    const { form,disabled=false,options={},lookUpKey,rowSelection,title,openBefore,closeBefore,onSearchBefore,onClear,onOk,...otherProps} = this.props
+    const { form,disabled=false,options={},lookUpKey,rowSelection,title,openBefore,closeBefore,onSearchBefore,onClear,onOk,modalKey,...otherProps} = this.props
     const { showClear } = this.state
      
     let suffixProps = {}

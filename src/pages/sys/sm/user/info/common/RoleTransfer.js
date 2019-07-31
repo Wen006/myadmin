@@ -1,7 +1,6 @@
 
 import React from 'react';
 import { Transfer } from 'antd';
-import Global from '@/stores/common/Global';
 import { observer } from 'mobx-react';
 import lodash from 'lodash'
 
@@ -15,7 +14,7 @@ export default class RoleTransfer extends React.Component {
 
   filterOption =  (inputValue, option) => option.roleName.indexOf(inputValue) > -1;
 
-  handleChange = targetKeys => {
+  handleChange = (targetKeys,flag,c) => {
     this.userInfoStore.targetRoleKeys = targetKeys;
   };
 
@@ -37,8 +36,10 @@ export default class RoleTransfer extends React.Component {
       <Transfer
         titles={["所有角色","授权角色"]}
         style={{height:'60vh'}}
-        dataSource={this.userInfoStore.allRoleData}
-        targetKeys={this.userInfoStore.targetRoleKeys}
+        // dataSource={this.userInfoStore.allRoleData}
+        // targetKeys={this.userInfoStore.targetRoleKeys}
+        dataSource={this.userInfoStore.getAllRoleData()}
+        targetKeys={this.userInfoStore.getTargetRoleKeys()}
         listStyle={{width:"40%",height: '100%',textAlign:'left'}}
         render={item => item.roleName}
         {...tProps}

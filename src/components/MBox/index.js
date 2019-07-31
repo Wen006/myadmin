@@ -1,4 +1,5 @@
 import { message,Modal } from 'antd';
+import Intler from '../Intler';
 
 export default {
   success: (content, duration, onClose) => {
@@ -35,12 +36,15 @@ export default {
   destroy: () => {
     message.destroy();
   },
-  confirm: ({title,content,onOk,onCancel}) =>{
+  confirm: ({title,content,onOk,onCancel,...other}) =>{
     Modal.confirm({
       title,
       content,
       onOk,
       onCancel,
+      cancelText:Intler.getIntl("app.btn.cancel"),
+      okText:Intler.getIntl("app.btn.sure"),
+      ...other,
     });
   }
 };

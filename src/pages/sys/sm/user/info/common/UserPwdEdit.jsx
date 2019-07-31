@@ -101,24 +101,24 @@ class UserPwdEdit extends React.Component {
 
     return (
       <div style={{ width: '450px',margin:'0 auto' }}>
-        <InputH name="id" {...comFormItemProps} hidden />
+        <InputH id="id" {...comFormItemProps} hidden />
         <Form layout="inline">
           <InputH 
             label={Intler.getIntl("sm.user.userName")} 
-            name="userName" 
+            id="userName" 
             fieldOptions={{ rules: [] }} 
             options={this.viewOptions} 
             {...comFormItemProps}
           />
           <InputH 
             label={Intler.getIntl("sm.user.userCode")} 
-            name="userCode" 
+            id="userCode" 
             fieldOptions={{ rules: [] }} 
             options={this.viewOptions}
             {...comFormItemProps}
           />
           <InputH
-            name="password"
+            id="password"
             label={Intler.getIntl("sm.user.orgPassword")}
             options={{
               type: "password",
@@ -126,7 +126,7 @@ class UserPwdEdit extends React.Component {
             {...comFormItemProps}
           />
           <InputH
-            name="newPassword"
+            id="newPassword"
             label={Intler.getIntl("sm.user.newPassword")}
             options={{
               type: "password",
@@ -135,7 +135,7 @@ class UserPwdEdit extends React.Component {
             {...comFormItemProps}
           />
           <InputH
-            name="rePassword"
+            id="rePassword"
             label={Intler.getIntl("sm.user.rePassword")}
             options={{
               type: "password",

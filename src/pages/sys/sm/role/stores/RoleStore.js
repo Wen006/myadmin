@@ -1,6 +1,6 @@
 /* eslint-disable prefer-destructuring */
 import lodash from 'lodash'
-import { observable } from 'mobx';
+import { observable, toJS } from 'mobx';
 import Global from '@/stores/common/Global';
 import { arrayToTree } from '@/utils/utils'
 import {getNow} from '@/utils/util.date'
@@ -152,5 +152,6 @@ export default class RoleStore {
         return  [];
     } 
 
+    getMenuCheckKeys = () =>toJS(this.menuCheckKeys);
 
 }

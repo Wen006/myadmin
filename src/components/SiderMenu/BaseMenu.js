@@ -1,6 +1,7 @@
+/* eslint-disable import/no-extraneous-dependencies */
 import React, { PureComponent } from 'react';
 import classNames from 'classnames';
-import { Menu, Icon } from 'antd';
+import { Menu } from 'antd';
 import Link from 'umi/link';
 import { urlToList } from '../_utils/pathTools';
 import { getMenuMatches } from './SiderMenuUtils';

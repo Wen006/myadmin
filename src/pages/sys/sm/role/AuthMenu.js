@@ -49,7 +49,6 @@ export default class AuthMenu extends React.Component{
         this.roleStore = props.roleStore
         this.state = {
             treeDom:[],
-            checkedKeys:[],
         }
     }
 
@@ -58,7 +57,6 @@ export default class AuthMenu extends React.Component{
             const treeDom = this.getMenus(data);
             this.setState({treeDom})
         })
-        console.log("AuthMenu")
     }
 
     getMenus = (treeJson) => treeJson.map((item) => {
@@ -67,7 +65,7 @@ export default class AuthMenu extends React.Component{
             levelMap[item.id] = item.parentId
           }
           return (
-            <TreeNode title={item.menuName} key={item.id} data={item}>
+            <TreeNode title={item.menuName} key={`${item.id}`} data={item}>
               {this.getMenus(item.children)}
             </TreeNode>
           )
@@ -88,7 +86,7 @@ export default class AuthMenu extends React.Component{
               ref={r=>this.roleStore.treeRef=r}
               checkable={this.roleStore.edittable}
               className={styles.roleCon}
-              checkedKeys={this.roleStore.menuCheckKeys}
+              checkedKeys={this.roleStore.getMenuCheckKeys()}
               onCheck={(checkedKeys)=>{
                 this.roleStore.menuCheckKeys = checkedKeys;
               }}

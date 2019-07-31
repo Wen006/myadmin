@@ -46,8 +46,9 @@ export function getCurDate(format = Data_Format.YEAR_MONTH_DAY) {
  */ 
 export function formatDate(date, matStr = Data_Format.YEAR_MONTH_DAY) {
   if(!date) return date;
-  try {
-    if (date instanceof Date || date instanceof Number) {
+  try { 
+
+    if (date instanceof Date || date instanceof Number || typeof date == 'number') {
       return moment(date).format(matStr);
     }
     if(date instanceof moment){

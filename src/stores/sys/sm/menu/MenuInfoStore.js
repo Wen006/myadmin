@@ -1,9 +1,9 @@
 /* eslint-disable no-unused-expressions */
 
+import lodash from 'lodash'
+import { observable, toJS } from 'mobx';
 import Global from '@/stores/common/Global';
 import {MBox,Intler} from '@/components';
-import { observable } from 'mobx';
-import lodash from 'lodash'
 import { arrayToTree } from '@/utils/utils';
 
 const api = {
@@ -24,7 +24,9 @@ export default class MenuInfoStore {
 
   @observable searchValue = '';
 
-  @observable treeJson = [];
+  treeData = []; // 原始数据
+
+  @observable treeJson = []; // 树结构的
 
   menuMap = {};
 
@@ -44,7 +46,8 @@ export default class MenuInfoStore {
     });
     this.clearData();
     this.loading = false;
-    return this.loadMenuTree(datas);
+    this.treeData = this.loadMenuTree(datas);
+    return this.treeData;
   };
 
   saveOrUpdateMenuInfo = async params => {
@@ -58,15 +61,19 @@ export default class MenuInfoStore {
       MBox.error(returnMessage||Intler.getIntl('common.save.fail'));
       return {};
     }
-    // 保存成功后将数据给当前编辑的变量（主要id） 然后跟新一下
-    lodash.assign(datas,{itemid:datas.id})
-    delete this.menuMap[this.selectRow.itemid];
+    datas.itemid = this.selectRow.itemid;
     this.menuMap[datas.itemid] = datas
-    this.selectRow = datas;
-    this.selectedKeys = [`${datas.itemid}`];
-    // 页面数据重新渲染 无需查询刷新
-    this.treeJson = this.listToTree(lodash.values(this.menuMap)); 
-    return datas;
+    lodash.assign(this.selectRow,datas)
+    this.selectedKeys = [`${datas.itemid}`]; 
+    this.treeData.some(it=>{
+      if(it.itemid == this.selectRow.itemid){
+        lodash.assign(it,datas); 
+        return true;
+      }
+      return false;
+    })
+    this.treeJson = this.listToTree(this.treeData)
+    return this.selectRow;
   };
 
   deleteMulti = async params => {
@@ -83,18 +90,22 @@ export default class MenuInfoStore {
     return success;
   };
 
-  loadMenuTree = data => {
-    const menuData = data.map(it=>{
-      lodash.assign(it,{itemid:`${it.id}`})
-      this.menuMap[it.itemid] = it;
-      return it;
-    })
-    this.treeJson = this.listToTree(lodash.values(this.menuMap));
-    return menuData;
+  loadMenuTree = data => { 
+    if(data && data.length > 0){
+      data.forEach(ele=>{
+        lodash.assign(ele,{itemid:`${ele.id}`})
+        this.menuMap[ele.itemid] = ele; 
+      })
+    }
+
+    this.treeJson = this.listToTree(data);
+    return data;
   };
 
   listToTree = menuList => {
-    const treeJson = arrayToTree(menuList.filter(_ => _.mpid !== '-1'), 'itemid', 'parentId');
+    
+    const ds =lodash.cloneDeep(menuList).filter(_ => _.mpid !== '-1');
+    const treeJson = arrayToTree(ds, 'itemid', 'parentId');
     return treeJson;
   };
 
@@ -155,7 +166,7 @@ export default class MenuInfoStore {
       icon: 'xitongguanli',
       remark: null,
       taxisNo: 0,
-      url: '#',
+      path: '#',
       langs: [],
       menuCode: uniqueId,
       menuName: uniqueId,
@@ -172,7 +183,7 @@ export default class MenuInfoStore {
           }
     );
 
-    this.menuMap[editNode.itemid] = editNode;
+    // this.menuMap[editNode.itemid] = editNode;
     
     // 指定展开项
     if (!expandedKeys.includes(editNode.itemid)) {
@@ -181,8 +192,8 @@ export default class MenuInfoStore {
     //  新增后 要选择的项切换成当前新增的
     this.selectedKeys = [`${editNode.itemid}`];
     this.selectRow = editNode;
-
-    this.treeJson = this.listToTree(lodash.values(this.menuMap));
+    this.treeData.push(editNode);
+    this.treeJson = this.listToTree(this.treeData); 
     return editNode;
   };
 
@@ -214,4 +225,12 @@ export default class MenuInfoStore {
     const langs_ = selectRow_.langs || {};
     this.setState({ selectRow: selectRow_, langs: langs_ });
   };
+
+  getExpandedKeys = () =>toJS(this.expandedKeys)
+
+  getCheckedKeys = () => toJS(this.checkedKeys);
+
+  getSelectedKeys = () => toJS(this.selectedKeys);
+
+  
 }

@@ -3,7 +3,7 @@
 /* eslint-disable prefer-destructuring */
 import React from 'react';
 import AgGridPro from '@/components/AgGrid/AgGridPro';
-import { AdRender, Act, VPro, Intler, Btns,MPCConfirm } from '@/components';
+import { AdRender, Act, Viewer, Intler, Btns,MPCConfirm } from '@/components';
 import UserInfoStore from '@/stores/sys/sm/user/UserInfoStore';
 import Navigator from '@/stores/common/Navigator';
 import PageHeaderWrapper from '@/components/PageHeaderWrapper';
@@ -81,7 +81,7 @@ class UserInfoList extends React.Component {
       });
     } else if (key === 'edit') {
       Navigator.forward({
-        url: '/system/user/info/userInfoEdit',
+        url: '/sys/sm/user/info/userIndex/edit',
         params: record,
         title: '用户编辑',
       });
@@ -148,7 +148,7 @@ class UserInfoList extends React.Component {
           infoCellRenderer: (
             params // 自定义详情链接组件
           ) => (
-            <VPro
+            <Viewer
               tiggerTitle={params.value}
               cache={false}
               title="查看页面"
@@ -164,7 +164,7 @@ class UserInfoList extends React.Component {
                   this.vProApi.showViewer(false);
                 }}
               />
-            </VPro>
+            </Viewer>
           ),
           actionCellRenderer: params => {
             // 自定义操作列
@@ -187,20 +187,20 @@ class UserInfoList extends React.Component {
                 >
                   <Act.Item text={Intler.getIntl("common.title.delete")} key="delete" />
                 </MPCConfirm> 
-                <VPro
+                <Viewer
                   tiggerTitle={Intler.getIntl("sm.user.pwd.update")}
                   cache={false}
                   title={Intler.getIntl("sm.user.pwd.update")}
                   onReady={r => {
-                    this.vProApi = r;
+                    this.vPwdProApi = r;
                   }}
                 >
                   <UserPwdEdit 
                     record={record}
-                    onClose={()=>{this.vProApi.showViewer(false)}}
+                    onClose={()=>{this.vPwdProApi.showViewer(false)}}
                     onSave={(value)=>{}} 
                   />
-                </VPro> 
+                </Viewer> 
                 <MPCConfirm
                   key="reset"
                   type="reset"

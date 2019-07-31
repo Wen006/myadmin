@@ -6,6 +6,7 @@
 import React from 'react';
 import { Tree } from 'antd';
 import styles from '@/pages/common.less';
+import { toJS } from 'mobx';
 
 const { TreeNode } = Tree;
  
@@ -36,7 +37,7 @@ export default ({ treeJson, searchValue: sVal, ...treeProps }) => {
           levelMap[item.id] = item.mpid;
         }
         return (
-          <TreeNode title={menuName} showIcon={item.icon} key={item.itemid} data={item}>
+          <TreeNode title={menuName} showIcon={item.icon} key={`${item.itemid}`} data={item}>
             {getMenus(item.children,searchValue)}
           </TreeNode>
         );
@@ -46,9 +47,17 @@ export default ({ treeJson, searchValue: sVal, ...treeProps }) => {
     return treeEle;
   };
 
-  const Ele = getMenus(treeJson, sVal);
+  const Ele = getMenus(treeJson, sVal); 
   return (
-    <Tree showLine draggable checkable {...treeProps} className={styles.treeCon}>
+    <Tree 
+      showLine 
+      draggable 
+      checkable 
+      {...treeProps} 
+      checkedKeys={toJS(treeProps.checkedKeys)}
+      expandedKeys={toJS(treeProps.expandedKeys)}
+      selectedKeys={toJS(treeProps.selectedKeys)}
+      className={styles.treeCon}>
       {Ele}
     </Tree>
   );

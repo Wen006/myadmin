@@ -4,7 +4,7 @@ import { Drawer, Card } from 'antd';
 import styles from '../../global.less';
 import Btns from '../Button';
 
-export default class VPro extends React.PureComponent {
+export default class Viewer extends React.PureComponent {
   constructor(props) {
     super(props);
     const { cache = true, isView = false } = props;
@@ -18,9 +18,10 @@ export default class VPro extends React.PureComponent {
 
   componentDidMount() {
     if ('onReady' in this.props) {
-      this.props.onReady({
-        showViewer: this.showViewer,
-      });
+      this.props.onReady(this)
+      // this.props.onReady({
+      //   showViewer: this.showViewer,
+      // });
     }
   }
 
@@ -33,7 +34,7 @@ export default class VPro extends React.PureComponent {
   };
 
   render() {
-    const { children, tiggerTitle, onClose, ...other } = this.props;
+    const { children, tiggerTitle, onClose, cache, ...other } = this.props;
 
     const { visible, loading } = this.state;
 

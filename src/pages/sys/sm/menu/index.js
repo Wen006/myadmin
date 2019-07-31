@@ -1,3 +1,4 @@
+/* eslint-disable react/destructuring-assignment */
 /* eslint-disable react/no-array-index-key */
 /* eslint-disable react/no-unused-state */
 /**
@@ -62,7 +63,7 @@ const ChoseIcon = ({ item, handleChoseIcon }) => {
  
 @observer
 class MenuInfoEdit extends React.Component {
-  formFields =["id","deleteFlag","modificationNum","createdBy","createdDate","lastUpdBy","lastUpdDate","originApp","originFlag","itemid","parentId","menuName","menuCode","parentName","taxisNo","icon","url","remark"];
+  formFields =["id","deleteFlag","modificationNum","createdBy","createdDate","lastUpdBy","lastUpdDate","originApp","originFlag","itemid","parentId","menuName","menuCode","parentName","taxisNo","icon","path","remark"];
 
   treeProps = [
     'autoExpandParent',
@@ -127,9 +128,9 @@ class MenuInfoEdit extends React.Component {
   // form 向表单筛值
   fillForm = selectRow => {
     const item = lodash.pick(selectRow, this.formFields);
-    const { menuMap, expandedKeys } = this.menuInfoStore;
+    const { menuMap } = this.menuInfoStore;
     item.parentName = item.parentId && menuMap[item.parentId] ? menuMap[item.parentId].menuName : '';
-    const nExpandedKeys = [].concat(expandedKeys);
+    const nExpandedKeys = [].concat(this.menuInfoStore.getExpandedKeys()); 
     const { form } = this.props;
     if (!nExpandedKeys.some(it => it.itemid == item.itemid)) {
       this.menuInfoStore.getParentIds(item, nExpandedKeys);
@@ -286,7 +287,7 @@ class MenuInfoEdit extends React.Component {
                   <AutoRow colProps={{ span: 24 }}>
                     <InputH
                       label={Intler.getIntl('sm.menu.path')}
-                      id="url"
+                      id="path"
                       fieldOptions={{ rules: [] }}
                       {...comFormProps}
                     />

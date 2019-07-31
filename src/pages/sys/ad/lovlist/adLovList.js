@@ -3,7 +3,7 @@
 /* eslint-disable prefer-destructuring */
 import React from 'react';
 import AgGridPro from '@/components/AgGrid/AgGridPro';
-import { AdRender, Act, VPro, Intler, Btns,MPCConfirm } from '@/components';
+import { AdRender, Act, Viewer, Intler, Btns,MPCConfirm } from '@/components';
 import AdLovlistStore from '@/stores/sys/ad/lovlist/AdLovlistStore';
 import Navigator from '@/stores/common/Navigator';
 import PageHeaderWrapper from '@/components/PageHeaderWrapper';
@@ -139,7 +139,7 @@ class AdLovList extends React.Component {
             // )
             // 2.方式2 查看
             return  (
-              <VPro
+              <Viewer
                 tiggerTitle={params.value}
                 cache={false}
                 title={`方式2 ${Intler.getIntl("common.title.view")}`}
@@ -148,7 +148,7 @@ class AdLovList extends React.Component {
                 }}
               >
                 <EditFrom view record={re} />
-              </VPro>
+              </Viewer>
             )
           },
           usingRenderer:params=><Switch 
@@ -220,7 +220,7 @@ class AdLovList extends React.Component {
           <AgGridPro key="dataGrid" columnDefs={this.columnDefs} {...agPropPros} />
         </div>
         {/* 侧边滑动 */}
-        <VPro
+        <Viewer
           cache={false}
           title={`方式1${Intler.getIntl("common.title.view")}`}
           onReady={r => {
@@ -231,7 +231,7 @@ class AdLovList extends React.Component {
             view
             record={()=> this.adLovlistStore.record}
           />
-        </VPro>
+        </Viewer>
       </PageHeaderWrapper>
     );
   }
