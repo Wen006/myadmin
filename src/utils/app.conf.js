@@ -7,8 +7,9 @@
 
 module.exports = { 
   // apiProxy:'http://msa.web.ip:8888/api',
-  apiProxy:'http://10.20.11.236:8888/api',
-  // apiProxy:'/api',
+  // apiProxy:'http://10.20.11.236:8888/api',
+  // apiProxy:'http://localhost:8888/api',
+  apiProxy:'/api',
   languages:{
     zh_CN:'zh-CN',
     en_US:'en-US',

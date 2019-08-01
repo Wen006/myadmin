@@ -1,11 +1,19 @@
 import { formatMessage,FormatMessage } from 'umi/locale';
 
-const getIntl = (id)=>{
-    if(!id) return id;
-    return formatMessage({id});
+const isNull = k => k == undefined || k ==null || k == "";
+ 
+const getIntl = (id) => {
+    if (isNull(id)) { return id}
+    return formatMessage({id}) || id;
 }
 
-export default {
-    formatMessage,FormatMessage,
-    getIntl,
+const Intler = ({ label, args }) => {
+    return getIntl(label, args);
 }
+
+Intler.getIntl = getIntl
+
+export {
+    formatMessage,FormatMessage
+}
+export default Intler;

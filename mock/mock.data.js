@@ -141,7 +141,7 @@ const menuData =[
         {
             "id": 10001,
             "name": "菜单管理",
-            "path": "/sys/menu/info/menuInfoIndex",
+            "path": "/sys/sm/menu/info/menuInfoIndex",
             "parentId": 100,
             "otherId": null,
             "icon": "hetongshengxiao",
@@ -151,7 +151,7 @@ const menuData =[
         {
             "id": 10002,
             "name": "角色管理",
-            "path": "/sys/role/info/roleInfoIndex",
+            "path": "/sys/sm/role/info/roleInfoIndex",
             "parentId": 100,
             "otherId": null,
             "icon": "shixiangbiangengshenqing",

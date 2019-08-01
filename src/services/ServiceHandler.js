@@ -1,8 +1,8 @@
 /* eslint-disable no-unused-vars */
 // import request from 'utils/fetch'
-import request,{ axios,fetch } from '@/utils/request';
 import { stringify } from 'qs';
 import lodash from 'lodash';
+import request,{ axios,fetch } from '@/utils/request';
 import api from './config';
 import { apiProxy } from '@/utils/app.conf'
 import logger from '@/utils/utils.log'
