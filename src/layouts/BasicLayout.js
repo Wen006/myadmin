@@ -14,18 +14,18 @@ import Footer from './Footer';
 import Header from './Header';
 import Context from './MenuContext';
 import Exception403 from '../pages/example/Exception/403';
+import Exception404 from '../pages/example/Exception/404';
 import PageLoading from '@/components/PageLoading';
 import SiderMenu from '@/components/SiderMenu';
 import { title } from '../defaultSettings';
 import styles from './BasicLayout.less';
 import GSpin from '@/components/Loader/GSpin';
-// import RouterTabs from './RouterTabs'
+import RouterTabs from './RouterTabs'
 
 // lazy load SettingDrawer
 const SettingDrawer = React.lazy(() => import('@/components/SettingDrawer'));
 
-const TabLayout = React.lazy(() => import('./TabLayout'));
-const RouterTabs = React.lazy(() => import('./RouterTabs'));
+// const RouterTabs = React.lazy(() => import('./RouterTabs'));
 
 
 const { Content } = Layout;
@@ -136,9 +136,7 @@ class BasicLayout extends React.PureComponent {
     //   id: currRouterData.locale || currRouterData.name,
     //   defaultMessage: currRouterData.name,
     // });
-    const pageName ={
-      id: currRouterData.locale || currRouterData.name, 
-    };
+    const pageName = currRouterData.locale || currRouterData.name;
 
     return `${pageName} - ${title}`;
   };
@@ -214,12 +212,16 @@ class BasicLayout extends React.PureComponent {
           />
           <Content className={styles.content} style={contentStyle}>
             { isTab ?
-              <Suspense fallback={<PageLoading />}>
-                {/* <TabLayout
+              <Authorized authority={routerConfig} noMatch={<Exception403 />}>
+                <RouterTabs 
+                  noMatch={<Exception404 />}
+                  homeUrl="/dashboard/home"
                   {...this.props}
-                />  */}
-                <RouterTabs />
-              </Suspense>
+                >
+                  {children}xx
+                </RouterTabs>
+              </Authorized>
+
               :
               <Authorized authority={routerConfig} noMatch={<Exception403 />}>
                 {children}
@@ -255,8 +257,6 @@ export default connect(({ global, setting, menu }) => ({
   menuData: menu.menuData,
   breadcrumbNameMap: menu.breadcrumbNameMap,
   isTab:menu.isTab,
-  menuTabs:menu.menuTabs,
-  activeTabKey:menu.activeTabKey,
   ...setting,
 }))(props => (
   <Media query="(max-width: 599px)">

@@ -156,7 +156,8 @@ class UserInfo extends React.Component {
             <div className={styles.btnBar}>
               <Btns.back
                 onClick={() => {
-                  Navigator.forward({ url: '/sys/sm/user/info/userIndex' });
+                  //Navigator.forward({ url: '/sys/sm/user/info/userIndex' });
+                  if(this.props.onClose) this.props.onClose()
                 }}
               />
               <Btns.save type="primary" onClick={this.userInfoStore.handleSave} />

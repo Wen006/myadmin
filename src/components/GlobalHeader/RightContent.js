@@ -99,9 +99,13 @@ export default class GlobalHeaderRight extends PureComponent {
           <Icon type="setting" />
           <FormattedMessage id="menu.account.settings" defaultMessage="account settings" />
         </Menu.Item>
-        <Menu.Item key="triggerError">
+        {/* <Menu.Item key="triggerError">
           <Icon type="close-circle" />
           <FormattedMessage id="menu.account.trigger" defaultMessage="Trigger Error" />
+        </Menu.Item> */}
+        <Menu.Item key="sys.switch.tab">
+          <Icon type="swap" />
+          <FormattedMessage id="app.sys.switch.tab" defaultMessage="account settings" />
         </Menu.Item>
         <Menu.Divider />
         <Menu.Item key="logout">

@@ -73,6 +73,11 @@ class HeaderView extends PureComponent {
         type: 'login/logout',
       });
     }
+    if(key === 'sys.switch.tab'){
+      dispatch({
+        type: 'menu/switchTab',
+      });
+    }
   };
 
   handleNoticeVisibleChange = visible => {

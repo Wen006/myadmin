@@ -38,8 +38,12 @@ class Navigator {
 
   forward = ({ url, title, params }) => {
     this.curNav = new Nav(title, url, params);
-    this.params[url] = this.curNav;
-    router.push(url);
+    this.params[url] = this.curNav; 
+    router.push({
+      pathname:url,
+      query:params,
+      search:title?`?titleName=${title}`:"",
+    });
   };
 
   go = n => {

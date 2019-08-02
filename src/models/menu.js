@@ -94,10 +94,7 @@ export default {
   namespace: 'menu',
 
   state: {
-    isTab: false,            // 是否开启 多tab
-    seqTabKeys: [],           // 多tab的key顺序
-    menuTabs: [],           // 存放tab菜单信息
-    activeTabKey: '/',      // 被激活的tab 的key
+    isTab: true,            // 是否开启 多tab
     menuData: [],           // 菜单数据 树结构的
     breadcrumbNameMap: {},  // 面包屑集合 {key[url]:value[menuData]}
   },
@@ -113,30 +110,6 @@ export default {
         payload: { menuData, breadcrumbNameMap },
       });
     },
-    *addMenuTab({ payload }, { put }) {
-       const { path,currTab } = payload
-       yield put({
-         type:'addTab',
-         payload:{
-          path,
-          currTab,
-         }
-       })
-       yield put(routerRedux.push({pathname:path}))
-    }, 
-    *removeTab({ payload }, { put,select }) {
-      // const { activeKey } = action.payload 
-      // const { menuTabs }  = select(_=>_.menu)
-      // if(activeKey&&state.menuTabs.length > 0){  
-      //   state.menuTabs = state.menuTabs.filter(it=>it.path != activeKey);
-      //   if(state.activeTabKey == activeKey){
-      //     state.seqTabKeys.length = state.menuTabs.length;
-      //     state.activeTabKey = state.seqTabKeys.length>0?state.seqTabKeys[state.seqTabKeys.length-1]:"/";
-      //   }else{
-      //     state.seqTabKeys = state.seqTabKeys.filter(k=>k != activeKey);
-      //   }
-      // }
-    }, 
   },
 
   reducers: {
@@ -146,48 +119,10 @@ export default {
         ...action.payload,
       };
     },
-    addTab(state, action) {
-      const { path,currTab } = action.payload
-      if(currTab&&!state.menuTabs.some(it=>it.path == path)){
-        state.menuTabs.push(currTab); 
-        state.seqTabKeys.push(path);
-      }else{ // 说明有tab 那么把seqKey 切换顺序
-        if(state.seqTabKeys.length> 0 && state.seqTabKeys[state.seqTabKeys.length-1] != path){
-          state.seqTabKeys = state.seqTabKeys.filter(it => it != path).concat(path);
-        }
-      }
+    switchTab(state,action){ 
       return {
         ...state,
-        activeTabKey:path,
-      };
-    },
-    removeTaba(state, action) {
-      const { activeKey } = action.payload 
-      if(activeKey&&state.menuTabs.length > 0){  
-        state.menuTabs = state.menuTabs.filter(it=>it.path != activeKey);
-        if(state.activeTabKey == activeKey){
-          state.seqTabKeys.length = state.menuTabs.length;
-          state.activeTabKey = state.seqTabKeys.length>0?state.seqTabKeys[state.seqTabKeys.length-1]:"/";
-        }else{
-          state.seqTabKeys = state.seqTabKeys.filter(k=>k != activeKey);
-        }
-      }
-      return {
-        ...state,
-      };
-    },
-    removeAllTab(state, action) {  
-      return {
-        ...state,
-        menuTabs:[],
-        activeTabKey:'/',
-      };
-    },
-    changeActiveTab (state,action){
-      const { activeKey } = action.payload
-      return {
-        ...state,
-        activeTabKey:activeKey,
+        isTab:!state.isTab,
       }
     }
 

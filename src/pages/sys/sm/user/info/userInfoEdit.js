@@ -24,7 +24,7 @@ export default class UserInfoEdit extends React.Component {
 
   render() {
     const { loaded } = this.state;
-
+    const { tabApi } = this.props
     return (
       <PageHeaderWrapper
         title="用户编辑"
@@ -39,7 +39,8 @@ export default class UserInfoEdit extends React.Component {
               record={this.userInfoStore.record}
               userInfoStore={this.userInfoStore}
               onClose={() => {
-                Navigator.goBack();
+                // Navigator.goBack();
+                tabApi.closeThisTab();
               }}
             />
           ) : null}

@@ -11,7 +11,7 @@
       routes: [
         {
           path: `/sys/sm/user/info/userIndex`,
-          name: '用户信息',
+          name: 'User',
           author: 'wennn',
           component: `./sys/sm/user/info/userInfoList`,
         },

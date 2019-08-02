@@ -17,7 +17,7 @@ export default [
       routes: [
         {
           path: '/dashboard/home',
-          name: 'home',
+          name: '首页',
           component: './example/Dashboard/Analysis',
         },
         {

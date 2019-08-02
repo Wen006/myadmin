@@ -24,4 +24,5 @@ export default {
     'app.pwa.serviceworker.updated': '有新内容',
     'app.pwa.serviceworker.updated.hint': '请点击“刷新”按钮或者手动刷新页面',
     'app.pwa.serviceworker.updated.ok': '刷新',
+    'app.sys.switch.tab':"切换TAB"
 }
