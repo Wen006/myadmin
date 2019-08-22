@@ -1,7 +1,7 @@
 ---
 title: 
-  en-US: Viewer
-  zh-CN: Viewer
+ ' en-US': Viewer
+  'zh-CN': Viewer
 subtitle: 侧边滑动
 cols: 1
 order: 14

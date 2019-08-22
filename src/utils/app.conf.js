@@ -10,9 +10,11 @@ module.exports = {
   // apiProxy:'http://10.20.11.236:8888/api',
   // apiProxy:'http://localhost:8888/api',
   apiProxy:'/api',
+  homeUrl:'/dashboard/home',
+  showSetting:true,
   languages:{
-    zh_CN:'zh-CN',
-    en_US:'en-US',
+    'zh-CN':'zh-CN',
+    'en-US':'en-US',
     // ja_JP:'ja-JP'
   },
 };

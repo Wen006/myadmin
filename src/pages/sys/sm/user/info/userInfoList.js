@@ -13,6 +13,9 @@ import styles from '@/pages/common.less';
 import UserInfo from './common/UserInfo';
 import UserPwdEdit from './common/UserPwdEdit'
 import FilterItems from './FilterItems'
+import Intld from '@/components/Intler'
+
+
 
 class UserInfoList extends React.Component {
 
@@ -70,6 +73,13 @@ class UserInfoList extends React.Component {
       selectCount: 0,
       queryParams:{}, // 存放lookup选择的条件
     };
+
+
+    console.log('----------------------------------')
+    console.log('Intler', Intler)
+    console.log('Intld', Intld)
+    console.log('----------------------------------')
+
   }
 
   // 每一行的操作列函数

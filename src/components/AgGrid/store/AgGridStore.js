@@ -12,10 +12,10 @@ const { observable } = mobx;
  *
  */
 
-const lang = 'zh_CN';
+const lang = 'zh-CN';
 
 const localeText = {
-  zh_CN: {
+  'zh-CN': {
     'table.dtp.showTotal.pre': '共 ',
     'table.dtp.showTotal.next': ' 条',
     'table.dtp.selected.pre': '已选择 ',
@@ -23,7 +23,7 @@ const localeText = {
     'table.dtp.clear': '清空',
     noRowsToShow: '无数据',
   },
-  en_US: {
+ ' en-US': {
     'table.dtp.showTotal.pre': 'Total ',
     'table.dtp.showTotal.next': ' Item',
     'table.dtp.selected.pre': 'Select ',

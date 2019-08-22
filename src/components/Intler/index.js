@@ -7,13 +7,11 @@ const getIntl = (id) => {
     return formatMessage({id}) || id;
 }
 
-const Intler = ({ label, args }) => {
-    return getIntl(label, args);
-}
+// const Intler = ({ label, args }) => {
+//     return getIntl(label, args);
+// }
+const Intler = {}
 
 Intler.getIntl = getIntl
 
-export {
-    formatMessage,FormatMessage
-}
 export default Intler;

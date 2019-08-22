@@ -18,6 +18,7 @@ export default [
         {
           path: '/dashboard/home',
           name: '首页',
+          closeable: false,
           component: './example/Dashboard/Analysis',
         },
         {

@@ -1,8 +1,8 @@
 ---
 order: 0
 title: 
-  zh-CN: 按照字符数省略
-  en-US: Truncate according to the number of character
+  'zh-CN': 按照字符数省略
+ ' en-US': Truncate according to the number of character
 ---
 
 ## zh-CN

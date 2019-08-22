@@ -24,7 +24,7 @@ const user = {
   timezoneName: '亚特兰大时间',
   timezoneDiff: -13,
   languageId: 1,
-  languageCode: 'zh_CN',
+  languageCode: 'zh-CN',
   languageName: '中文',
   positionId: 80,
   positionClassifyCode: 'USPL04',

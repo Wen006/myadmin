@@ -21,6 +21,8 @@ import { title } from '../defaultSettings';
 import styles from './BasicLayout.less';
 import GSpin from '@/components/Loader/GSpin';
 import RouterTabs from './RouterTabs'
+import { showSetting,homeUrl } from '@/utils/app.conf'
+
 
 // lazy load SettingDrawer
 const SettingDrawer = React.lazy(() => import('@/components/SettingDrawer'));
@@ -159,14 +161,14 @@ class BasicLayout extends React.PureComponent {
     });
   };
 
-  renderSettingDrawer = () => 
+  renderSettingDrawer = () =>{
     // Do not render SettingDrawer in production
     // unless it is deployed in preview.pro.ant.design as demo
     // if (process.env.NODE_ENV === 'production' && APP_TYPE !== 'site') {
     //   return null;
     // }
-     <SettingDrawer />
-  ;
+    return showSetting?<SettingDrawer />:null;
+  }  
 
   render() {
     const {

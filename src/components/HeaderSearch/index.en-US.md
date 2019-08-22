@@ -1,7 +1,7 @@
 ---
 title:
-  en-US: HeaderSearch
-  zh-CN: HeaderSearch
+ ' en-US': HeaderSearch
+  'zh-CN': HeaderSearch
 subtitle: Top search box
 cols: 1
 order: 8

@@ -1,8 +1,8 @@
 ---
 order: 0
 title: 
-  zh-CN: 要显示的最大项目 
-  en-US: Max Items to Show
+  'zh-CN': 要显示的最大项目 
+ ' en-US': Max Items to Show
 ---
 
 `maxLength` attribute specifies the maximum number of items to show while `excessItemsStyle` style the excess

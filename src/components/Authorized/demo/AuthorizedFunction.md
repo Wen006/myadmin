@@ -1,8 +1,8 @@
 ---
 order: 2
 title: 
-  zh-CN: 使用方法作为参数
-  en-US: Use function as a parameter
+  'zh-CN': 使用方法作为参数
+ ' en-US': Use function as a parameter
 ---
 
 Use Function as a parameter

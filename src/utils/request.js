@@ -59,7 +59,7 @@ const ERROR_MSG={
 // 添加请求拦截器
 axios.interceptors.request.use(conf => {
   lodash.assign(conf.headers,{
-    'Accept-Language':getLocale() || 'zh_CN',
+    'Accept-Language':getLocale() || 'zh-CN',
     // 'Access-Token':'1111111',
   })
   // 在发送请求之前做些什么

@@ -5,20 +5,20 @@ import { Select } from 'antd';
 import Global from '@/stores/common/Global';
 // import { getLocalInfo } from 'utils/webUtils';
 
-const lang = 'zh_CN'
+const lang = 'zh-CN'
 
 const localeText = {
-  zh_CN: {
+  'zh-CN': {
     'aggrid.editer.select.select': '请选择',
   },
-  en_US: {
+ ' en-US': {
     'aggrid.editer.select.select': 'Select',
   },
 };
 
 const getIntl = key => {
   if (localeText[lang]) return localeText[lang][key] || key;
-  return localeText.zh_CN[key] || key;
+  return localeText.zh-CN[key] || key;
 };
 
 const { Option } = Select;

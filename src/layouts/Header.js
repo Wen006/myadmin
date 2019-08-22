@@ -1,3 +1,4 @@
+/* eslint-disable import/no-extraneous-dependencies */
 import React, { PureComponent } from 'react';
 import { formatMessage } from 'umi/locale';
 import { Layout, message } from 'antd';

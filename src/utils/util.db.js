@@ -13,7 +13,7 @@ const db = low(adapter)
 db
   .defaults({
     sys: {
-      language:'zh_CN',
+      language:'zh-CN',
       login:{
           status:'no',
           info:{},

@@ -1,8 +1,8 @@
 ---
 order: 1
 title: 
-  zh-CN: 按照行数省略
-  en-US: Truncate according to the number of rows
+  'zh-CN': 按照行数省略
+ ' en-US': Truncate according to the number of rows
 ---
 
 ## zh-CN

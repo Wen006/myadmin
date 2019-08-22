@@ -12,13 +12,13 @@ const getMenuData = locale =>
 
 function getMenu(req, resp) {
   const { headers } = req;
-  const { sessionlocale = 'zh_CN' } = headers;
+  const { sessionlocale = 'zh-CN' } = headers;
   writeOk(resp, getMenuData(sessionlocale));
 }
 
 function getMenuTData(req, resp) {
   const { headers } = req;
-  const { sessionlocale = 'zh_CN' } = headers;
+  const { sessionlocale = 'zh-CN' } = headers;
   // const list = treeToArray(lodash.cloneDeep(menuData));
   // console.log(list.length)
   writeOk(resp, menuList);
@@ -26,7 +26,7 @@ function getMenuTData(req, resp) {
 const ids = menuList.map(it=>it.id)
 function getMenuKey(req, resp) {
   const { headers } = req;
-  const { sessionlocale = 'zh_CN' } = headers;
+  const { sessionlocale = 'zh-CN' } = headers;
   // const list = treeToArray(lodash.cloneDeep(menuData));
   // console.log(list.length)
   const idd = lodash.shuffle(ids)
@@ -40,7 +40,7 @@ function getMenuKey(req, resp) {
 
 // export function getMenuLinkAll(req, resp) {
 //   const { headers } = req;
-//   const { sessionlocale = 'zh_CN' } = headers;
+//   const { sessionlocale = 'zh-CN' } = headers;
 //   writeOk(resp, navMenu);
 // }
 export default {

@@ -1,8 +1,8 @@
 ---
 order: 1
 title: 
-  zh-CN: 使用数组作为参数
-  en-US: Use Array as a parameter
+  'zh-CN': 使用数组作为参数
+ ' en-US': Use Array as a parameter
 ---
 
 Use Array as a parameter
