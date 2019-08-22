@@ -13,8 +13,8 @@
   autoHideHeader: false, // auto hide header
   fixSiderbar: true, // sticky siderbar
   title: 'My Admin',
-  logoText: 'MPC-财经云',
+  logoText: 'My-Admin',
   logoIcon: '/icons/logo/logo_f.png',
-  footerTitle: '2019 MPC 产品研发组',
+  footerTitle: '2019 活宝一匹狼',
   defaultLanguage:'zh-CN',
 };
