@@ -6,11 +6,11 @@
 
 ### 摘要	
 
-​	该工程是基于antPro2进行个性化改装，相对于之前有大的改进。详情 https://pro.ant.design/docs/getting-started-cn
+​	该工程是基于antPro2进行个性化改装，目的是为了能快速结合实际业务开。详情 https://pro.ant.design/docs/getting-started-cn
 
 ### 特殊说明
 
-- 基于 antd 多Tab页菜单切换功能添加
+- 基于 antd 多Tab页菜单切换功能添加（可缓存页面）
 - 工程针对咱们自己业务系统进行了一些特殊封装
 - 工程中加入了mobx 用于方便大家开发（redux 依然有，但是门槛较高）
 - 用户、角色、菜单管理基本功能已经完成

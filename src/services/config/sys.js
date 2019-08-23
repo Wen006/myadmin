@@ -189,10 +189,9 @@ export default {
     auth: 'wennn',
   },
 
-
   AD_LOV_LIST_FIND_BY_CODE: {
     url: '/ad/lovlist/getAdLovListByCode',
-    method: 'get',
+    // method: 'get',
     // mockhandler: 'list',
     // mocktable: 'AD_LOV_LIST',
     desc: '查询代码表通过listCode',
