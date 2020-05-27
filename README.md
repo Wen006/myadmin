@@ -5,7 +5,7 @@
 
 ### 摘要
 
-​ 该工程是基于antPro2进行个性化改装，目的是为了能快速结合实际业务开。详情 <https://pro.ant.design/docs/getting-started-cn>
+​ 该工程是基于antPro2进行个性化改装，目的是为了能快速结实际业务开发。详情 <https://pro.ant.design/docs/getting-started-cn>
 
 ### 特殊说明
 
