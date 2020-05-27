@@ -89,7 +89,7 @@ xxxMacBook-Pro:myadmin wen$ npm start
 
 ##### 登陆页面：用户名/密码：admin/1
 
-![](./doc/images/login.png)
+![](./doc/images/login.jpg)
 
 #### 登陆后的页面展示
 
