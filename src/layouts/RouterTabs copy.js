@@ -1,12 +1,12 @@
 /* eslint-disable react/destructuring-assignment */
-import React, { Component } from 'react';
+
+import React, { Component } from 'react'; 
 import classNames from 'classnames';
-import { Tag, Dropdown, Icon, Tooltip, Menu, Tabs, Button } from 'antd';
+import { Tag, Dropdown, Icon, Tooltip, Menu,Tabs } from 'antd';
 import { withRouter } from "react-router-dom";
 import styles from './layouts.less';
 import Iconfont from '@/components/Iconfont/index'
 import { isUrl } from '@/utils/utils';
-import TabItem from './TabItem'
 
 const { SubMenu } = Menu;
 const { TabPane } = Tabs;
@@ -17,7 +17,7 @@ let routerCcnfig = {};
 
 // 通过 pathname 获取 pathname 对应到路由描述信息对象
 const getTitleByPathname = (pathname) => {
-  return routerCcnfig[pathname];
+    return routerCcnfig[pathname];
 }
 
 const getIcon = icon => {
@@ -31,11 +31,11 @@ const getIcon = icon => {
   return icon;
 };
 
-const Positions = {
-  top: 'top',
-  right: 'right',
-  bottom: 'bottom',
-  left: 'left'
+const Positions={
+  top:'top', 
+  right:'right', 
+  bottom:'bottom',
+  left:'left'
 }
 
 @withRouter
@@ -43,18 +43,16 @@ class RouterTabs extends Component {
 
   static unListen = null;
 
-  apis = {}
-
   static defaultProps = {
     initialValue: [],
   };
 
   constructor(props) {
     super(props);
-    const { history, location: { pathname }, route = {}, homeUrl } = this.props;
-    const { routes = [] } = route
+    const { history, location:{pathname}, route={}, homeUrl } = this.props;
+    const {routes = []} = route
     this.routes = routes
-    routerCcnfig = this.routeToMap(this.routes, routerCcnfig);
+    routerCcnfig = this.routeToMap(this.routes,routerCcnfig);
 
     // if(pathname !== homeUrl){ // 浏览器刷新的时候要跳转首页
     //   history.push({
@@ -79,11 +77,11 @@ class RouterTabs extends Component {
       currentPageName: "", // 当前路由对应到 pathname
       refsTag: [], // tabs 所有到所有页签
       searchMap: {}, // 每个 页签对应的路由参数
-      menuTabs: [],
-      type: 'editable-card',// editable-card line card
+      menuTabs:[],
+      type:'editable-card',// editable-card line card
       // size:'small',
-      hideAdd: true,
-      tabPosition: Positions.top,
+      hideAdd:true,
+      tabPosition:Positions.top,
     };
 
     this.handleMenuClick = this.handleMenuClick.bind(this);
@@ -118,11 +116,11 @@ class RouterTabs extends Component {
       if (newRefsTag.indexOf(currentPathname) === -1) {
         newRefsTag.push(currentPathname);
         const tabInfo = {
-          name: _location.query.titleName || this.getMenuInfo(pathname).name || routerCcnfig[pathname].name,
-          icon: this.getMenuInfo(pathname).icon
+          name:_location.query.titleName||this.getMenuInfo(pathname).name||routerCcnfig[pathname].name,
+          icon:this.getMenuInfo(pathname).icon
         }
-        if (_location.query)
-          newMenuTabs.push({ ...routerCcnfig[pathname], ...tabInfo })
+        if(_location.query)
+        newMenuTabs.push({...routerCcnfig[pathname],...tabInfo})
       }
       // 存放参数
       this.state.searchMap[pathname] = _location.search;
@@ -130,7 +128,7 @@ class RouterTabs extends Component {
       this.setState({
         currentPageName: pathname,
         refsTag: newRefsTag,
-        menuTabs: newMenuTabs,
+        menuTabs:newMenuTabs,
       });
     });
   }
@@ -142,24 +140,24 @@ class RouterTabs extends Component {
       this.unListen = null;
     }
   }
-
-  getMenuInfo = (pathname) => {
-    const { breadcrumbNameMap = {} } = this.props
-    return breadcrumbNameMap[pathname] || {}
+ 
+  getMenuInfo = (pathname) =>{
+    const { breadcrumbNameMap={} } = this.props
+    return breadcrumbNameMap[pathname]||{}
   }
 
-  routeToMap = (routes, ar) => {
-    return routes.reduce((pv, cv, ci, arr) => {
-      if (!(cv.routes && cv.routes.length > 0) && cv.component && cv.path) {
-        pv[`${cv.path}`] = cv;
+  routeToMap = (routes,ar) =>{  
+    return routes.reduce((pv,cv,ci,arr)=>{ 
+      if(!(cv.routes&&cv.routes.length > 0)&&cv.component&&cv.path){
+        pv[`${cv.path}`] =  cv;
       }
-      if (cv.routes) {
-        return this.routeToMap(cv.routes, pv);
+      if(cv.routes){
+        return this.routeToMap(cv.routes,pv);
       }
       return pv;
-    }, ar)
+    },ar)
   }
-
+ 
   handleClose = (tag) => {
     const { pathname } = this.props.location;
     const { history } = this.props;
@@ -198,26 +196,26 @@ class RouterTabs extends Component {
     const { homeUrl, history } = this.props
     const eKey = e.key;
     let currentPathname = this.props.location.pathname;
-
-    if (eKey === '1') {
+     
+    if (eKey === '1') { 
       currentPathname = homeUrl;
       const refsTag = [this.state.refsTag[0]]
       const menuTabs = [this.state.menuTabs[0]]
       const searchMap = {
-        [`${homeUrl}`]: this.state.searchMap[homeUrl]
+        [`${homeUrl}`]:this.state.searchMap[homeUrl]
       }
-      setTimeout(() => this.setState({ refsTag, menuTabs, searchMap }))
+      setTimeout(()=>this.setState({refsTag,menuTabs,searchMap}))
     } else if (eKey === '2') {
-      if (currentPathname === homeUrl) {
-        this.handleMenuClick({ key: '1' });
-      } else {
-        const refsTag = [`${homeUrl}`, `${currentPathname}`];
-        const menuTabs = this.state.menuTabs.filter(it => it.path == homeUrl || it.path == currentPathname);
+      if(currentPathname === homeUrl){
+        this.handleMenuClick({key:'1'});
+      }else{
+        const refsTag = [`${homeUrl}`,`${currentPathname}`];
+        const menuTabs = this.state.menuTabs.filter(it=>it.path == homeUrl || it.path == currentPathname);
         const searchMap = {
-          [`${homeUrl}`]: this.state.searchMap[homeUrl],
-          [`${currentPathname}`]: this.state.searchMap[currentPathname],
+          [`${homeUrl}`]:this.state.searchMap[homeUrl],
+          [`${currentPathname}`]:this.state.searchMap[currentPathname],
         }
-        setTimeout(() => this.setState({ refsTag, menuTabs, searchMap }))
+        setTimeout(()=>this.setState({refsTag,menuTabs,searchMap}))
       }
     } else {
       this.handleClickTag(eKey);
@@ -231,52 +229,50 @@ class RouterTabs extends Component {
     }
   }
 
-  getTabEle = (path) => {
+  getTabEle = (path) =>{
     const { noMatch } = this.props
-    const { component } = routerCcnfig[path] || {};
+    const {component} = routerCcnfig[path]||{};
     const tabApi = {
-      closeThisTab: () => this.clearRouteInfo(this.state.currentPageName)
+      closeThisTab:()=>this.clearRouteInfo(this.state.currentPageName)
     }
-    return React.createElement(component, { ...this.props, tabApi }) || noMatch || 'Not Found';
+    return React.createElement(component,{...this.props,tabApi}) || noMatch || 'Not Found';
   }
 
-  handleEditTab = (targetKey, action) => {
-    if (action == 'remove') {
+  handleEditTab = (targetKey, action) =>{ 
+    if(action == 'remove'){
       this.clearRouteInfo(targetKey)
     }
   }
 
-  clearRouteInfo = (path) => {
-    const { history, homeUrl } = this.props
-    const {
+  clearRouteInfo = (path) =>{
+    const {history,homeUrl} = this.props
+    const { 
       currentPageName, // 当前路由对应到 pathname
       refsTag, // tabs 所有到所有页签
       searchMap, // 每个 页签对应的路由参数
       menuTabs,
-    } = this.state
+    } = this.state 
 
-    if (path) {
-      const targetIndex = refsTag.findIndex(p => p === path);
-      if (targetIndex > -1) {
-        refsTag.splice(targetIndex, 1);
-        if (searchMap[path]) delete searchMap[path];
-        menuTabs.splice(targetIndex, 1)
-      }
-      if (refsTag.length > 0) {
-        if (currentPageName == path) {
+    if(path){
+      const targetIndex = refsTag.findIndex(p=>p === path);
+      if(targetIndex>-1){
+        refsTag.splice(targetIndex,1);
+        if(searchMap[path]) delete searchMap[path];
+        menuTabs.splice(targetIndex,1)
+      }  
+      if(refsTag.length > 0){
+        if(currentPageName == path){
           history.goBack();
-        }
-      } else if (homeUrl) history.push(homeUrl);
+        } 
+      }else if(homeUrl)history.push(homeUrl);
     }
-    this.setState({
-      currentPageName, // 当前路由对应到 pathname
+    this.setState({currentPageName, // 当前路由对应到 pathname
       refsTag, // tabs 所有到所有页签
       searchMap, // 每个 页签对应的路由参数
-      menuTabs
-    })
+      menuTabs})
   }
 
-  handleChangeTab = (targetKey) => {
+  handleChangeTab = (targetKey) =>{
     if (targetKey !== this.state.currentPageName) {
       this.props.history.push({
         pathname: targetKey,
@@ -286,15 +282,17 @@ class RouterTabs extends Component {
   }
 
   render() {
-    const { currentPageName, refsTag, menuTabs = [], ...otherProps } = this.state;
+    const { currentPageName,refsTag, menuTabs=[],...otherProps } = this.state; 
+    // const { className, style } = this.props;
+    // const cls = classNames(styles['router-tabs'], className);
 
-    const tags = menuTabs.map(({ path, name, icon }, index) => {
+    const tags = menuTabs.map(({path,name,icon}, index) => {
       const pathname = path
-
-      const routeInfo = getTitleByPathname(pathname); // 这里假设每个pathname都能获取到指定到页面名称
-
+      
+      const routeInfo =getTitleByPathname(pathname); // 这里假设每个pathname都能获取到指定到页面名称
+      
       const title = routeInfo ? name || routeInfo.name || "未配置国际化" : '404';
-
+      
       const isLongTag = title.length > 30;
       const tagElem = (
         <Tag
@@ -318,8 +316,8 @@ class RouterTabs extends Component {
     });
     this.tags = tags;
     /* eslint-disable */
-    const operations = <Dropdown overlay={
-      <Menu onClick={this.handleMenuClick}>
+    const  operations = <Dropdown overlay={
+        <Menu onClick={this.handleMenuClick}>
         <Menu.Item key="1">关闭所有</Menu.Item>
         <Menu.Item key="2">关闭其他</Menu.Item>
         <SubMenu title="切换标签">
@@ -336,39 +334,25 @@ class RouterTabs extends Component {
       </Tag>
     </Dropdown>
     return (
-      <div className={styles.tabMain}>
-        <Tabs
-          {...otherProps}
-          activeKey={currentPageName}
+      <div className={styles.tabMain}> 
+        <Tabs 
+          {...otherProps} 
+          activeKey={currentPageName} 
           onChange={this.handleChangeTab}
           onEdit={this.handleEditTab}
-          tabBarExtraContent={
-            <div>
-              {operations}
-              <Button icon='reload' className={styles.tabRefresh} onClick={() => {
-                if (this.apis[currentPageName]) {
-                  this.apis[currentPageName].refresh();
-                }
-              }} />
-            </div>
-          }
-        >
+          tabBarExtraContent={operations} 
+        > 
           {
-            menuTabs.map(it => {
-              return (
-                <TabPane
+            menuTabs.map(it=>{ 
+                return(
+                  <TabPane 
                   closable={it.closeable != false}
                   tab={<span>{getIcon(it.icon)} {it.name}</span>
-                  } key={it.path || it.id || "404"} >
-                  <TabItem
-                    onReady={_ => {
-                      this.apis[it.path] = _
-                    }}
-                  >
-                    {this.getTabEle(it.path)}
-                  </TabItem>
-                </TabPane>
-              )
+                  // <Link to={it.path||it.id}>{it.name||it.id||""}</Link>
+                  } key={it.path||it.id||"404"} >
+                    {this.getTabEle(it.path)}     
+                  </TabPane> 
+                )
             })
           }
         </Tabs>

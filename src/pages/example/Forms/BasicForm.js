@@ -1,5 +1,8 @@
+/* eslint-disable react/no-access-state-in-setstate */
+/* eslint-disable no-case-declarations */
+/* eslint-disable react/destructuring-assignment */
 import React, { PureComponent } from 'react';
-import { connect } from 'dva';
+import { connect } from 'dva'; 
 import { formatMessage, FormattedMessage } from 'umi/locale';
 import {
   Form,
@@ -12,20 +15,42 @@ import {
   Radio,
   Icon,
   Tooltip,
-} from 'antd';
+} from 'antd'; 
 import PageHeaderWrapper from '@/components/PageHeaderWrapper';
 import styles from './style.less';
+import { axios } from '@/utils/request';
+import { formatDate, Data_Format, toZoneMoment, toMoment, setDefaultZone } from '@/utils/util.date';
+import { Btns } from '@/components';
 
 const FormItem = Form.Item;
-const { Option } = Select;
-const { RangePicker } = DatePicker;
-const { TextArea } = Input;
+
+const getOffset = _ =>{
+ return - (_||new Date()).getTimezoneOffset()/60;
+}
+
+const COUNTRYS = {
+  "SH":"Asia/Shanghai",
+  "AT":"America/Toronto"
+}
 
 @connect(({ loading }) => ({
   submitting: loading.effects['form/submitRegularForm'],
 }))
 @Form.create()
 class BasicForms extends PureComponent {
+
+  userDiffset = 8;
+
+  state={
+    err:{},
+    values:[],
+    defaultTimeOffset: getOffset(),
+    timeOffset:getOffset(),
+    result:{},
+    // result:{"time":1572256020214,"timeStr":"2019-10-28 17:47:00","timeLong":1572256020214,"offset":8},
+    showItem:{},
+  }
+
   handleSubmit = e => {
     const { dispatch, form } = this.props;
     e.preventDefault();
@@ -38,6 +63,69 @@ class BasicForms extends PureComponent {
       }
     });
   };
+
+  clickSave = e =>{
+    // this.props.form.validateFieldsAndScroll((err, values) => {
+    //   const v = [...this.state.values,values]
+    //   console.log('v', v)
+    //  this.setState({err,values:v})
+    // });
+  }
+
+  cliBtn = flag =>{
+    const basUrl = 'http://10.20.11.236:8888/time/zone/';
+    const bOset = getOffset();
+    this.setState({timeOffset:bOset});
+      switch (flag) {
+        case "setTime":
+           // 用户输入时间
+            const time = this.props.form.getFieldValue("time");
+            if(!time){
+              return;
+            } 
+
+            const data = {time,offset:bOset};
+           
+            axios.post(basUrl+flag,data).then(result=>{
+              this.setState({result:result.data})
+            })
+            this.setState({values:[...this.state.values,time]})
+          break;
+        case "setBackTime":
+            axios.get(`${basUrl}genTime`,{
+              params:{}
+            }).then(result=>{
+              this.setState({result:result.data,defaultTimeOffset:getOffset()})
+            })
+          break;
+        case "getTime":
+            axios.get(basUrl+flag,{
+              params:{}
+            }).then(result=>{
+              this.setState({result:result.data})
+            })
+          break;
+        case "resolveTime":
+          const { result } = this.state
+          if(result.time){
+            const showTime = result.time;
+            this.setState({
+              showItem:{
+                timeStamp:showTime,
+                timeZoneStr:formatDate(showTime,Data_Format.YEAR_MONTH_DAY_HH_MM_SS),
+                timeStr:formatDate(showTime,Data_Format.YEAR_MONTH_DAY_HH_MM_SS),
+                userDiffset:this.userDiffset,
+              }
+            });
+            const mt = toMoment(result.time);
+            this.props.form.setFieldsValue({editTime:mt}) 
+          }
+
+          break;
+        default:
+          break;
+      }
+  }
 
   render() {
     const { submitting } = this.props;
@@ -72,171 +160,111 @@ class BasicForms extends PureComponent {
         <Card bordered={false}>
           <Form onSubmit={this.handleSubmit} hideRequiredMark style={{ marginTop: 8 }}>
             <FormItem {...formItemLayout} label={<FormattedMessage id="form.title.label" />}>
-              {getFieldDecorator('title', {
+              {getFieldDecorator('time', 
+              {
+                
                 rules: [
-                  {
-                    required: true,
-                    message: formatMessage({ id: 'validation.title.required' }),
-                  },
-                ],
-              })(<Input placeholder={formatMessage({ id: 'form.title.placeholder' })} />)}
-            </FormItem>
-            <FormItem {...formItemLayout} label={<FormattedMessage id="form.date.label" />}>
-              {getFieldDecorator('date', {
-                rules: [
-                  {
-                    required: true,
-                    message: formatMessage({ id: 'validation.date.required' }),
-                  },
+                  // {
+                  //   required: true,
+                  //   // message: formatMessage({ id: 'validation.title.required' }),
+                  // },
                 ],
               })(
-                <RangePicker
-                  style={{ width: '100%' }}
-                  placeholder={[
-                    formatMessage({ id: 'form.date.placeholder.start' }),
-                    formatMessage({ id: 'form.date.placeholder.end' }),
-                  ]}
-                />
-              )}
-            </FormItem>
-            <FormItem {...formItemLayout} label={<FormattedMessage id="form.goal.label" />}>
-              {getFieldDecorator('goal', {
-                rules: [
-                  {
-                    required: true,
-                    message: formatMessage({ id: 'validation.goal.required' }),
-                  },
-                ],
-              })(
-                <TextArea
-                  style={{ minHeight: 32 }}
-                  placeholder={formatMessage({ id: 'form.goal.placeholder' })}
-                  rows={4}
-                />
-              )}
-            </FormItem>
-            <FormItem {...formItemLayout} label={<FormattedMessage id="form.standard.label" />}>
-              {getFieldDecorator('standard', {
-                rules: [
-                  {
-                    required: true,
-                    message: formatMessage({ id: 'validation.standard.required' }),
-                  },
-                ],
-              })(
-                <TextArea
-                  style={{ minHeight: 32 }}
-                  placeholder={formatMessage({ id: 'form.standard.placeholder' })}
-                  rows={4}
-                />
-              )}
-            </FormItem>
-            <FormItem
-              {...formItemLayout}
-              label={
-                <span>
-                  <FormattedMessage id="form.client.label" />
-                  <em className={styles.optional}>
-                    <FormattedMessage id="form.optional" />
-                    <Tooltip title={<FormattedMessage id="form.client.label.tooltip" />}>
-                      <Icon type="info-circle-o" style={{ marginRight: 4 }} />
-                    </Tooltip>
-                  </em>
-                </span>
-              }
-            >
-              {getFieldDecorator('client')(
-                <Input placeholder={formatMessage({ id: 'form.client.placeholder' })} />
-              )}
-            </FormItem>
-            <FormItem
-              {...formItemLayout}
-              label={
-                <span>
-                  <FormattedMessage id="form.invites.label" />
-                  <em className={styles.optional}>
-                    <FormattedMessage id="form.optional" />
-                  </em>
-                </span>
-              }
-            >
-              {getFieldDecorator('invites')(
-                <Input placeholder={formatMessage({ id: 'form.invites.placeholder' })} />
-              )}
-            </FormItem>
-            <FormItem
-              {...formItemLayout}
-              label={
-                <span>
-                  <FormattedMessage id="form.weight.label" />
-                  <em className={styles.optional}>
-                    <FormattedMessage id="form.optional" />
-                  </em>
-                </span>
-              }
-            >
-              {getFieldDecorator('weight')(
-                <InputNumber
-                  placeholder={formatMessage({ id: 'form.weight.placeholder' })}
-                  min={0}
-                  max={100}
-                />
-              )}
-              <span className="ant-form-text">%</span>
-            </FormItem>
-            <FormItem
-              {...formItemLayout}
-              label={<FormattedMessage id="form.public.label" />}
-              help={<FormattedMessage id="form.public.label.help" />}
-            >
-              <div>
-                {getFieldDecorator('public', {
-                  initialValue: '1',
-                })(
-                  <Radio.Group>
-                    <Radio value="1">
-                      <FormattedMessage id="form.public.radio.public" />
-                    </Radio>
-                    <Radio value="2">
-                      <FormattedMessage id="form.public.radio.partially-public" />
-                    </Radio>
-                    <Radio value="3">
-                      <FormattedMessage id="form.public.radio.private" />
-                    </Radio>
-                  </Radio.Group>
-                )}
-                <FormItem style={{ marginBottom: 0 }}>
-                  {getFieldDecorator('publicUsers')(
-                    <Select
-                      mode="multiple"
-                      placeholder={formatMessage({ id: 'form.publicUsers.placeholder' })}
-                      style={{
-                        margin: '8px 0',
-                        display: getFieldValue('public') === '2' ? 'block' : 'none',
-                      }}
-                    >
-                      <Option value="1">
-                        <FormattedMessage id="form.publicUsers.option.A" />
-                      </Option>
-                      <Option value="2">
-                        <FormattedMessage id="form.publicUsers.option.B" />
-                      </Option>
-                      <Option value="3">
-                        <FormattedMessage id="form.publicUsers.option.C" />
-                      </Option>
-                    </Select>
-                  )}
-                </FormItem>
-              </div>
-            </FormItem>
+                <DatePicker 
+                  // dateRender={(cur,today)=>{
+                  //   return toZoneMoment(cur).date();
+                  // }
+                // }
+                />)}
+            </FormItem> 
             <FormItem {...submitFormLayout} style={{ marginTop: 32 }}>
               <Button type="primary" htmlType="submit" loading={submitting}>
                 <FormattedMessage id="form.submit" />
               </Button>
-              <Button style={{ marginLeft: 8 }}>
+              <Button style={{ marginLeft: 8 }} onClick={this.clickSave}>
                 <FormattedMessage id="form.save" />
               </Button>
+              <Button style={{ marginLeft: 8 }} onClick={_=>this.cliBtn("setTime")}>
+                前端设置时间
+              </Button>
+              <Button style={{ marginLeft: 8 }} onClick={_=>this.cliBtn("setBackTime")}>
+                后台设置时间
+              </Button>
+              <Button style={{ marginLeft: 8 }} onClick={_=>this.cliBtn("getTime")}>
+                获取时间
+              </Button>
             </FormItem>
+            <hr />
+            {/* err: {JSON.stringify(this.state.err)}<br /> */}
+           form-values:<br /> 
+            {this.state.values.map(i=>{
+             return <div>ISO:{JSON.stringify(i)}  ==  FORMAT:{i.format("L")} ==  FORMATS:{i.format(Data_Format.YEAR_MONTH_DAY_HH_MM_SS)}</div>
+           })}
+            <br />
+            <strong>保存时前端时区偏移量{this.state.defaultTimeOffset}</strong>
+            <br />
+            <strong>当前浏览器时区偏移量：{this.state.timeOffset}</strong>
+            <hr />
+          result:<br />
+            {JSON.stringify(this.state.result)}
+            <br />
+            <hr />
+
+            {this.state.result.time?
+              <div>
+                <table bordered={1} cellPadding={2}>
+                  <thead>
+                    <th>来源</th>
+                    <th>格式化时间戳 {this.state.result.time}</th>
+                    <th>格式化str {this.state.result.timeStr}</th>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>Date格式化</td>
+                      <td>{formatDate(new Date(this.state.result.time),Data_Format.YEAR_MONTH_DAY_HH_MM_SS)}</td>
+                      <td>{formatDate(new Date(this.state.result.timeStr),Data_Format.YEAR_MONTH_DAY_HH_MM_SS)}</td>
+                    </tr>
+                    <tr>
+                      <td>Moment格式化</td>
+                      <td>{toMoment(this.state.result.time).format()}</td>
+                      <td>{toMoment(this.state.result.timeStr).format()}</td>
+                    </tr>
+                  </tbody>
+                </table>
+                <hr />
+              </div>:null}
+              对应时区转化：
+            <Button onClick={_=>this.cliBtn('resolveTime')}>转化对应时区显示</Button>
+            <InputNumber onChange={v=>this.userDiffset=v} />
+            {/* <FormItem {...formItemLayout} label={<Button onClick={_=>this.cliBtn('resolveTime')}>转化对应时区显示</Button>}>
+                  {getFieldDecorator('offset', {
+                    rules: [
+                      {
+                        required: true,
+                        message: formatMessage({ id: 'validation.title.required' }),
+                      },
+                    ],
+                  })(
+                    <InputNumber />)}
+                </FormItem>  */}
+            <FormItem {...formItemLayout} label="保存后修改的时间">
+              {getFieldDecorator('editTime', {
+                    rules: [
+                      // {
+                      //   required: true,
+                      //   // message: formatMessage({ id: 'validation.title.required' }),
+                      // },
+                    ],
+                  })(
+                    <DatePicker format={Data_Format.YEAR_MONTH_DAY_HH_MM_SS} />)}
+            </FormItem> 
+            <Btns.Group>
+              <Btns.default onClick={_=>setDefaultZone(COUNTRYS.SH)}>上海</Btns.default>
+              <Btns.default onClick={_=>setDefaultZone(COUNTRYS.AT)}>美国</Btns.default>
+            </Btns.Group>
+            <div>
+              {this.state.showItem&&JSON.stringify(this.state.showItem)}
+            </div>
           </Form>
         </Card>
       </PageHeaderWrapper>

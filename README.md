@@ -1,12 +1,11 @@
 
-
 [TOC]
 
 ## 入门
 
-### 摘要	
+### 摘要
 
-​	该工程是基于antPro2进行个性化改装，目的是为了能快速结合实际业务开。详情 https://pro.ant.design/docs/getting-started-cn
+​ 该工程是基于antPro2进行个性化改装，目的是为了能快速结合实际业务开。详情 <https://pro.ant.design/docs/getting-started-cn>
 
 ### 特殊说明
 
@@ -26,7 +25,7 @@
 
 #### Nodejs (version 8 +)
 
-- 下载地址 https://nodejs.org/zh-cn/download/
+- 下载地址 <https://nodejs.org/zh-cn/download/>
 
 #### 浏览器
 
@@ -36,16 +35,17 @@
 #### 调试工具 （主要是监控和查看数据流转情况）
 
 ​	`都可以通过谷歌商城下载，若不能访问谷歌商城，建议下载360谷歌访问助手或者蓝灯等等（翻墙的软件）`
+ `或者下载谷歌双核浏览器，可以方便下载插件`
 
 - React Developer Tool   （可以查看到React组件的属性变量等等）
 - MobX Developer Tool   （可以查看到mobx的store属性函数等等）
-- Redux DevTools			（可以看到redux中数据流到变化和函数调用等等）
+- Redux DevTools   （可以看到redux中数据流到变化和函数调用等等）
 
 ### 工程安装
 
 #### 代码下载
 
-  代码从gitee  https://gitee.com/W006/myadmin.git 下载
+  代码从gitee  <https://gitee.com/W006/myadmin.git> 下载
 
 #### 下载工程依赖
 
@@ -77,14 +77,35 @@ yarn install
 
 启动成功后，控制台会显示地址和端口
 
-##### 地址：http://localhost:6060
+```shell
+xxxMacBook-Pro:myadmin wen$ npm start
+ ...
+  App running at:
+  - Local:   http://localhost:6060/ (copied to clipboard)
+  - Network: http://192.168.43.234:6060/
+```
 
-![](http://10.20.13.197:4999/server/../Public/Uploads/2019-07-05/5d1ea16164f7f.png)
+##### 地址：http://localhost:6060
 
 ##### 登陆页面：用户名/密码：admin/1
 
-![](http://10.20.13.197:4999/server/../Public/Uploads/2019-07-05/5d1ea1715be16.png)
+![](./doc/images/login.png)
 
+#### 登陆后的页面展示
+
+##### 多切页
+
+![](./doc/images/tab-home.jpg)
+
+![](./doc/images/tab-user.jpg)
+
+![](./doc/images/tab-top.png)
+
+##### 面包屑
+
+![](./doc/images/bread.jpg)
+
+![](./doc/images/bread-top.jpg)
 
 
 ### 目录结构
@@ -92,6 +113,7 @@ yarn install
 ```
 ├── config                   # umi 配置，包含路由，构建等配置
 |		├── routes							 # 根据业务模块路由配置
+├── doc                      # 文档图片
 ├── mock                     # 本地模拟数据
 ├── docker									 # 容器配置文件
 ├── public
@@ -120,11 +142,6 @@ yarn install
 ├── README.md
 └── package.json
 ```
-
-
-
-
-
 
 
 ## 构建和部署
@@ -231,9 +248,9 @@ public String index(){
 
 
 
-## 本地开发 
+## 本地开发
 
-### 1.新增js和less 		@/pages/
+### 1.新增js和less @/pages/
 
 - **建文件夹**sys/demo/
 
@@ -278,24 +295,20 @@ public String index(){
   
   ```
 
-  
-
 - **路由**在`config/routes/`sys.js 加入配置
 
   ```js
   {
     path: `/sys/demo/demoIndex`, # 路由地址（这个和菜单的URL、要一致）
-    name: '新页面',													# 模块名称
-    author: 'neusoft',											 # 作者
+    name: '新页面', # 模块名称
+    author: 'neusoft',  # 作者
     component: `./sys/demo/NewPage`, # 页面位置，这里"."代表@/pages/
   }
   ```
 
-  
-
 ### 3.新增store 或者 modal
 
-​	复杂的页面难免会写一大堆逻辑，为了让页面和逻辑分开这里就需要处理数据流的store或者modal
+​ 复杂的页面难免会写一大堆逻辑，为了让页面和逻辑分开这里就需要处理数据流的store或者modal
 
    `这里建一个store或者modal就可以了，推荐store`
 
@@ -311,7 +324,3 @@ public String index(){
   前后台分离开发的时候，前端可以通过配置模拟数据来做开发。
 
 ### 访问页面
-
-
-
-

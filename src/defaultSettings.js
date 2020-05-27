@@ -13,6 +13,8 @@
   autoHideHeader: false, // auto hide header
   fixSiderbar: true, // sticky siderbar
   title: 'My Admin',
+  loginTitle:'My Admin',
+  loginSubTitle:'Jackstraw - 奋斗吧骚年',
   logoText: 'My-Admin',
   logoIcon: '/icons/logo/logo_f.png',
   footerTitle: '2019 活宝一匹狼',

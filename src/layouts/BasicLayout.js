@@ -220,7 +220,7 @@ class BasicLayout extends React.PureComponent {
                   homeUrl="/dashboard/home"
                   {...this.props}
                 >
-                  {children}xx
+                  {children}
                 </RouterTabs>
               </Authorized>
 

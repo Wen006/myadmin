@@ -6,7 +6,7 @@ import GlobalFooter from '@/components/GlobalFooter';
 import SelectLang from '@/components/SelectLang';
 import styles from './UserLayout.less';
 import { BgCL } from '@/components/Animation'
-import { title,footerTitle,logoIcon } from '../defaultSettings';
+import { loginTitle,footerTitle,logoIcon,loginSubTitle } from '../defaultSettings';
 
 
 const links = [
@@ -59,10 +59,10 @@ class UserLayout extends React.PureComponent {
               <div className={styles.header}>
                 <Link to="/">
                   <img alt="logo" className={styles.logo} src={logoIcon} />
-                  <span className={styles.title}>{title}</span>
+                  <span className={styles.title}>{loginTitle}</span>
                 </Link>
               </div>
-              <div className={styles.desc}>MPC 产品研发组</div>
+              <div className={styles.desc}>{loginSubTitle}</div>
             </div>
             {children}
           </div>

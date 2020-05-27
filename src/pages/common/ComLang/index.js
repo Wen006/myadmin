@@ -77,8 +77,8 @@ export default class ComLang extends Component{
         const columnDefs = [
             {headerName:'id',field:'id',hide:true,width:30,checkboxSelection:true},
             {headerName:'keyId',field:'keyId',hide:true},
-            {headerName:'名称',field:'name',...editProps},
             {headerName:'语言',field:'languageCode'},
+            {headerName:'名称',field:'name',...editProps},
         ]
 
         return <Card title="语言信息" hoverable={false} bordered={false} className={disabled?styles.hidden:null}>

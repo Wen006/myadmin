@@ -11,8 +11,11 @@
 /* eslint-disable no-let */
 // eslint-disable-next-line no-extend-native
 // eslint-disable-next-line func-names
-import moment from 'moment'
+// import moment from 'moment'
+import latest from "moment-timezone/data/meta/latest.json";
+import moment from "moment-timezone"; 
 
+// moment.tz.setDefault('Asia/Shanghai');
 const Data_Format = {
   YEAR_MONTH_DAY_HH_MM_SS:"YYYY-MM-DD HH:mm:ss",
   YEAR_MONTH_DAY:"YYYY-MM-DD",
@@ -25,11 +28,21 @@ export {
   Data_Format,
 }
 
+export function setDefaultZone(name){
+  moment.tz.setDefault(name);
+}
+
+export function getZoneMeta(key){
+  const meta = latest.countries[key||"CN"]
+  console.log('meta', meta)
+  return meta||latest.CN;
+}
+
 /**
  * @description 获取客户端时间
  */
 export function getNow() {
-  return moment().toDate();
+  return moment().tz(getZoneMeta().zones[0]).toDate();
 }
 
 /**
@@ -60,14 +73,30 @@ export function formatDate(date, matStr = Data_Format.YEAR_MONTH_DAY) {
   return date;
 }
 
+
 /**
  * @description long或者日期转 moment form表单用的多
- * @param {Number or Date} longOrDate 
+ * @param {Number or Date or moment } ldm 
  */
-export function toMoment(longOrDate) {
-  if(!longOrDate) return longOrDate;
-  return moment(longOrDate);
+export function toMoment(ldm) {
+  if(!ldm) return ldm;
+  return ldm instanceof moment ? ldm : moment(ldm);
 }
+
+/**
+ * @description 转为带时区的moment
+ * @param {long or date} o 
+ */
+export function toZoneMoment(o){
+  const m = toMoment(o);
+  return m?m.tz(getZoneMeta().zones[0]):m;
+}
+
+export function formatZoneDate(date, matStr = Data_Format.YEAR_MONTH_DAY) {
+  const m = toZoneMoment(date);
+  return m?m.format(matStr):date;
+}
+
 
 /**
  * @description 时间戳转日期  moment form表单用的多

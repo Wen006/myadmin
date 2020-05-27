@@ -73,13 +73,6 @@ class UserInfoList extends React.Component {
       selectCount: 0,
       queryParams:{}, // 存放lookup选择的条件
     };
-
-
-    console.log('----------------------------------')
-    console.log('Intler', Intler)
-    console.log('Intld', Intld)
-    console.log('----------------------------------')
-
   }
 
   // 每一行的操作列函数

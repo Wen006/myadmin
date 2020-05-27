@@ -37,7 +37,7 @@ export default class TopNavHeader extends PureComponent {
             </div>
             <div
               style={{
-                maxWidth,
+                // maxWidth,
               }}
             >
               <BaseMenu {...this.props} flatMenuKeys={flatMenuKeys} className={styles.menu} />
