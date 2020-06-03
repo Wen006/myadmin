@@ -8,7 +8,7 @@
 module.exports = {  
   // apiProxy:'http://localhost:8888/api',
   apiProxy:'/api',
-  // homeUrl:'/dashboard/home',
+  homeUrl:'/dashboard/home',
   showSetting:true,
   languages:{
     'zh-CN':'zh-CN',
