@@ -14,9 +14,9 @@
 
 ```javascript
 <Act>
-  <MPCConfirm type="del" onConfirm={() => this.handleDel(params.data)}>
+  <WConfirm type="del" onConfirm={() => this.handleDel(params.data)}>
     <Icon type="delete" />
-      </MPCConfirm>
+      </WConfirm>
 	<Act.Item key="a" disabled onClick={()=>alert(1)}>a</Act.Item>
 	<Act.Item key="b" onClick={()=>alert(1)}>b</Act.Item>
 </Act>
@@ -79,9 +79,9 @@ const gridProps ={
         frameworkComponents: {
             actionCellRenderer: params => (
             <Act>
-              <MPCConfirm type="del" onConfirm={() => this.handleDel(params.data)}>
+              <WConfirm type="del" onConfirm={() => this.handleDel(params.data)}>
                 <Icon type="delete" />
-              </MPCConfirm>
+              </WConfirm>
               <Act.Item key="a" disabled onClick={()=>alert(1)}>a</Act.Item>
               <Act.Item key="b" onClick={()=>alert(1)}>b</Act.Item>
             </Act>

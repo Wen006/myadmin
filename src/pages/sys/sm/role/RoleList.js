@@ -8,7 +8,7 @@
 import React, { Fragment } from 'react';
 import { Card,Icon, Input,Button, Divider } from 'antd';
 import { observer } from 'mobx-react';
-import { Btns,Intler,MPCConfirm } from '@/components';
+import { Btns,Intler,WConfirm } from '@/components';
 import styles from '@/pages/common.less';
 import AgGridPro from '@/components/AgGrid/AgGridPro';
 import rStyles from './index.less'
@@ -107,13 +107,13 @@ class RoleList extends React.Component {
           frameworkComponents: {
             actionCellRenderer: params  => (
               <Fragment>
-                <MPCConfirm
+                <WConfirm
                   key="del"
                   type="del"
                   onConfirm={this.handleOpe.bind(this,'delete',params.data)}
                 >
                   <Icon style={{ fontSize: '15px' }} type="delete" />
-                </MPCConfirm>
+                </WConfirm>
               </Fragment>
             )
           }

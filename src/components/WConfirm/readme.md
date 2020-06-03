@@ -1,17 +1,17 @@
 ---
-title: MPCConfirm
+title: WConfirm
 subtitle: 通用确认弹框
 desc: 
 ---
 
 ## Tag使用
-import MPCConfirm from 'components/MPCConfirm/MPCConfirm'
+import WConfirm from 'components/WConfirm/WConfirm'
 
 
  return （
-  <MPCConfirm type="del" disabled>
+  <WConfirm type="del" disabled>
     <a href=" javascript:; ">删除</a>
-  </MPCConfirm>
+  </WConfirm>
  ）
 
 ## API

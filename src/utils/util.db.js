@@ -1,13 +1,13 @@
 /**
  * @description 简单的浏览器store操作
- * @author neusoft
+ * @author wennn
  * @time 20190624
  */
 import low from 'lowdb'
 import LocalStorage from 'lowdb/adapters/LocalStorage'
 import cookie from 'cookiejs';
 
-const adapter = new LocalStorage(`MPC-${process.env.APP_VERSION}`)
+const adapter = new LocalStorage(`W-${process.env.APP_VERSION}`)
 const db = low(adapter)
 
 db

@@ -3,7 +3,7 @@
 /* eslint-disable no-extend-native */
 /**
  * @description 不好分类的工具
- * @author neusoft
+ * @author wennn
  * @time 20190624
  */
 

@@ -3,7 +3,7 @@
 import React from 'react'
 import { Card, Modal,Icon } from 'antd'
 import lodash from "lodash";
-import { DateRender, AdRender, Act, MBox, Viewer, Btns,Intler,AutoRow,Iconfont,MPCConfirm,CountDown,Ellipsis,NumberInfo,TagSelect,SearchBar,Toolbar,Trend } from '@/components'
+import { DateRender, AdRender, Act, MBox, Viewer, Btns,Intler,AutoRow,Iconfont,WConfirm,CountDown,Ellipsis,NumberInfo,TagSelect,SearchBar,Toolbar,Trend } from '@/components'
 import { moment, Data_Format, formatDate } from '@/utils/util.date'
 import PageHeaderWrapper from '@/components/PageHeaderWrapper';
 import styles from './index.less'
@@ -87,9 +87,9 @@ export default class BaseComp extends React.Component{
           />
         </Card>
         <Card title="按钮" {...cardProps}>
-          MPCConfirm: 弹出确认，根据业务需求在@/components/MPCConfirm 进行配置 <br />
-          <MPCConfirm type="delete" onConfirm={() => {}}><Icon type="delete" /></MPCConfirm>
-          <MPCConfirm type="submit" onConfirm={() => {}}><Icon type="save" /></MPCConfirm>
+          WConfirm: 弹出确认，根据业务需求在@/components/WConfirm 进行配置 <br />
+          <WConfirm type="delete" onConfirm={() => {}}><Icon type="delete" /></WConfirm>
+          <WConfirm type="submit" onConfirm={() => {}}><Icon type="save" /></WConfirm>
           <br />
           Btns:按钮具体根据业务可以在@/components/Button 按照规范统一配置按钮大小，形状，颜色等等<br />
           {lodash.keys(Btns).map(key=>{
@@ -111,9 +111,9 @@ export default class BaseComp extends React.Component{
           Act: 用于操作列,多余菜单隐藏 ...
           <br />
           <Act>
-            <MPCConfirm type="del" onConfirm={() => {}}>
+            <WConfirm type="del" onConfirm={() => {}}>
               <Icon type="delete" />
-            </MPCConfirm>
+            </WConfirm>
             <Act.Item key="a" disabled onClick={()=>alert(1)}>a</Act.Item>
             <Act.Item key="b" onClick={()=>alert(1)}>b</Act.Item>
             <Act.Item key="c" onClick={()=>alert(1)}>c</Act.Item>

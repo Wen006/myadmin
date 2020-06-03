@@ -28,7 +28,7 @@ import lodash from 'lodash';
 import { observer } from 'mobx-react';
 import MenuInfoStore from '@/stores/sys/sm/menu/MenuInfoStore';
 import { InputH, InputNumberH } from '@/components/FormMark';
-import { Btns, Iconfont, AutoRow, Intler,MPCConfirm } from '@/components';
+import { Btns, Iconfont, AutoRow, Intler,WConfirm } from '@/components';
 import { IconItems } from '@/utils/app.const';
 import PageHeaderWrapper from '@/components/PageHeaderWrapper';
 import {DefaultField} from '@/pages/common'
@@ -180,13 +180,13 @@ class MenuInfoEdit extends React.Component {
     const btns = ( 
       <Btns.Group className={styles.treeBtn}>
         <Button type="primary" onClick={() => this.handleAddTreeNode()} icon="plus" />
-        <MPCConfirm
+        <WConfirm
           type="del"
           disabled={this.menuInfoStore.checkedKeys.length < 1}
           onConfirm={() => this.handleDel()}
         > 
           <Button disabled={this.menuInfoStore.checkedKeys.length < 1} type="primary" icon="delete" />
-        </MPCConfirm>
+        </WConfirm>
         <Button type="primary" onClick={() => fetchTreeJson()} icon="retweet" />
       </Btns.Group> 
     );

@@ -4,7 +4,7 @@
 /* eslint-disable radix */
 /**
  * @description 日期工具
- * @author neusoft
+ * @author wennn
  * @time 20190624
  */
 /* eslint-disable no-extend-native */

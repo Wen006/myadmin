@@ -5,7 +5,7 @@ import React, { Fragment, Children } from 'react';
 import { Form, Card, Icon, Switch } from 'antd'; 
 import lodash from 'lodash'
 import * as Rxjs from 'rxjs'
-import { Btns, AdRender ,Act,MPCConfirm} from '@/components'; 
+import { Btns, AdRender ,Act,WConfirm} from '@/components'; 
 import { getNow } from '@/utils/util.date' 
 import ReactMain from './react'
 import ReactMobxMain from './reactmobx'

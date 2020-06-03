@@ -28,7 +28,7 @@ const confirmMap = {
   },
 };
 
-export default class MPCConfirm extends PureComponent {
+export default class WConfirm extends PureComponent {
   constructor(props) {
     super(props);
     const { type, title, okText, cancelText } = props;

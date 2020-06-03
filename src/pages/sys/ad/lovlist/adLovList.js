@@ -3,7 +3,7 @@
 /* eslint-disable prefer-destructuring */
 import React from 'react';
 import AgGridPro from '@/components/AgGrid/AgGridPro';
-import { AdRender, Act, Viewer, Intler, Btns,MPCConfirm } from '@/components';
+import { AdRender, Act, Viewer, Intler, Btns,WConfirm } from '@/components';
 import AdLovlistStore from '@/stores/sys/ad/lovlist/AdLovlistStore';
 import Navigator from '@/stores/common/Navigator';
 import PageHeaderWrapper from '@/components/PageHeaderWrapper';
@@ -167,7 +167,7 @@ class AdLovList extends React.Component {
                 <Act.Item onClick={()=>this.handleBarOpe('edit',record)}>
                   <Icon type='edit' />
                 </Act.Item> 
-                <MPCConfirm
+                <WConfirm
                   key="del"
                   type="del"
                   onConfirm={()=>this.handleBarOpe('delete',record)}
@@ -176,7 +176,7 @@ class AdLovList extends React.Component {
                     <Icon type='delete' />
                   </Act.Item>
                   {/* <Act.Item text={Intler.getIntl("common.title.delete")} key="delete" /> */}
-                </MPCConfirm> 
+                </WConfirm> 
               </Act>
             );
           },
@@ -202,14 +202,14 @@ class AdLovList extends React.Component {
                 onClick={()=>this.handleBarOpe('edit')} 
                 disabled={selectCount != 1}
               />
-              <MPCConfirm
+              <WConfirm
                 key="del"
                 disabled={selectCount < 1}
                 type="del"
                 onConfirm={()=>this.handleBarOpe('delete')}
               >
                 <Btns.del algin="left" disabled={selectCount < 1} key="delete" />
-              </MPCConfirm>
+              </WConfirm>
             </Btns.Group>
             }
           pullDown={<SearchBar key="grid" type="grid" {...searchBarProps} onReady={(ref)=>{this.searchBarRef=ref}} />}

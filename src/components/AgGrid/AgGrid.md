@@ -100,7 +100,7 @@ cellRenderer
    gridOptions:{
      frameworkComponents: { // 这里定义操作列注册
        actionCellRenderer: (params)=><Act>
-         <MPCConfirm type="del" onConfirm={alert(1)}><Icon type="delete" /></MPCConfirm>			</Act>,
+         <WConfirm type="del" onConfirm={alert(1)}><Icon type="delete" /></WConfirm>			</Act>,
      },
    },
  }
@@ -315,7 +315,7 @@ class App extends React.Component{
              frameworkComponents: { // 这里定义操作列注册
                 actionCellRenderer: (params)=>
                  <Act>
-                    <MPCConfirm type="del" onConfirm={alert(1)}>del</MPCConfirm>
+                    <WConfirm type="del" onConfirm={alert(1)}>del</WConfirm>
             	 </Act>,
              },
              onCellValueChanged:this.onCellValueChanged,// 页面停止编辑触发
@@ -500,7 +500,7 @@ import React from 'react'
 import Act from 'plugins/Action/Act'
 import AgGrid from 'plugins/AgGrid/AgGrid'
 import { Btns } from 'components'
-import MPCConfirm from 'components/MPCConfirm/MPCConfirm'
+import WConfirm from 'components/WConfirm/WConfirm'
 import { formatDate } from 'utils/dateUtils'
 import { numFormatStr } from 'utils/utils'
 import { Icon } from 'antd';
@@ -655,18 +655,18 @@ export default class AgGridMain extends React.Component{
           <Btns.add onClick={this.handleAdd} key="add" size="small" />,
           <Btns.del align="right" onClick={this.handleDelAll} text="清空" 
         	key="add" size="small" />,
-          <MPCConfirm align="right" key="del" type="del" onConfirm={() => this.handleDel()}>
+          <WConfirm align="right" key="del" type="del" onConfirm={() => this.handleDel()}>
             <Btns.del size='small' />
-          </MPCConfirm>,
+          </WConfirm>,
         ],
         gridOptions:{
           // 这里定义操作列注册 还有其他方式注入组件
           frameworkComponents: { 
               actionCellRenderer:(params)=>( 
                 <Act>
-                  <MPCConfirm type="del" onConfirm={()=>this.handleDel(params.data)}>
+                  <WConfirm type="del" onConfirm={()=>this.handleDel(params.data)}>
                     <Icon type="delete" />
-                  </MPCConfirm>
+                  </WConfirm>
                 </Act>
               ),
           },

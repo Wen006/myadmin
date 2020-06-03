@@ -1,6 +1,6 @@
 /**
  * @description 加密工具类
- * @author neusoft
+ * @author wennn
  * @time 20190624
  */
 import Base64 from 'crypto-js/enc-base64';

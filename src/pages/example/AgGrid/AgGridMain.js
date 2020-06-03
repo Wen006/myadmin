@@ -4,7 +4,7 @@
 import React from 'react';
 import { Form, Card, Icon, Switch } from 'antd'; 
 import lodash from 'lodash'
-import { Btns, AdRender, DateRender,Act,MPCConfirm} from '@/components'; 
+import { Btns, AdRender, DateRender,Act,WConfirm} from '@/components'; 
 // import AbC  from '@/components/AgGrid/Editer/config' 
 import { getNow } from '@/utils/util.date' 
 import AgGrid, {LookUpCell,InputCell,NumberCell,SelectCell,MonthCell,DateCell,SwitchCell} from '@/components/AgGrid/AgGrid'
@@ -190,7 +190,7 @@ class EditForm extends React.Component {
           frameworkComponents: {
             adRender: AdRender, 
             dateRender:DateRender,
-            actionCellRenderer: params =>(<Act><MPCConfirm type="del" onConfirm={this.handleDel.bind(this,params)}><Icon type="delete" /></MPCConfirm></Act>),
+            actionCellRenderer: params =>(<Act><WConfirm type="del" onConfirm={this.handleDel.bind(this,params)}><Icon type="delete" /></WConfirm></Act>),
           },
           singleClickEdit:true,        // 单击编辑
           // editType:'fullRow' ,    // 是否开启整行编辑

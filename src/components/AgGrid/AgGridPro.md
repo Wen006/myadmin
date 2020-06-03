@@ -62,9 +62,9 @@ const agProps = {
         <Btns.update disabled algin="left" key="edit"/>,
          // 下面的同上面的 （不推荐）
         { buttons:'update', label:'更新', disabled:true, size:'small',onClick:()=>{}}, 
- 		<MPCConfirm key="del" type="del" onConfirm={() => this.handleDel.bind(this)}>
+ 		<WConfirm key="del" type="del" onConfirm={() => this.handleDel.bind(this)}>
           <Btns.del algin="left" key="delete" />
-        </MPCConfirm>,
+        </WConfirm>,
 		<span algin="right">合计：¥200</span>
     ]
     fetch: {
@@ -154,7 +154,7 @@ import PageHeaderLayout from 'layouts/PageHeaderLayout';
 import Intler from 'components/Intler/Intler';
 import { Btns } from 'components';
 import AgGridPro from 'plugins/AgGrid/AgGridPro';
-import MPCConfirm from 'components/MPCConfirm/MPCConfirm';
+import WConfirm from 'components/WConfirm/WConfirm';
 import Navigator from 'stores/common/Navigator';
 import Act from 'plugins/Action/Act';
 import lodash from 'lodash';
@@ -208,9 +208,9 @@ export default class UserList extends React.Component {
       toolBars: [
         <Btns.add algin="left" key="add" onClick={this.handleAdd.bind(this, 'add')} />,
         <Btns.update algin="left" key="edit" onClick={this.handleAdd.bind(this, 'edit')}/>,
-        <MPCConfirm key="del" type="del" onConfirm={() => this.handleDel.bind(this)}>
+        <WConfirm key="del" type="del" onConfirm={() => this.handleDel.bind(this)}>
           <Btns.del algin="left" key="delete" />
-        </MPCConfirm>,
+        </WConfirm>,
       ],
       toolPanel:()=>{
         return <span>我是toolBar和表格之间的部分</span>
@@ -241,7 +241,7 @@ export default class UserList extends React.Component {
                     this.handleOpe('edit', record);
                   }}
                 />
-                <MPCConfirm
+                <WConfirm
                   key="del"
                   type="del"
                   onConfirm={() => {
@@ -249,7 +249,7 @@ export default class UserList extends React.Component {
                   }}
                 >
                   <ActItem text="删除" key="del_item" />
-                </MPCConfirm>
+                </WConfirm>
               </Act>
             );
           },

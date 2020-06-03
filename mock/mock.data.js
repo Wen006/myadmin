@@ -83,28 +83,7 @@ const user = {
       unitName: '海信美国有限公司',
       entityId: 81102,
       entityName: '美国销售综管部',
-    },
-    {
-      id: null,
-      unitId: 8110,
-      unitName: '海信美国有限公司',
-      entityId: 81101,
-      entityName: '美国销售人资部',
-    },
-    {
-      id: null,
-      unitId: 8110,
-      unitName: '海信美国有限公司',
-      entityId: 811011,
-      entityName: '美国销售业务拓展部',
-    },
-    {
-      id: null,
-      unitId: 8110,
-      unitName: '海信美国有限公司',
-      entityId: 81104,
-      entityName: '美国销售市场部',
-    },
+    }
   ],
 };
 

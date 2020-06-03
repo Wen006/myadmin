@@ -2,7 +2,7 @@
 import React from 'react';
 import { Form, Card, Icon, Switch } from 'antd';
 import { InputH } from '@/components/FormMark';
-import { Btns, Intler, AdRender, AutoRow ,Act,MPCConfirm} from '@/components'; 
+import { Btns, Intler, AdRender, AutoRow ,Act,WConfirm} from '@/components'; 
 import AgGrid,{ NumberCell } from '@/components/AgGrid/AgGrid'
 import styles from '@/pages/common.less';    
 import { DefaultField } from '@/pages/common';
@@ -155,7 +155,7 @@ class EditForm extends React.Component {
                 params.node.setDataValue("activeFlag",checked?"1":"0");
               }}
             />,
-            actionCellRenderer: params =>(<Act><MPCConfirm type="del" onConfirm={this.handleDel.bind(this,params)}><Icon type="delete" /></MPCConfirm></Act>),
+            actionCellRenderer: params =>(<Act><WConfirm type="del" onConfirm={this.handleDel.bind(this,params)}><Icon type="delete" /></WConfirm></Act>),
           },
         },
       };

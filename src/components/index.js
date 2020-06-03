@@ -4,7 +4,7 @@ import Act from './Action/Act';
 import MBox from './MBox';
 import Viewer from './Viewer';
 // import ImportTerm from './Import/ImportTem';
-import MPCConfirm from './MPCConfirm'
+import WConfirm from './WConfirm'
 import Iconfont from './Iconfont'
 import Btns from './Button'
 import Intler from './Intler'
@@ -17,4 +17,4 @@ import SearchBar from './SearchBar'
 import Toolbar from './Toolbar'
 import Trend from './Trend'
 
-export { DateRender, AdRender, Act, MBox, Viewer, Btns,Intler,AutoRow,Iconfont,MPCConfirm,CountDown,Ellipsis,NumberInfo,TagSelect,SearchBar,Toolbar,Trend};
+export { DateRender, AdRender, Act, MBox, Viewer, Btns,Intler,AutoRow,Iconfont,WConfirm,CountDown,Ellipsis,NumberInfo,TagSelect,SearchBar,Toolbar,Trend};

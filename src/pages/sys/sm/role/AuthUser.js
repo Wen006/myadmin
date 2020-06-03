@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react'
-import { Intler,MPCConfirm, Btns } from '@/components'
+import { Intler,WConfirm, Btns } from '@/components'
 import AgGridPro from '@/components/AgGrid/AgGridPro'
 import { Icon } from 'antd'
 
@@ -56,7 +56,7 @@ export default class AuthUser extends React.Component{
             gridOptions: {
                 frameworkComponents: {
                     actionCellRenderer: params  => (
-                      <MPCConfirm
+                      <WConfirm
                         key="del"
                         type="del"
                         onConfirm={() => {
@@ -64,7 +64,7 @@ export default class AuthUser extends React.Component{
                         }}
                       >
                         <Icon style={{ fontSize: '20px' }} type="delete" />
-                      </MPCConfirm> 
+                      </WConfirm> 
                     )
                 }
             }

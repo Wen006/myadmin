@@ -41,6 +41,6 @@ export default class SwitchCell extends React.Component {
   };
 
   render() {
-    return <Switch className={"mpc-ag-edit-cell"} {...this.state} checkedChildren={this.state.checkedChildren.codeName} unCheckedChildren={this.state.unCheckedChildren.codeName} onChange={this.onChange} />;
+    return <Switch className={"w-ag-edit-cell"} {...this.state} checkedChildren={this.state.checkedChildren.codeName} unCheckedChildren={this.state.unCheckedChildren.codeName} onChange={this.onChange} />;
   }
 }

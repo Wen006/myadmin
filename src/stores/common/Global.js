@@ -7,7 +7,7 @@ import CacheStore from './sys/CacheStore';
 class Global {
   languageInfo = undefined;
 
-  version = 'MPC_00V1';
+  version = 'W_00V1';
 
   user = {}
 

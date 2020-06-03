@@ -1,6 +1,6 @@
 /**
  * @description 静态案例
- * @author neusoft
+ * @author wennn
  * 
  */
 export default [

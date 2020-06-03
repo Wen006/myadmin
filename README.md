@@ -301,7 +301,7 @@ public String index(){
   {
     path: `/sys/demo/demoIndex`, # 路由地址（这个和菜单的URL、要一致）
     name: '新页面', # 模块名称
-    author: 'neusoft',  # 作者
+    author: 'wennn',  # 作者
     component: `./sys/demo/NewPage`, # 页面位置，这里"."代表@/pages/
   }
   ```

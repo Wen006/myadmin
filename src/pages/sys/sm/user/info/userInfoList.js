@@ -3,7 +3,7 @@
 /* eslint-disable prefer-destructuring */
 import React from 'react';
 import AgGridPro from '@/components/AgGrid/AgGridPro';
-import { AdRender, Act, Viewer, Intler, Btns,MPCConfirm } from '@/components';
+import { AdRender, Act, Viewer, Intler, Btns,WConfirm } from '@/components';
 import UserInfoStore from '@/stores/sys/sm/user/UserInfoStore';
 import Navigator from '@/stores/common/Navigator';
 import PageHeaderWrapper from '@/components/PageHeaderWrapper';
@@ -181,7 +181,7 @@ class UserInfoList extends React.Component {
                     this.handleOpe('edit', record);
                   }}
                 />
-                <MPCConfirm
+                <WConfirm
                   key="del"
                   type="del"
                   onConfirm={() => {
@@ -189,7 +189,7 @@ class UserInfoList extends React.Component {
                   }}
                 >
                   <Act.Item text={Intler.getIntl("common.title.delete")} key="delete" />
-                </MPCConfirm> 
+                </WConfirm> 
                 <Viewer
                   tiggerTitle={Intler.getIntl("sm.user.pwd.update")}
                   cache={false}
@@ -204,7 +204,7 @@ class UserInfoList extends React.Component {
                     onSave={(value)=>{}} 
                   />
                 </Viewer> 
-                <MPCConfirm
+                <WConfirm
                   key="reset"
                   type="reset"
                   onConfirm={() => {
@@ -212,7 +212,7 @@ class UserInfoList extends React.Component {
                   }}
                 >
                   <Act.Item text={Intler.getIntl("sm.user.pwd.reset")} key="reset_pwd" />
-                </MPCConfirm>
+                </WConfirm>
               </Act>
             );
           },
@@ -238,14 +238,14 @@ class UserInfoList extends React.Component {
                 onClick={this.handleBarOpe.bind(this,'edit')} 
                 disabled={selectCount != 1}
               />
-              <MPCConfirm
+              <WConfirm
                 key="del"
                 disabled={selectCount < 1}
                 type="del"
                 onConfirm={this.handleBarOpe.bind(this,'delete')}
               >
                 <Btns.del algin="left" disabled={selectCount < 1} key="delete" />
-              </MPCConfirm>
+              </WConfirm>
             </Btns.Group>
             }
           pullDown={<SearchBar key="grid" type="grid" {...searchBarProps} onReady={(ref)=>{this.searchBarRef=ref}} />}
