@@ -145,7 +145,7 @@ export default class GlobalHeaderRight extends PureComponent {
         <span>
           <a
             // target="_blank"
-            href="javascript:;"
+            href="#!"
             // rel="noopener noreferrer"
             className={styles.action}
           >

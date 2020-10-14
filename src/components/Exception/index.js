@@ -39,7 +39,8 @@ class Exception extends React.PureComponent {
           />
         </div>
         <div className={styles.content}>
-          <h1>{title || config[pageType].title}</h1>
+          <h1>{config[pageType].title}</h1>
+          <h2>{title}</h2>
           <div className={styles.desc}>{desc || config[pageType].desc}</div>
           <div className={styles.actions}>
             {actions ||

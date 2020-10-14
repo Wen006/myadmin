@@ -74,6 +74,7 @@ export default {
         },
       })
       reloadAuthorized();
+      window.location.reload();
       yield put(
         routerRedux.push({
           pathname: '/user/login',

@@ -1,5 +1,5 @@
 import React, { Suspense } from 'react';
-import { Layout } from 'antd';
+import { Card, Layout, Skeleton } from 'antd';
 import DocumentTitle from 'react-document-title';
 import isEqual from 'lodash/isEqual';
 import memoizeOne from 'memoize-one';
@@ -21,7 +21,7 @@ import { title } from '../defaultSettings';
 import styles from './BasicLayout.less';
 import GSpin from '@/components/Loader/GSpin';
 import RouterTabs from './RouterTabs'
-import { showSetting,homeUrl } from '@/utils/app.conf'
+import { showSetting, homeUrl } from '@/utils/app.conf'
 
 
 // lazy load SettingDrawer
@@ -71,16 +71,15 @@ class BasicLayout extends React.PureComponent {
     } = this.props;
     dispatch({
       type: 'user/fetchCurrent',
-    }).then(success=>{
-      if(success){
+    }).then(success => {
+      if (success) {
         dispatch({
           type: 'menu/getMenuData',
           payload: { routes, authority },
         });
-      }else{
-        // window.location.push("/user/login")
+      } else {
         dispatch({
-          type:"login/logout",
+          type: "login/logout",
         })
       }
     });
@@ -161,14 +160,14 @@ class BasicLayout extends React.PureComponent {
     });
   };
 
-  renderSettingDrawer = () =>{
+  renderSettingDrawer = () => {
     // Do not render SettingDrawer in production
     // unless it is deployed in preview.pro.ant.design as demo
     // if (process.env.NODE_ENV === 'production' && APP_TYPE !== 'site') {
     //   return null;
     // }
-    return showSetting?<SettingDrawer />:null;
-  }  
+    return showSetting ? <SettingDrawer /> : null;
+  }
 
   render() {
     const {
@@ -178,6 +177,7 @@ class BasicLayout extends React.PureComponent {
       location: { pathname },
       isMobile,
       menuData,
+      menuLoaded,
       breadcrumbNameMap,
       route: { routes },
       fixedHeader,
@@ -185,7 +185,7 @@ class BasicLayout extends React.PureComponent {
     } = this.props;
 
     const isTop = PropsLayout === 'topmenu';
-    const routerConfig = this.getRouterAuthority(pathname, routes);
+    const routerConfig = "";//this.getRouterAuthority(pathname, routes);
     const contentStyle = !fixedHeader ? { paddingTop: 0 } : {};
     const layout = (
       <Layout>
@@ -213,22 +213,17 @@ class BasicLayout extends React.PureComponent {
             {...this.props}
           />
           <Content className={styles.content} style={contentStyle}>
-            { isTab ?
+            <Skeleton loading={!menuLoaded}>
               <Authorized authority={routerConfig} noMatch={<Exception403 />}>
-                <RouterTabs 
-                  noMatch={<Exception404 />}
-                  homeUrl="/dashboard/home"
-                  {...this.props}
-                >
-                  {children}
-                </RouterTabs>
+                {isTab ?
+                  <RouterTabs
+                    noMatch={<Exception404 />}
+                    homeUrl="/dashboard/home"
+                    {...this.props} />
+                  : { children }
+                }
               </Authorized>
-
-              :
-              <Authorized authority={routerConfig} noMatch={<Exception403 />}>
-                {children}
-              </Authorized>
-            }
+            </Skeleton>
           </Content>
           <Footer />
         </Layout>
@@ -246,7 +241,7 @@ class BasicLayout extends React.PureComponent {
               </Context.Provider>
             )}
           </ContainerQuery>
-        </DocumentTitle> 
+        </DocumentTitle>
         <Suspense fallback={<PageLoading />}>{this.renderSettingDrawer()}</Suspense>
       </React.Fragment>
     );
@@ -257,8 +252,9 @@ export default connect(({ global, setting, menu }) => ({
   collapsed: global.collapsed,
   layout: setting.layout,
   menuData: menu.menuData,
+  menuLoaded: menu.loaded,
   breadcrumbNameMap: menu.breadcrumbNameMap,
-  isTab:menu.isTab,
+  isTab: menu.isTab,
   ...setting,
 }))(props => (
   <Media query="(max-width: 599px)">

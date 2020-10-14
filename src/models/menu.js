@@ -95,6 +95,7 @@ export default {
 
   state: {
     isTab: true,            // 是否开启 多tab
+    loaded: false,
     menuData: [],           // 菜单数据 树结构的
     breadcrumbNameMap: {},  // 面包屑集合 {key[url]:value[menuData]}
   },
@@ -116,6 +117,7 @@ export default {
     save(state, action) {
       return {
         ...state,
+        loaded:true,
         ...action.payload,
       };
     },

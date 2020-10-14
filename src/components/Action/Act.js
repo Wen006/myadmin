@@ -4,7 +4,7 @@ import { Dropdown, Menu, Divider, Icon } from 'antd';
 
 const ActItem = ({ children, text, className, ...others }) => {
   return (
-    <a key="a" className={`ant-dropdown-link ${className}`} {...others} href="javascript:;">
+    <a key="a" className={`ant-dropdown-link ${className}`} {...others} href="#!">
       {text || children}
     </a>
   );
@@ -44,7 +44,7 @@ class Act extends React.Component {
     if (menuItems.length > 0) {
       dropdowns.push(
         <Dropdown key="ant-dropdown-link" overlay={menu}>
-          <a className="ant-dropdown-link" href="javascript:;">
+          <a className="ant-dropdown-link" href="#!">
             <Icon type="ellipsis" />
           </a>
         </Dropdown>

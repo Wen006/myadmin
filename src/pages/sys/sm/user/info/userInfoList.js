@@ -98,7 +98,7 @@ class UserInfoList extends React.Component {
   handleBarOpe = ope => {
     switch (ope) {
       case 'add':
-        Navigator.forward({ url: '/sys/sm/user/info/userIndex/edit', params: {}, title: '新增用户' });
+        Navigator.forward({ url: '/sys/sm/user/info/userIndex/edit', params: {pageId:+new Date()}, title: '新增用户' });
         break;
       case 'edit':
         const record = this.agStore.getSelectOneRecord();

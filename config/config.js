@@ -62,6 +62,7 @@ export default {
     APP_TYPE: process.env.APP_TYPE || '',
     APP_VERSION: process.env.APP_VERSION || version,
   },
+  hash:true,
   treeShaking: true,
   targets: {
     ie: 11,

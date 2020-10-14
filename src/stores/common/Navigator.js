@@ -36,13 +36,14 @@ class Navigator {
 
   curNav = undefined;
 
-  forward = ({ url, title, params }) => {
+  forward = ({ url, title, params={} }) => {
     this.curNav = new Nav(title, url, params);
     this.params[url] = this.curNav; 
+    console.log('params', params)
     router.push({
       pathname:url,
-      query:params,
-      search:title?`?titleName=${title}`:"",
+      query:{...params,titleName:title},
+      // search:title?`?titleName=${title}`:"",
     });
   };
 

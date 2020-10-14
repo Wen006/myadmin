@@ -110,7 +110,7 @@ export default {
   [`${getMockPre('SYS_USER_INFO_LOGIN')}`]: userLogin,
   [`${getMockPre('SYS_USER_INFO_GETCURUSER')}`]: getCurrentUser,
   [`${getMockPre('SYS_USER_INFO_LOGINOUT')}`]: loginOut,
-  [`${getMockPre('SYS_USER_INFO_CHANGE_ROLE')}`]: changeRole,
+  // [`${getMockPre('SYS_USER_INFO_CHANGE_ROLE')}`]: changeRole,
   [`${getMockPre('SYS_PARAMS')}`]: getSysParams,
   [`${getMockPre('SYS_ROLE_QUERY_FOR_USER')}`]: getRoleForUser,
 };

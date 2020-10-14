@@ -162,7 +162,7 @@ import UserFilter from './UserFilter';
 
 const ActItem = ({ text, className, ...others }) => {
   return (
-    <a key="a" className='ant-dropdown-link' {...others} href="javascript:;">
+    <a key="a" className='ant-dropdown-link' {...others} href="#!">
       {text}
     </a>
   );

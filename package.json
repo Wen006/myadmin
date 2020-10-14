@@ -19,7 +19,6 @@
     "tslint": "npm run tslint:fix",
     "tslint:fix": "tslint --fix 'src/**/*.ts*'",
     "test": "umi test",
-    "test:component": "umi test ./src/components",
     "test:all": "node ./tests/run-tests.js",
     "prettier": "node ./scripts/prettier.js",
     "docker:dev": "docker-compose -f ./docker/docker-compose.dev.yml up",
@@ -56,6 +55,7 @@
     "mobx-react": "^5.4.4",
     "moment": "^2.22.2",
     "moment-timezone": "^0.5.27",
+    "nan-my-component": "^1.0.6",
     "numeral": "^2.0.6",
     "nzh": "^1.0.3",
     "omit.js": "^1.0.0",
@@ -121,8 +121,12 @@
   "engines": {
     "node": ">=8.0.0"
   },
-  "keywords":[
-    "react","ant-design","menu tab","typescript","jsx"
+  "keywords": [
+    "react",
+    "ant-design",
+    "menu tab",
+    "typescript",
+    "jsx"
   ],
   "author": "wennn",
   "license": "ISC",

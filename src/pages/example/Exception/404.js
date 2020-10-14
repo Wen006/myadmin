@@ -3,12 +3,13 @@ import { formatMessage } from 'umi/locale';
 import Link from 'umi/link';
 import Exception from '@/components/Exception';
 
-const Exception404 = () => (
+const Exception404 = (props) => (
   <Exception
     type="404"
     desc={formatMessage({ id: 'app.exception.description.404' })}
     linkElement={Link}
     backText={formatMessage({ id: 'app.exception.back' })}
+    {...props}
   />
 );
 

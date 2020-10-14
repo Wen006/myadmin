@@ -10,7 +10,7 @@ import WConfirm from 'components/WConfirm/WConfirm'
 
  return （
   <WConfirm type="del" disabled>
-    <a href=" javascript:; ">删除</a>
+    <a href=" #! ">删除</a>
   </WConfirm>
  ）
 

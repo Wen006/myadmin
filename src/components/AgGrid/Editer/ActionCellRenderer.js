@@ -14,11 +14,11 @@ export default class ActionCellRenderer extends Component {
           okText="Yes"
           cancelText="No"
         >
-          <a key="aa" className="ant-dropdown-link" href="javascript:;">
+          <a key="aa" className="ant-dropdown-link" href="#!">
             aa
           </a>
         </Popconfirm>
-        <a key="a" className="ant-dropdown-link" onClick={() => alert(0)} href="javascript:;">
+        <a key="a" className="ant-dropdown-link" onClick={() => alert(0)} href="#!">
           a
         </a>
         <a
@@ -26,7 +26,7 @@ export default class ActionCellRenderer extends Component {
           className="ant-dropdown-link"
           hidden
           onClick={() => alert(0)}
-          href="javascript:;"
+          href="#!"
         >
           b
         </a>
@@ -35,7 +35,7 @@ export default class ActionCellRenderer extends Component {
           className="ant-dropdown-link"
           disabled
           onClick={() => alert(0)}
-          href="javascript:;"
+          href="#!"
         >
           c
         </a>

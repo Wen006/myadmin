@@ -44,7 +44,7 @@ export default class WConfirm extends PureComponent {
 
     if (disabled) {
       return (
-        <a href="javascript:;" disabled>
+        <a href="#!" disabled>
           {children}
         </a>
       );

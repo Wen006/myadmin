@@ -54,7 +54,7 @@ export default class Viewer extends React.PureComponent {
       <Fragment>
         {tiggerTitle ? (
           <a
-            href="javascript:;"
+            href="#!"
             onClick={() => {
               this.showViewer(!visible);
             }}

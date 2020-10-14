@@ -4,4 +4,4 @@
 
 import Link from 'umi/link';
 
-export default ({children,to=false,...other}) =>to?<Link to {...other}>{children}</Link>:<a href="javascript:;" {...other}>{children}</a>;
+export default ({children,to=false,...other}) =>to?<Link to {...other}>{children}</Link>:<a href="#!" {...other}>{children}</a>;

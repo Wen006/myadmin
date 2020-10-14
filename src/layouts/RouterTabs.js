@@ -3,29 +3,27 @@ import React, { Component } from 'react';
 import classNames from 'classnames';
 import { Tag, Dropdown, Icon, Tooltip, Menu, Tabs, Button } from 'antd';
 import { withRouter } from "react-router-dom";
-import styles from './layouts.less';
 import Iconfont from '@/components/Iconfont/index'
 import { isUrl } from '@/utils/utils';
 import TabItem from './TabItem'
+import { homeUrl } from '@/utils/app.conf';
+import styles from './layouts.less';
 
 const { SubMenu } = Menu;
 const { TabPane } = Tabs;
 
 
 // 模拟全局路由配置对象，
-let routerCcnfig = {};
+let allRouteFlatMap = {};
 
 // 通过 pathname 获取 pathname 对应到路由描述信息对象
-const getTitleByPathname = (pathname) => {
-  return routerCcnfig[pathname];
-}
+const getRouteInfo = pathname => allRouteFlatMap[pathname]
 
 const getIcon = icon => {
   if (typeof icon === 'string' && isUrl(icon)) {
     return <img src={icon} alt="icon" className={styles.icon} />;
   }
   if (typeof icon === 'string') {
-    // return <Icon type={icon} />;
     return <Iconfont type={icon} />;
   }
   return icon;
@@ -43,50 +41,46 @@ class RouterTabs extends Component {
 
   static unListen = null;
 
-  apis = {}
+  routes = []; // 路由信息
 
-  static defaultProps = {
-    initialValue: [],
-  };
+  tabMap = {}; // 每个 页签对应的路由信息
 
   constructor(props) {
     super(props);
-    const { history, location: { pathname }, route = {}, homeUrl } = this.props;
+    const { history, location: { pathname }, route = {} } = this.props;
     const { routes = [] } = route
     this.routes = routes
-    routerCcnfig = this.routeToMap(this.routes, routerCcnfig);
 
-    // if(pathname !== homeUrl){ // 浏览器刷新的时候要跳转首页
-    //   history.push({
-    //     pathname: homeUrl,
-    //     search: "",
-    //   }); 
-    // }
-    // const menuTabs = []
-    // const refsTag = []
-    // const searchMap = {}
-
-    // const homeRouteInfo = routerCcnfig[homeUrl]
-    // if(homeRouteInfo){
-    //   const menuInfo = this.getMenuInfo(homeUrl)||{};
-    //   const name =  menuInfo.name||homeRouteInfo.name||pathname;
-    //   menuTabs.push({...homeRouteInfo,name})
-    //   refsTag.push(homeUrl);
-    //   searchMap[homeUrl] = ""
-    // }
+    // 路由扁平化
+    allRouteFlatMap = this.routeToMap(this.routes, allRouteFlatMap);
 
     this.state = {
-      currentPageName: "", // 当前路由对应到 pathname
-      refsTag: [], // tabs 所有到所有页签
-      searchMap: {}, // 每个 页签对应的路由参数
-      menuTabs: [],
+      curPage: {}, // 当前路由对应到 pathname
+      pages: [],
       type: 'editable-card',// editable-card line card
-      // size:'small',
       hideAdd: true,
       tabPosition: Positions.top,
     };
 
-    this.handleMenuClick = this.handleMenuClick.bind(this);
+    // 第一次渲染首页
+    this.renderHome();
+  }
+
+  // 首页
+  renderHome = () => {
+    const { history, location: { pathname } } = this.props;
+    const { key, query, search } = location
+    if (pathname == '/') {
+      history.push({
+        pathname: homeUrl,
+        search
+      })
+    } else if (pathname != homeUrl && this.state.pages.length == 0) {
+      history.push({
+        pathname: homeUrl,
+        search
+      })
+    }
   }
 
   componentDidMount() {
@@ -103,34 +97,51 @@ class RouterTabs extends Component {
         this.notListenOnce = false;
         return;
       }
-      const { pathname } = _location;
+      const { pathname, query = {}, search } = _location;
+      const newPages = [...this.state.pages];
 
-      if (pathname === '/' || !getTitleByPathname(pathname)) {
-        this.setState({
-          currentPageName: "404",
-        });
+      if (pathname == '/') { // 返回首页
+        this.props.history.push({
+          pathname: homeUrl,
+          search
+        })
         return;
       }
-      const newRefsTag = [...this.state.refsTag];
-      const newMenuTabs = [...this.state.menuTabs];
 
-      const currentPathname = pathname;
-      if (newRefsTag.indexOf(currentPathname) === -1) {
-        newRefsTag.push(currentPathname);
-        const tabInfo = {
-          name: _location.query.titleName || this.getMenuInfo(pathname).name || routerCcnfig[pathname].name,
-          icon: this.getMenuInfo(pathname).icon
-        }
-        if (_location.query)
-          newMenuTabs.push({ ...routerCcnfig[pathname], ...tabInfo })
+      // 
+      // 
+      // 获取路由唯一key
+      const curKey = this.getFullPathName(pathname, query) + "";
+
+      if (!this.tabMap[curKey]) {
+        // 路由配置
+        const routeInfo = getRouteInfo(pathname) || getRouteInfo("/exception/404");
+
+        // 菜单配置
+        const menuInfo = this.getMenuInfo(pathname) || {};
+
+        newPages.push({
+          pageId: curKey,
+          ...routeInfo,
+          ...menuInfo,
+          name: query.titleName || menuInfo.name || routeInfo.name,
+          search: _location.search
+        });
       }
-      // 存放参数
-      this.state.searchMap[pathname] = _location.search;
+
+      // 保存对应页面信息
+      this.tabMap[curKey] = {
+        path: pathname,
+        search,
+        api:undefined,
+      }
 
       this.setState({
-        currentPageName: pathname,
-        refsTag: newRefsTag,
-        menuTabs: newMenuTabs,
+        curPage: {
+          pageId: curKey,
+          path: pathname,
+        },
+        pages: newPages
       });
     });
   }
@@ -143,11 +154,16 @@ class RouterTabs extends Component {
     }
   }
 
+  getFullPathName = (pathname, query = {}) => {
+    return query.pageId ? query.pageId : pathname;
+  }
+
   getMenuInfo = (pathname) => {
     const { breadcrumbNameMap = {} } = this.props
     return breadcrumbNameMap[pathname] || {}
   }
 
+  // 扁平化路由
   routeToMap = (routes, ar) => {
     return routes.reduce((pv, cv, ci, arr) => {
       if (!(cv.routes && cv.routes.length > 0) && cv.component && cv.path) {
@@ -160,163 +176,190 @@ class RouterTabs extends Component {
     }, ar)
   }
 
-  handleClose = (tag) => {
-    const { pathname } = this.props.location;
-    const { history } = this.props;
-    let { currentPageName } = this.state;
-    const { searchMap } = this.state;
-    const newRefsTag = [...this.state.refsTag.filter(t => t !== tag)];
-    if (currentPageName === tag) {
-      currentPageName = this.state.refsTag[this.state.refsTag.indexOf(tag) - 1];
-    }
-    this.setState({
-      currentPageName,
-      refsTag: newRefsTag,
-    });
-    if (pathname !== currentPageName) {
-      this.notListenOnce = true;
-      history.push({
-        pathname: currentPageName,
-        search: searchMap[currentPageName],
-      });
-    }
-  };
+  /**
+   * 关闭标签
+   * @param {页面标示} pageId 
+   */
+  handleClose = (pageId) => this.handleEditTab(pageId, 'remove')
 
   handleClickTag = (tag, e) => {
     if (e && e.target.tagName.toLowerCase() === 'i') {
       return;
     }
-    if (tag !== this.state.currentPageName) {
+    if (tag !== this.state.curPage.pageId) {
       this.props.history.push({
         pathname: tag,
-        search: this.state.searchMap[tag] ? this.state.searchMap[tag].replace(/from=[^&]+&?/, '') : undefined,
+        search: this.getSearchMapParams(tag)
       });
     }
   }
 
+  // 获取路由缓存参数
+  getSearchMapParams = pageId => {
+    const tabMap = this.tabMap[pageId];
+    if (!tabMap) {
+      return "";
+    }
+    return tabMap.search ? tabMap.search.replace(/from=[^&]+&?/, '') : undefined;
+  }
+
+  /**
+   * 标签选择功能
+   * 1: 关闭所有
+   * 2: 关闭其他
+   * 其他: 切换菜单
+   * @param {tag 点击} e 
+   */
   handleMenuClick = (e) => {
     const { homeUrl, history } = this.props
     const eKey = e.key;
-    let currentPathname = this.props.location.pathname;
+    let curPageId = this.getFullPathName(this.props.location.pathname,this.props.location.query);
 
     if (eKey === '1') {
-      currentPathname = homeUrl;
-      const refsTag = [this.state.refsTag[0]]
-      const menuTabs = [this.state.menuTabs[0]]
-      const searchMap = {
-        [`${homeUrl}`]: this.state.searchMap[homeUrl]
+      curPageId = homeUrl;
+      const pages = [this.state.pages[0]]
+      const curPage = this.state.pages[0];
+      this.tabMap = {
+        [`${homeUrl}`]: this.tabMap[homeUrl]
       }
-      setTimeout(() => this.setState({ refsTag, menuTabs, searchMap }))
+      setTimeout(() => this.setState({ pages ,curPage}))
     } else if (eKey === '2') {
-      if (currentPathname === homeUrl) {
+      if (curPageId === homeUrl) {
         this.handleMenuClick({ key: '1' });
       } else {
-        const refsTag = [`${homeUrl}`, `${currentPathname}`];
-        const menuTabs = this.state.menuTabs.filter(it => it.path == homeUrl || it.path == currentPathname);
-        const searchMap = {
-          [`${homeUrl}`]: this.state.searchMap[homeUrl],
-          [`${currentPathname}`]: this.state.searchMap[currentPathname],
+        const pages = this.state.pages.filter(it => it.path == homeUrl || it.path == curPageId);
+        this.tabMap = {
+          [`${homeUrl}`]: this.tabMap[homeUrl],
+          [`${curPageId}`]: this.tabMap[curPageId],
         }
-        setTimeout(() => this.setState({ refsTag, menuTabs, searchMap }))
+        setTimeout(() => this.setState({ pages }))
       }
-    } else {
+    } else { // 切换
       this.handleClickTag(eKey);
       return;
     }
-    if (currentPathname !== this.state.currentPageName) {
-      history.push({
-        pathname: currentPathname,
-        search: this.state.searchMap[currentPathname],
+
+    if (curPageId !== this.state.curPage.pageId) {
+      // history.push({
+      //   pathname: this.props.location.pathname,
+      //   search: this.getSearchMapParams(curPageId)
+      // });
+    }
+  }
+
+  // 生成组件
+  getTabEle = (path, name) => {
+    let routeInfo = getRouteInfo(path);
+    if (!routeInfo) {
+      const { component } = getRouteInfo("/exception/404");
+      return React.createElement(component, {
+        title: name,
+        actions: React.createElement(Button, {
+          onClick: () => this.clearRouteInfo(path)
+        }, "关闭")
       });
     }
-  }
-
-  getTabEle = (path) => {
-    const { noMatch } = this.props
-    const { component } = routerCcnfig[path] || {};
+    const { component } = routeInfo;
     const tabApi = {
-      closeThisTab: () => this.clearRouteInfo(this.state.currentPageName)
+      closeThisTab: () => this.clearRouteInfo(path)
     }
-    return React.createElement(component, { ...this.props, tabApi }) || noMatch || 'Not Found';
+    return React.createElement(component, { ...this.props, tabApi });
   }
 
-  handleEditTab = (targetKey, action) => {
+  /**
+   * 点击card 上的关闭
+   * @param {pageId} targetKey 
+   * @param {remove,...待扩展} action 
+   */
+  handleEditTab = (pageId, action) => {
     if (action == 'remove') {
-      this.clearRouteInfo(targetKey)
+      this.clearRouteInfo(pageId)
     }
   }
 
-  clearRouteInfo = (path) => {
+  /**
+   * 清除对应页面
+   * @param {*} pageId 
+   */
+  clearRouteInfo = pageId => {
     const { history, homeUrl } = this.props
     const {
-      currentPageName, // 当前路由对应到 pathname
-      refsTag, // tabs 所有到所有页签
-      searchMap, // 每个 页签对应的路由参数
-      menuTabs,
-    } = this.state
+      curPage,
+      pages,
+    } = this.state;
 
-    if (path) {
-      const targetIndex = refsTag.findIndex(p => p === path);
+    if (pageId) {
+      const targetIndex = pages.findIndex(p => p.pageId === pageId);
       if (targetIndex > -1) {
-        refsTag.splice(targetIndex, 1);
-        if (searchMap[path]) delete searchMap[path];
-        menuTabs.splice(targetIndex, 1)
+        pages.splice(targetIndex, 1);
+        if (this.tabMap[pageId]) delete this.tabMap[pageId];
       }
-      if (refsTag.length > 0) {
-        if (currentPageName == path) {
-          history.goBack();
+      if (pages.length > 0) {
+        if (curPage.pageId == pageId) {
+          if(pages.length == 1){
+            this.setState({
+              curPage:{
+                pageId:pages[0].pageId,
+                path:pages[0].path
+              },
+              pages,
+            })
+            return ;
+          }else{
+            history.goBack();
+          }
         }
       } else if (homeUrl) history.push(homeUrl);
+    }else{
+
     }
+
     this.setState({
-      currentPageName, // 当前路由对应到 pathname
-      refsTag, // tabs 所有到所有页签
-      searchMap, // 每个 页签对应的路由参数
-      menuTabs
+      curPage, // 当前路由对应到 pathname
+      pages: [...pages], // tabs 所有到所有页签
     })
   }
 
-  handleChangeTab = (targetKey) => {
-    if (targetKey !== this.state.currentPageName) {
-      this.props.history.push({
-        pathname: targetKey,
-        search: this.state.searchMap[targetKey],
-      });
+  /**
+   * 切换页面
+   */
+  handleChangeTab = (pageId) => {
+    if (pageId !== this.state.curPage.pageId) {
+      const pageInfo = this.tabMap[pageId];
+      if (pageInfo) {
+        this.props.history.push({
+          pathname: pageInfo.path,
+          search: this.getSearchMapParams(pageId),
+        });
+      }
     }
   }
 
   render() {
-    const { currentPageName, refsTag, menuTabs = [], ...otherProps } = this.state;
+    const { curPage, pages, ...otherProps } = this.state;
+    this.tags = pages.map(({ pageId, path: pathname, name, icon }, index) => {
+      const title = name;
+      const isLonger = title.length > 30; // 标题过长处理
 
-    const tags = menuTabs.map(({ path, name, icon }, index) => {
-      const pathname = path
-
-      const routeInfo = getTitleByPathname(pathname); // 这里假设每个pathname都能获取到指定到页面名称
-
-      const title = routeInfo ? name || routeInfo.name || "未配置国际化" : '404';
-
-      const isLongTag = title.length > 30;
       const tagElem = (
         <Tag
-          key={pathname}
-          data-key={pathname}
-          className={classNames(styles.tag,
-            { [styles.active]: pathname === currentPageName })}
-          onClick={e => this.handleClickTag(pathname, e)}
+          key={pageId}
+          data-key={pageId}
+          className={classNames(styles.tag, { [styles.active]: pageId === curPage.pageId })}
+          onClick={e => this.handleClickTag(pageId, e)}
           closable={index !== 0}
-          afterClose={() => this.handleClose(pathname)}
+          afterClose={() => this.handleClose(pageId)}
         >
           {getIcon(icon)}
           <span className={styles.icon} />
-          {isLongTag ? `${title.slice(
-            0, 30)}...` : title}
+          {isLonger ? `${title.slice(0, 30)}...` : title}
         </Tag>
       );
-      return isLongTag
+      return isLonger
         ? <Tooltip title={title} key={`tooltip_${pathname}`}>{tagElem}</Tooltip>
         : tagElem;
     });
-    this.tags = tags;
+
     /* eslint-disable */
     const operations = <Dropdown overlay={
       <Menu onClick={this.handleMenuClick}>
@@ -324,14 +367,14 @@ class RouterTabs extends Component {
         <Menu.Item key="2">关闭其他</Menu.Item>
         <SubMenu title="切换标签">
           {
-            tags.map(item => (<Menu.Item key={item.key}>{item.props.children}</Menu.Item>))
+            this.tags.map(item => (<Menu.Item key={item.key}>{item.props.children}</Menu.Item>))
           }
         </SubMenu>
       </Menu>
     }
     >
       <Tag size={'small'} color="#2d8cf0"
-        style={{ marginLeft: 12 }}>
+        style={{ marginLeft: 12,padding:'2px 7px' }}>
         标签选项 <Icon type="down" />
       </Tag>
     </Dropdown>
@@ -339,37 +382,36 @@ class RouterTabs extends Component {
       <div className={styles.tabMain}>
         <Tabs
           {...otherProps}
-          activeKey={currentPageName}
+          activeKey={curPage.pageId}
           onChange={this.handleChangeTab}
           onEdit={this.handleEditTab}
           tabBarExtraContent={
             <div>
               {operations}
               <Button icon='reload' className={styles.tabRefresh} onClick={() => {
-                if (this.apis[currentPageName]) {
-                  this.apis[currentPageName].refresh();
+                if (this.tabMap[curPage.pageId]&&this.tabMap[curPage.pageId].api) {
+                  this.tabMap[curPage.pageId].api.refresh();
                 }
               }} />
             </div>
           }
         >
           {
-            menuTabs.map(it => {
-              return (
-                <TabPane
-                  closable={it.closeable != false}
-                  tab={<span>{getIcon(it.icon)} {it.name}</span>
-                  } key={it.path || it.id || "404"} >
-                  <TabItem
-                    onReady={_ => {
-                      this.apis[it.path] = _
-                    }}
-                  >
-                    {this.getTabEle(it.path)}
-                  </TabItem>
-                </TabPane>
-              )
-            })
+            pages.map(it => (
+              <TabPane
+                closable={it.closeable != false}
+                tab={<span>{getIcon(it.icon)} {it.name}</span>}
+                key={it.pageId}
+              >
+                <TabItem
+                  onReady={_ => this.tabMap[curPage.pageId].api = _}
+                >
+                  {/* 这里是获取页面组件的 所以通过path路由匹配 */}
+                  {this.getTabEle(it.path, it.name)}
+                </TabItem>
+              </TabPane>
+            )
+            )
           }
         </Tabs>
       </div>
